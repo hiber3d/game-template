@@ -1,0 +1,17 @@
+{
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "cmake.sourceDirectory": "${workspaceFolder}/game/CMakeLists.txt",
+    "cmake.buildDirectory": "${workspaceFolder}/game/build",
+    "cmake.preferredGenerators": [
+        "Xcode",
+        "Ninja"
+    ],
+    "files.associations": {
+        "*.html": "html",
+        "*.schema": "flatbuffers",
+        "*.rml": "html",
+        "*.rcss": "css",
+        "*.material": "json",
+        "cstdint": "cpp"
+    }
+}

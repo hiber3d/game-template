@@ -18,7 +18,23 @@ AlignTrailingComments: true
 # Force pointers to the type for C++.
 DerivePointerAlignment: false
 PointerAlignment: Left
-SortIncludes: Never
+SortIncludes: CaseInsensitive
+IncludeCategories:
+  # 1. Relative paths with ""
+  - Regex: '^".*\.hpp"$'
+    Priority: 0
+  
+  # 2. Absolute paths with <> (excluding Hiber3D)
+  - Regex: '^<[^H][^i][^b][^e][^r].*\.hpp>$'
+    Priority: 1
+    
+  # 3. Hiber3D includes
+  - Regex: '^<Hiber3D/.*>$'
+    Priority: 2
+    
+  # 4. Other external includes
+  - Regex: '^<.*>$'
+    Priority: 3
 AllowShortIfStatementsOnASingleLine: Never
 BreakConstructorInitializers: BeforeComma
 PackConstructorInitializers: Never

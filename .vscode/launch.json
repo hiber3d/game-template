@@ -1,0 +1,41 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Vite DEV server",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/frontend",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "--host",
+        "--port",
+        "8547",
+      ],
+      "type": "node",
+      "env": {
+        "NO_COLOR": "1",
+      },
+      "enableDWARF": true,
+      "sourceMaps": true,
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "pattern": "http://localhost:([0-9]+)",
+        "config": {
+          "type": "chrome",
+          "request": "launch",
+          "name": "Chrome Debug",
+          "url": "http://localhost:8547", // This port is the one that Vite uses by default, not sure how to get it dynamically
+          "enableDWARF": true,
+          "sourceMaps": true,
+          "webRoot": "${workspaceFolder}/frontend",
+        }
+      },
+      "preLaunchTask": "CMake: build",
+    }
+  ],
+  "compounds": []
+}

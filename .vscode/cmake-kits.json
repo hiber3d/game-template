@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Emscripten",
+        "toolchainFile": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+        "preferredGenerator": {
+            "name": "Ninja"
+        },
+        "cmakeSettings": {
+            "CMAKE_C_COMPILER_LAUNCHER": "",
+            "CMAKE_CXX_COMPILER_LAUNCHER": ""
+        },
+        "environmentVariables": {
+            "EM_COMPILER_WRAPPER": "ccache"
+        },
+        "environmentSetupScript": "${workspaceFolder}/game/scripts/setup_emscripten"
+    }
+]
