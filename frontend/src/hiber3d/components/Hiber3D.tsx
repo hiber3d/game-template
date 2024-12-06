@@ -1,30 +1,11 @@
-import {
-  createContext,
-  ReactNode,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 import launch, { MainModule, Options } from "@hiber3d/interop";
-
-export type MethodListener = {
-  name: string;
-  method: (...args: unknown[]) => void;
-};
-export type AddMethodListener = (listener: MethodListener) => MethodListener;
-export type RemoveMethodListener = (listener: MethodListener) => void;
-
-type ApiContextType = {
-  api: MainModule | null;
-  addMethodListener: AddMethodListener;
-  removeMethodListener: RemoveMethodListener;
-  ref: RefObject<HTMLCanvasElement>;
-  mainRef: RefObject<HTMLDivElement>;
-};
-
-const ApiContext = createContext<ApiContextType | undefined>(undefined);
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  AddMethodListener,
+  ApiContext,
+  MethodListener,
+  RemoveMethodListener,
+} from "../context/ApiContext";
 
 export const Hiber3D = ({
   children,
