@@ -8,7 +8,7 @@ export type MethodListener = {
 export type AddMethodListener = (listener: MethodListener) => MethodListener;
 export type RemoveMethodListener = (listener: MethodListener) => void;
 
-type ApiContextType = {
+type Hiber3DContextType = {
   api: MainModule | null;
   addMethodListener: AddMethodListener;
   removeMethodListener: RemoveMethodListener;
@@ -16,4 +16,6 @@ type ApiContextType = {
   mainRef: RefObject<HTMLDivElement>;
 };
 
-export const ApiContext = createContext<ApiContextType | undefined>(undefined);
+export const Hiber3DContext = createContext<Hiber3DContextType | undefined>(
+  undefined
+);
