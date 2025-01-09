@@ -31,7 +31,6 @@ public:
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Mesh>(context);
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::StandardMaterial>(context);
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Cubemap>(context);
-        
         context.registerModule<Hiber3D::InteropModule>();
 
         context.registerModule<ExampleModule>();
@@ -39,6 +38,6 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-    Hiber3D::run("Seaman", std::make_unique<MainModule>(), argc, argv);
+    Hiber3D::run("GameTemplate", std::make_unique<MainModule>(), argc, argv);
     return 0;
 }

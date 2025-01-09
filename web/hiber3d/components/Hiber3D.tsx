@@ -1,11 +1,11 @@
 import launch, { MainModule, Options } from "@hiber3d/interop";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import {
-  AddMethodListener,
-  ApiContext,
   MethodListener,
+  AddMethodListener,
   RemoveMethodListener,
-} from "../context/ApiContext";
+  Hiber3DContext,
+} from "hiber3d/context/Hiber3DContext";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 export const Hiber3D = ({
   children,
@@ -72,7 +72,7 @@ export const Hiber3D = ({
   }, []);
 
   return (
-    <ApiContext.Provider
+    <Hiber3DContext.Provider
       value={{
         api,
         addMethodListener,
@@ -89,6 +89,6 @@ export const Hiber3D = ({
         />
         {children}
       </main>
-    </ApiContext.Provider>
+    </Hiber3DContext.Provider>
   );
 };
