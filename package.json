@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite  --configLoader runner",
-    "build": "tsc -b && vite build  --configLoader runner",
+    "compile": "./scripts/emscripten.sh --build --build-webgl",
+    "preinstall": "npm run compile",
+    "dev": "npm run compile && vite  --configLoader runner",
+    "build": "npm run compile && tsc -b && vite build  --configLoader runner",
     "lint": "eslint .",
     "preview": "vite preview"
   },

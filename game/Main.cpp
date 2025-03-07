@@ -25,7 +25,7 @@ public:
         context.registerModule<Hiber3D::AssetModule>(Hiber3D::AssetModuleSettings{
             .defaultReaderAssetPath = "",
             .defaultWriterAssetPath = "",
-            .enableWatcher = false 
+            .enableWatcher = true 
         });
         context.registerModule<Hiber3D::LogModule>(Hiber3D::LogSettings{.logLevel = Hiber3D::LogLevel::INFO});
         context.registerModule<Hiber3D::GltfModule>();
