@@ -1,18 +1,18 @@
+#!/usr/bin/env node
 const { execSync } = require('child_process');
 const os = require('os');
 
-const isWindows = os.platform() === 'win32';
+// Grab all CLI args after "node ./scripts/emscripten.cjs"
+const args = process.argv.slice(2);
 
 try {
-    if (isWindows) {
-        // On Windows, use Git Bash, WSL, or other shell
-        execSync('sh ./scripts/emscripten.sh --build --build-webgl', { stdio: 'inherit' });
-        // Alternative: execSync('bash ./emscripten.sh', { stdio: 'inherit' });
-    } else {
-        // On Unix-like systems
-        execSync('./scripts/emscripten.sh --build --build-webgl', { stdio: 'inherit' });
-    }
+  // On Windows...
+  if (os.platform() === 'win32') {
+    execSync(`sh ./scripts/emscripten.sh ${args.join(' ')}`, { stdio: 'inherit' });
+  } else {
+    execSync(`./scripts/emscripten.sh ${args.join(' ')}`, { stdio: 'inherit' });
+  }
 } catch (error) {
-    console.error('Error executing script:', error);
-    process.exit(1);
+  console.error('Error executing script:', error);
+  process.exit(1);
 }
