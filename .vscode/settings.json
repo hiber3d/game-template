@@ -1,6 +1,6 @@
 {
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
-    "cmake.sourceDirectory": "/Users/perbaltzar/hiber/game-template",
+    "cmake.sourceDirectory": "${workspaceFolder}/game/CMakeLists.txt",
     "cmake.buildDirectory": "${workspaceFolder}/game/build",
     "cmake.preferredGenerators": [
         "Xcode",
