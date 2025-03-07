@@ -4,3 +4,4 @@ emsdk/
 dist/
 .DS_Store
 tsconfig.tsbuildinfo
+.vs/

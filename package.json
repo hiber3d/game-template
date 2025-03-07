@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "compile": "./scripts/emscripten.sh --build --build-webgl",
+    "compile": "node ./scripts/emscripten.cjs",
     "preinstall": "npm run compile",
     "dev": "npm run compile && vite  --configLoader runner",
     "build": "npm run compile && tsc -b && vite build  --configLoader runner",
