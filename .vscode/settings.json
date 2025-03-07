@@ -12,6 +12,7 @@
         "*.rml": "html",
         "*.rcss": "css",
         "*.material": "json",
-        "cstdint": "cpp"
+        "cstdint": "cpp",
+        "unordered_set": "cpp"
     }
 }

@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+
+
 project("GameTemplate" LANGUAGES CXX C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
+set(TARGET_NAME "GameTemplate")
 
 include(FetchContent)
 FetchContent_Declare(
     Hiber3D_zip
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-    URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v1.86.0-dev.zip
+    URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v1.103.0-dev.zip
 )
 FetchContent_MakeAvailable(Hiber3D_zip)
 

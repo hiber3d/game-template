@@ -1,1 +1,0 @@
-{"root":["./web/app.tsx","./web/main.tsx","./web/vite-env.d.ts","./web/hiber3d/components/hiber3d.tsx","./web/hiber3d/context/hiber3dcontext.ts","./web/hiber3d/hooks/useapi.ts","./web/hiber3d/hooks/usehiber3d.ts"],"errors":true,"version":"5.6.3"}
