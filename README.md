@@ -36,6 +36,8 @@ From the root of the project, run
 
 ## Compiling engine
 
-If you only want to compile the C++ code you can run
+If you only want to compile the C++ code you can run:
 
-`npm run compile`
+- WebGPU only: `npm run compile:webgpu`
+- WebGL only: `npm run compile:webgl`
+- Both: `npm run compile`
