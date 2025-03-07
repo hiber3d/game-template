@@ -24,10 +24,9 @@ install_emscripten() {
     cd ./emsdk
     ./emsdk install $EMSCRIPTEN_VERSION
     ./emsdk activate $EMSCRIPTEN_VERSION
-    npm install -g webidl-dts-gen
     cd upstream/emscripten
-    echo "Installing typescript..."
-    npm install typescript
+    echo "Running npm install..."
+    npm install
     echo "Installation complete."
     cd ../../..
 }
