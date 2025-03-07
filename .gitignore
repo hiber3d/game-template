@@ -3,3 +3,4 @@ node_modules/
 emsdk/
 dist/
 .DS_Store
+tsconfig.tsbuildinfo
