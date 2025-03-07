@@ -6,8 +6,8 @@ export const App = () => (
     moduleFactory={moduleFactory}
     config={{ Renderer: { Quality: 3, MSAASampleCount: 1 } }}
   >
-    <div className="relative w-full h-dvh flex items-center justify-center">
-      <h1 className="text-white">Hello Game!</h1>
+    <div className="absolute w-full h-full flex items-start justify-center p-2">
+      <h1 className="text-white pt-4">Web UI in Play Mode</h1>
     </div>
   </Hiber3D>
 );
