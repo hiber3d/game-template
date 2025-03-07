@@ -1,0 +1,148 @@
+{
+    "version": "1.0.0",
+    "root": {
+        "id": 2097154,
+        "components": [
+            {
+                "type": "Hiber3D::Transform",
+                "data": {
+                    "position": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "rotation": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 1
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1,
+                        "z": 1
+                    }
+                }
+            },
+            {
+                "type": "Hiber3D::Name",
+                "data": "main.scene"
+            }
+        ],
+        "children": [
+            {
+                "id": 2097155,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            },
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Cylinder"
+                    },
+                    {
+                        "type": "Hiber3D::SceneRoot",
+                        "data": {
+                            "scene": "glbs\\cylinder.glb#scene0"
+                        }
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 2097156,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            },
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Plane"
+                    },
+                    {
+                        "type": "Hiber3D::SceneRoot",
+                        "data": {
+                            "scene": "glbs/plane.glb#scene0"
+                        }
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 2097157,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": -5,
+                                "y": 2,
+                                "z": 0
+                            },
+                            "rotation": {
+                                "x": 0,
+                                "y": 0.707107,
+                                "z": 0,
+                                "w": -0.707107
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Camera"
+                    },
+                    {
+                        "type": "Hiber3D::Camera",
+                        "data": {
+                            "priority": 1,
+                            "fovDegrees": 60,
+                            "aspect": 1
+                        }
+                    }
+                ],
+                "children": []
+            }
+        ]
+    }
+}

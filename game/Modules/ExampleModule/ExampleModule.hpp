@@ -5,7 +5,5 @@
 
 class ExampleModule : public Hiber3D::Module {
 public:
-    std::string_view name() override { return "ExampleModule"; }
-
     void onRegister(Hiber3D::InitContext& context) override;
 };
