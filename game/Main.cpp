@@ -5,17 +5,17 @@
 #include <Hiber3D/BaseAssets/Material.hpp>
 #include <Hiber3D/BaseAssets/Mesh.hpp>
 #include <Hiber3D/Core/InitContext.hpp>
+#include <Hiber3D/Debug/DebugModule.hpp>
+#include <Hiber3D/Editor/EditorModule.hpp>
 #include <Hiber3D/Gltf/GltfModule.hpp>
 #include <Hiber3D/Hiber3D.hpp>
-#include <Hiber3D/Interop/InteropModule.hpp>
 #include <Hiber3D/Hierarchy/HierarchyModule.hpp>
+#include <Hiber3D/Interop/InteropModule.hpp>
 #include <Hiber3D/Log/LogModule.hpp>
 #include <Hiber3D/Renderer/RenderModule.hpp>
-#include <Hiber3D/WorldTransform/WorldTransformModule.hpp>
-#include <Hiber3D/Scene/SceneModule.hpp>
 #include <Hiber3D/Scene/SceneManagerModule.hpp>
-#include <Hiber3D/Editor/EditorModule.hpp>
-#include <Hiber3D/Debug/DebugModule.hpp>
+#include <Hiber3D/Scene/SceneModule.hpp>
+#include <Hiber3D/WorldTransform/WorldTransformModule.hpp>
 
 #include <stdio.h>
 
@@ -25,8 +25,7 @@ public:
         context.registerModule<Hiber3D::AssetModule>(Hiber3D::AssetModuleSettings{
             .defaultReaderAssetPath = "",
             .defaultWriterAssetPath = "",
-            .enableWatcher = true 
-        });
+            .enableWatcher          = true});
         context.registerModule<Hiber3D::LogModule>(Hiber3D::LogSettings{.logLevel = Hiber3D::LogLevel::INFO});
         context.registerModule<Hiber3D::GltfModule>();
         context.registerModule<Hiber3D::SceneModule>();

@@ -5,15 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Vite DEV server",
+      "name": "Debug",
       "request": "launch",
-      "cwd": "${workspaceFolder}/frontend",
-      "runtimeExecutable": "npx",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
       "runtimeArgs": [
-        "vite",
-        "--host",
-        "--port",
-        "8547",
+          "run",
+        "dev",
       ],
       "type": "node",
       "env": {
@@ -28,10 +26,10 @@
           "type": "chrome",
           "request": "launch",
           "name": "Chrome Debug",
-          "url": "http://localhost:8547", // This port is the one that Vite uses by default, not sure how to get it dynamically
+          "url": "http://localhost:5173",
           "enableDWARF": true,
           "sourceMaps": true,
-          "webRoot": "${workspaceFolder}/frontend",
+          "webRoot": "${workspaceFolder}",
         }
       },
       "preLaunchTask": "CMake: build",

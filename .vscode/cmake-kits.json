@@ -13,5 +13,17 @@
             "EM_COMPILER_WRAPPER": "ccache"
         },
         "environmentSetupScript": "${workspaceFolder}/game/scripts/setup_emscripten"
+    },
+    {
+        "name": "Emscripten (Mac)",
+        "toolchainFile": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
+        "preferredGenerator": {
+            "name": "Ninja"
+        },
+        "cmakeSettings": {
+            "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+            "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
+        },
+        "environmentSetupScript": "${workspaceFolder}/game/scripts/setup_emscripten"
     }
 ]

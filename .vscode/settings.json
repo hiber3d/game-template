@@ -1,7 +1,7 @@
 {
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
-    "cmake.sourceDirectory": "${workspaceFolder}/game/CMakeLists.txt",
-    "cmake.buildDirectory": "${workspaceFolder}/game/build",
+    "cmake.sourceDirectory": "${workspaceFolder}/CMakeLists.txt",
+    "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.preferredGenerators": [
         "Xcode",
         "Ninja"
