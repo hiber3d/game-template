@@ -1,8 +1,3 @@
-@import "@hiber3d/web/styles";
 @import "tailwindcss" source("/");
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-}
+@import "@hiber3d/web/styles";
+@source "../node_modules/@hiber3d/web";

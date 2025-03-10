@@ -11,7 +11,7 @@
     "dev": "vite --configLoader runner",
     "build": "npm run compile && tsc -b && vite build  --configLoader runner",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --configLoader runner"
   },
   "dependencies": {
     "@hiber3d/web": "file:build/web",
