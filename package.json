@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "compile": "node ./scripts/emscripten.cjs --build --build-webgl",
+    "compile:release": "node ./scripts/emscripten.cjs --build --build-webgl --release",
     "compile:webgpu": "node ./scripts/emscripten.cjs --build",
     "compile:webgl": "node ./scripts/emscripten.cjs --build-webgl",
     "preinstall": "npm run compile",
     "dev": "vite --configLoader runner",
-    "build": "npm run compile && tsc -b && vite build  --configLoader runner",
+    "build": "npm run compile:release && tsc -b && vite build  --configLoader runner",
     "lint": "eslint .",
     "preview": "vite preview --configLoader runner"
   },
