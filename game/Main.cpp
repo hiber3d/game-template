@@ -10,6 +10,7 @@
 #include <Hiber3D/Gltf/GltfModule.hpp>
 #include <Hiber3D/Hiber3D.hpp>
 #include <Hiber3D/Hierarchy/HierarchyModule.hpp>
+#include <Hiber3D/Input/InputModule.hpp>
 #include <Hiber3D/Interop/InteropModule.hpp>
 #include <Hiber3D/Log/LogModule.hpp>
 #include <Hiber3D/Renderer/RenderModule.hpp>
@@ -34,6 +35,7 @@ public:
         context.registerModule<Hiber3D::RenderModule>();
         context.registerModule<Hiber3D::HierarchyModule>();
         context.registerModule<Hiber3D::DebugModule>();
+        context.registerModule<Hiber3D::InputModule>();
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Mesh>(context);
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::StandardMaterial>(context);
         context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Cubemap>(context);
