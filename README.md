@@ -31,13 +31,26 @@ clang-format is not available in `scoop`
 
 From the root of the project, run
 
+1. `npm run compile` (See below for options)
 1. `npm install`
 1. `npm run dev`
+
+## Building for distribution
+
+1. `npm run compile:release`
+1. `npm install`
+1. `npm run build`
 
 ## Compiling engine
 
 If you only want to compile the C++ code you can run:
 
-- WebGPU only: `npm run compile:webgpu`
-- WebGL only: `npm run compile:webgl`
-- Both: `npm run compile`
+- Both:
+  - `npm run compile`
+  - `npm run compile:release`
+- WebGPU only:
+  - `npm run compile:webgpu`
+  - `npm run compile:webgpu:release`
+- WebGL only:
+  - `npm run compile:webgl`
+  - `npm run compile:webgl:release`
