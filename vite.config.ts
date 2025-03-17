@@ -8,5 +8,4 @@ import { hiber3DVitePlugin } from "@hiber3d/web/vite-plugin";
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), tailwindcss(), hiber3DVitePlugin()],
   publicDir: "assets",
-  base: "./",
 });
