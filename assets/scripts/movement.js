@@ -1,3 +1,7 @@
+/**
+ * This script handles keyboard movement for the entity it is attached to.
+ */
+
 const KEYS = {
   FORWARD: 41, // W
   BACKWARD: 37, // S
