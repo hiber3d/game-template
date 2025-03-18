@@ -34,6 +34,7 @@ From the root of the project, run
 1. `npm run compile` (See below for options)
 1. `npm install`
 1. `npm run dev`
+1. Press `cmd + e` (`ctrl + e` on Windows) to toggle the editor
 
 ## Building for distribution
 
