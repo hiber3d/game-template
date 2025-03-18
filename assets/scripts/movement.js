@@ -2,17 +2,17 @@
  * This script handles keyboard movement for the entity it is attached to.
  */
 
-const KEYS = {
-  FORWARD: 41, // W
-  BACKWARD: 37, // S
-  STRAFE_LEFT: 19, // A
-  STRAFE_RIGHT: 22, // D
-
-  ASCEND: 1, // SPACE
-  DESCEND: 112, // LSHIFT
-};
-
 ({
+  KEYS: {
+    FORWARD: 41, // W
+    BACKWARD: 37, // S
+    STRAFE_LEFT: 19, // A
+    STRAFE_RIGHT: 22, // D
+
+    ASCEND: 23, // E
+    DESCEND: 35, // Q
+  },
+
   speed: 10,
 
   onCreate() {},
@@ -22,22 +22,22 @@ const KEYS = {
     const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
 
     // Update the transform based on the keys pressed
-    if (hiber3d.call("keyIsPressed", KEYS.FORWARD)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.FORWARD)) {
       transform.position.z -= dt * this.speed;
     }
-    if (hiber3d.call("keyIsPressed", KEYS.BACKWARD)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.BACKWARD)) {
       transform.position.z += dt * this.speed;
     }
-    if (hiber3d.call("keyIsPressed", KEYS.STRAFE_LEFT)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.STRAFE_LEFT)) {
       transform.position.x -= dt * this.speed;
     }
-    if (hiber3d.call("keyIsPressed", KEYS.STRAFE_RIGHT)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.STRAFE_RIGHT)) {
       transform.position.x += dt * this.speed;
     }
-    if (hiber3d.call("keyIsPressed", KEYS.ASCEND)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.ASCEND)) {
       transform.position.y += dt * this.speed;
     }
-    if (hiber3d.call("keyIsPressed", KEYS.DESCEND)) {
+    if (hiber3d.call("keyIsPressed", this.KEYS.DESCEND)) {
       transform.position.y -= dt * this.speed;
       transform.position.y = Math.max(0, transform.position.y);
     }

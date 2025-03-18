@@ -20,6 +20,8 @@
 #include <Hiber3D/Scene/SceneManagerModule.hpp>
 #include <Hiber3D/Scene/SceneModule.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
+#include <Hiber3D/ScriptingApi/ScriptFunctions.hpp>
+#include <Hiber3D/WorldTransform/ComputedWorldTransform.hpp>
 #include <Hiber3D/WorldTransform/WorldTransformModule.hpp>
 
 #include <stdio.h>
@@ -47,17 +49,19 @@ public:
         context.registerModule<Hiber3D::InteropModule>();
         context.registerModule<Hiber3D::JavaScriptScriptingModule>();
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Transform>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ComputedWorldTransform>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::SceneRoot>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Renderable>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Children>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Parent>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Camera>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Name>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](const Hiber3D::Registry& registry, Hiber3D::Key key) { return registry.singleton<const Hiber3D::KeyboardState>().isPressed(key); }>(context, "keyIsPressed");
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](const Hiber3D::Registry& registry, Hiber3D::Key key) { return registry.singleton<const Hiber3D::KeyboardState>().justPressed(key); }>(context, "keyJustPressed");
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](const Hiber3D::Registry& registry, Hiber3D::Key key) { return registry.singleton<const Hiber3D::KeyboardState>().justReleased(key); }>(context, "keyJustReleased");
+        registerHierarchyFunctions(context, context.getModule<Hiber3D::JavaScriptScriptingModule>());
 
         context.registerModule<Hiber3D::EditorModule>();
-
         context.registerModule<ExampleModule>();
     }
 };
