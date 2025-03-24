@@ -17,6 +17,7 @@
 #include <Hiber3D/Interop/InteropModule.hpp>
 #include <Hiber3D/Log/LogModule.hpp>
 #include <Hiber3D/Renderer/RenderModule.hpp>
+#include <Hiber3D/Renderer/Camera.hpp>
 #include <Hiber3D/Scene/SceneManagerModule.hpp>
 #include <Hiber3D/Scene/SceneModule.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
