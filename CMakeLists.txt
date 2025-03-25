@@ -18,9 +18,9 @@ FetchContent_MakeAvailable(Hiber3D_zip)
 set(GAME_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Main.cpp
     
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/Modules/ExampleModule/ExampleEvent.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/Modules/ExampleModule/ExampleModule.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/Modules/ExampleModule/ExampleModule.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/ExampleModule/ExampleEvent.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/ExampleModule/ExampleModule.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/ExampleModule/ExampleModule.cpp
 )
 
 hiber3d_add_game(GameTemplate "${GAME_FILES}")
