@@ -20,10 +20,10 @@ set(GAME_FILES
     
 
     
-    ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleComponents.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleEvents.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleTypes.hpp
 )
 
 hiber3d_add_game(GameTemplate "${GAME_FILES}")

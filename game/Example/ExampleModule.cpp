@@ -1,6 +1,6 @@
-#include <Example/ExampleComponents.hpp>
 #include <Example/ExampleEvents.hpp>
 #include <Example/ExampleModule.hpp>
+#include <Example/ExampleTypes.hpp>
 
 #include <Hiber3D/Asset/AssetModule.hpp>
 #include <Hiber3D/Asset/AssetPath.hpp>
