@@ -1,4 +1,4 @@
-#include <ExampleModule/ExampleModule.hpp>
+#include <Example/ExampleModule.hpp>
 
 #include <Hiber3D/Asset/AssetModule.hpp>
 #include <Hiber3D/Asset/AssetPath.hpp>
