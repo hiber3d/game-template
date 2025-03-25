@@ -1,10 +1,16 @@
+#include <Example/ExampleComponents.hpp>
+#include <Example/ExampleEvents.hpp>
 #include <Example/ExampleModule.hpp>
 
 #include <Hiber3D/Asset/AssetModule.hpp>
 #include <Hiber3D/Asset/AssetPath.hpp>
-#include <Hiber3D/BaseAssets/Cubemap.hpp>
 #include <Hiber3D/Asset/AssetServer.hpp>
+#include <Hiber3D/BaseAssets/Cubemap.hpp>
 #include <Hiber3D/BaseAssets/Texture.hpp>
+#include <Hiber3D/Editor/EditorModule.hpp>
+#include <Hiber3D/Hiber3D.hpp>
+#include <Hiber3D/Scene/SceneModule.hpp>
+#include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
 #include <Hiber3D/Renderer/RenderEnvironment.hpp>
 
 void loadEnvironment(
@@ -57,4 +63,21 @@ void loadEnvironment(
 void ExampleModule::onRegister(Hiber3D::InitContext& context) {
     context.addSystem(Hiber3D::Schedule::ON_START, loadEnvironment);
     context.addSystem(Hiber3D::Schedule::ON_START_EDIT, loadEnvironment);
+
+    
+    // Show in editor inspector
+    if (context.isModuleRegistered<Hiber3D::EditorModule>()) {
+        context.getModule<Hiber3D::EditorModule>().registerComponent<ExampleComponent>(context);
+    }
+
+    // Make available in scripts
+    if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<ExampleComponent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ExampleEvent>(context);
+    }
+
+    // Saved to scene file
+    if (context.isModuleRegistered<Hiber3D::SceneModule>()) {
+        context.getModule<Hiber3D::SceneModule>().registerComponent<ExampleComponent>(context);
+    }
 }
