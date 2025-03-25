@@ -2,7 +2,7 @@
  * This script handles keyboard movement for the entity it is attached to.
  */
 {
-  KEYS = {
+  const KEYS = {
     FORWARD: 41, // W
     BACKWARD: 37, // S
     STRAFE_LEFT: 19, // A
@@ -12,7 +12,7 @@
     DESCEND: 35, // Q
   };
 
-  MOVEMENT_SPEED = 10; // meters per second
+  const MOVEMENT_SPEED = 10; // meters per second
 
   ({
     onCreate() { },
