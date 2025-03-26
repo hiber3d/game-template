@@ -3,7 +3,7 @@
     FIRE: 1, // SPACE
   };
 
-  const BULLET_SCENE = 'scenes/bullet.scene';
+  const BULLET_SCENE = "scenes/bullet.scene";
 
   ({
     onCreate() { },
