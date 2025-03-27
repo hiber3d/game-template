@@ -30,24 +30,25 @@
 class MainModule : public Hiber3D::Module {
 public:
     void onRegister(Hiber3D::InitContext& context) override {
-        context.registerModule<Hiber3D::AssetModule>(Hiber3D::AssetModuleSettings{
-            .defaultReaderAssetPath = "",
-            .defaultWriterAssetPath = "",
-            .enableWatcher          = true});
+        context.registerModule<Hiber3D::AssetModule>(Hiber3D::AssetModuleSettings{.defaultReaderAssetPath = "",.defaultWriterAssetPath = "",.enableWatcher          = true});
+        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Mesh>(context);
+        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::StandardMaterial>(context);
+        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Cubemap>(context);
+        
         context.registerModule<Hiber3D::LogModule>(Hiber3D::LogSettings{.logLevel = Hiber3D::LogLevel::INFO});
         context.registerModule<Hiber3D::GltfModule>();
+
         context.registerModule<Hiber3D::SceneModule>();
         context.getModule<Hiber3D::SceneModule>().registerComponent<Hiber3D::ScriptInstance>(context);
+        
         context.registerModule<Hiber3D::SceneManagerModule>(Hiber3D::SceneManagerSettings{.defaultScene = "main.scene"});
         context.registerModule<Hiber3D::WorldTransformModule>();
         context.registerModule<Hiber3D::RenderModule>();
         context.registerModule<Hiber3D::HierarchyModule>();
         context.registerModule<Hiber3D::DebugModule>();
         context.registerModule<Hiber3D::InputModule>();
-        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Mesh>(context);
-        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::StandardMaterial>(context);
-        context.getModule<Hiber3D::AssetModule>().registerAssetType<Hiber3D::Cubemap>(context);
         context.registerModule<Hiber3D::InteropModule>();
+
         context.registerModule<Hiber3D::JavaScriptScriptingModule>();
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Transform>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ComputedWorldTransform>(context);
@@ -63,6 +64,7 @@ public:
         registerHierarchyFunctions(context, context.getModule<Hiber3D::JavaScriptScriptingModule>());
 
         context.registerModule<Hiber3D::EditorModule>();
+
         context.registerModule<ExampleModule>();
     }
 };
