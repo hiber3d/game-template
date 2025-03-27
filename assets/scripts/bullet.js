@@ -13,7 +13,7 @@
       hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", "z", newZ);
 
       this.currentLifeTime += dt;
-      if (this.currentLifeTime > maxLifeTime) {
+      if (this.currentLifeTime > this.maxLifeTime) {
         hiber3d.call("destroyEntityWithChildrenRecursive", this.entity);
       }
     },
