@@ -3,7 +3,7 @@
     FIRE: 1, // SPACE
   };
 
-  const BULLET_SCENE = "scenes/bullet.scene";
+  const BULLET_SCENE = "glbs/sphere.glb#scene0";
 
   ({
     onCreate() { },
@@ -21,6 +21,8 @@
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
         hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
+
+        hiber3d.addScript(bulletEntity, "scripts/bullet.js");
       }
     },
 
