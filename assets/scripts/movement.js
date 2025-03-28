@@ -3,46 +3,25 @@
  */
 
 ({
-  KEYS: {
-    FORWARD: 41, // W
-    BACKWARD: 37, // S
-    STRAFE_LEFT: 19, // A
-    STRAFE_RIGHT: 22, // D
-
-    ASCEND: 23, // E
-    DESCEND: 35, // Q
-  },
-
-  speed: 10,
-
   onCreate() {},
 
   update(dt) {
     // Get the transform component
+    const worldTransform = hiber3d.getValue(this.entity, "Hiber3D::ComputedWorldTransform");
+
+    mousePosition = hiber3d.getValue("Hiber3D::MouseState", "currentPosition");
+
+    const res = hiber3d.call("raycastFromMouse", mousePosition);
+
+    const direction = { 
+      x: res.x - worldTransform.position.x, 
+      y: res.y - worldTransform.position.y, 
+      z: res.z - worldTransform.position.z 
+    };
+    hiber3d.print(JSON.stringify(direction),'direction');
+    
     const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
-
-    // Update the transform based on the keys pressed
-    if (hiber3d.call("keyIsPressed", this.KEYS.FORWARD)) {
-      transform.position.z -= dt * this.speed;
-    }
-    if (hiber3d.call("keyIsPressed", this.KEYS.BACKWARD)) {
-      transform.position.z += dt * this.speed;
-    }
-    if (hiber3d.call("keyIsPressed", this.KEYS.STRAFE_LEFT)) {
-      transform.position.x -= dt * this.speed;
-    }
-    if (hiber3d.call("keyIsPressed", this.KEYS.STRAFE_RIGHT)) {
-      transform.position.x += dt * this.speed;
-    }
-    if (hiber3d.call("keyIsPressed", this.KEYS.ASCEND)) {
-      transform.position.y += dt * this.speed;
-    }
-    if (hiber3d.call("keyIsPressed", this.KEYS.DESCEND)) {
-      transform.position.y -= dt * this.speed;
-      transform.position.y = Math.max(0, transform.position.y);
-    }
-
-    // Set the updated transform
+    transform.rotation = hiber3d.call("lookRotation", direction);
     hiber3d.setValue(this.entity, "Hiber3D::Transform", transform);
   },
 

@@ -1,14 +1,14 @@
 ({
-    speed: 150,
-    maxLifeTime: 2,
+    speed: 1000,
+    maxLifeTime: 5,
     lifeTime: 0,
 
     onCreate() {},
 
     update(dt) {
         const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
-        const newZ =  transform.position.z - dt * this.speed;
-        hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", "z", newZ);
+        const newX =  transform.position.x + dt * this.speed;
+        hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", "x", newX);
 
         this.lifeTime += dt;
         if (this.lifeTime > this.maxLifeTime) {
