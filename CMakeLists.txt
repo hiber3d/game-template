@@ -18,7 +18,11 @@ FetchContent_MakeAvailable(Hiber3D_zip)
 set(GAME_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Main.cpp
     
-
+    
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Gun/GunEvents.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Gun/GunModule.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Gun/GunModule.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Gun/GunTypes.hpp
     
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleEvents.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.hpp
