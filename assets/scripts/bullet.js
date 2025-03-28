@@ -1,5 +1,5 @@
 ({
-  speed: 150,
+  speed: 100,
   maxLifeTime: 2,
 
   currentLifeTime: 0,
@@ -7,9 +7,12 @@
   onCreate() { },
 
   update(dt) {
-    const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
-    const newZ = transform.position.z - dt * this.speed;
-    hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", "z", newZ);
+    const localTransform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
+    const worldTransform = hiber3d.getValue(this.entity, "Hiber3D::ComputedWorldTransform");
+    const toMove = { x: 0, y: 0, z: -dt * this.speed };
+    const toMoveRotated = hiber3d.call("rotateDirection", worldTransform.rotation, toMove);
+    const newPosition = {x: localTransform.position.x + toMoveRotated.x, y: localTransform.position.y + toMoveRotated.y, z: localTransform.position.z + toMoveRotated.z};
+    hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", newPosition);
 
     this.currentLifeTime += dt;
     if (this.currentLifeTime > this.maxLifeTime) {

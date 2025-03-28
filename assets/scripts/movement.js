@@ -6,9 +6,6 @@ const MOVEMENT_KEYS = {
   BACKWARD: 37, // S
   STRAFE_LEFT: 19, // A
   STRAFE_RIGHT: 22, // D
-
-  ASCEND: 23, // E
-  DESCEND: 35, // Q
 };
 
 const MOVEMENT_SPEED = 10; // meters per second
@@ -20,27 +17,24 @@ const MOVEMENT_SPEED = 10; // meters per second
     // Get the transform component
     const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
 
-    // Update the transform based on the keys pressed
+    // Update position based on the keys pressed
+    var toMove = { x: 0, y: 0, z: 0 };
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.FORWARD)) {
-      transform.position.z -= dt * MOVEMENT_SPEED;
+      toMove.z -= dt * MOVEMENT_SPEED;
     }
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.BACKWARD)) {
-      transform.position.z += dt * MOVEMENT_SPEED;
+      toMove.z += dt * MOVEMENT_SPEED;
     }
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.STRAFE_LEFT)) {
-      transform.position.x -= dt * MOVEMENT_SPEED;
+      toMove.x -= dt * MOVEMENT_SPEED;
     }
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.STRAFE_RIGHT)) {
-      transform.position.x += dt * MOVEMENT_SPEED;
+      toMove.x += dt * MOVEMENT_SPEED;
     }
-    if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.ASCEND)) {
-      transform.position.y += dt * MOVEMENT_SPEED;
-    }
-    if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.DESCEND)) {
-      transform.position.y = Math.max(0, transform.position.y - dt * MOVEMENT_SPEED);
-    }
-
-    // Set the updated transform
+    const toMoveRotated = hiber3d.call("rotateDirection", transform.rotation, toMove);
+    transform.position = {x: transform.position.x + toMoveRotated.x, y: transform.position.y + toMoveRotated.y, z: transform.position.z + toMoveRotated.z};
+    
+    // Get updated transform component
     hiber3d.setValue(this.entity, "Hiber3D::Transform", transform);
   },
 

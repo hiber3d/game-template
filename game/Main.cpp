@@ -63,6 +63,9 @@ public:
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](const Hiber3D::Registry& registry, Hiber3D::Key key) { return registry.singleton<const Hiber3D::KeyboardState>().justReleased(key); }>(context, "keyJustReleased");
         registerHierarchyFunctions(context, context.getModule<Hiber3D::JavaScriptScriptingModule>());
 
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](Hiber3D::Quaternion quaternion, Hiber3D::float3 direction) {
+            return quaternion.rotateDirection(direction); }>(context, "rotateDirection");
+
         context.registerModule<Hiber3D::EditorModule>();
 
         context.registerModule<ExampleModule>();
