@@ -9,9 +9,6 @@
   update(dt) {
     const localTransform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
     const worldTransform = hiber3d.getValue(this.entity, "Hiber3D::ComputedWorldTransform");
-    if(!localTransform || !worldTransform) {
-      return;
-    }
     const toMove = { x: 0, y: 0, z: -dt * this.speed };
     const toMoveRotated = hiber3d.call("rotateDirection", worldTransform.rotation, toMove);
     const newPosition = {x: localTransform.position.x + toMoveRotated.x, y: localTransform.position.y + toMoveRotated.y, z: localTransform.position.z + toMoveRotated.z};
