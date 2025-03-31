@@ -6,6 +6,11 @@ const __dirname = fileURLToPath(new URL('../', import.meta.url))
 const server = await createServer({
   root: __dirname,
   configLoader: 'runner',
+  server: {
+    host: true,
+    port: 5180,
+    strictPort: false,
+  }
 })
 await server.listen()
 
