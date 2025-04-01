@@ -14,7 +14,6 @@ set(TARGET_NAME "GameTemplate")
 # )
 # FetchContent_MakeAvailable(Hiber3D_zip)
 
-set(HBR_USE_WEBGPU false CACHE BOOL "" FORCE)
 set(HBR_ENABLE_SOKOL_ASSERTS false CACHE BOOL "" FORCE) # Runs way faster without sokol asserts
 include(FetchContent)
 FetchContent_Declare(Hiber2
