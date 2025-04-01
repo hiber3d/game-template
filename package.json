@@ -13,7 +13,8 @@
     "dev": "vite --configLoader runner",
     "build": "tsc -b && vite build  --configLoader runner",
     "lint": "eslint .",
-    "preview": "vite preview --configLoader runner"
+    "preview": "vite preview --configLoader runner",
+    "postinstall": "node ./build_scripts/generate_project.js"
   },
   "dependencies": {
     "@hiber3d/web": "file:build/web",
