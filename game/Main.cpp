@@ -67,6 +67,9 @@ public:
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](Hiber3D::Quaternion quaternion, Hiber3D::float3 direction) {
             return quaternion.rotateDirection(direction); }>(context, "rotateDirection");
 
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](Hiber3D::Quaternion quaternion, Hiber3D::float3 axis, float angle) {
+            quaternion.rotateAroundAxis(axis, angle); return quaternion;}>(context, "rotateAroundAxis");
+        
         context.registerModule<Hiber3D::EditorModule>();
 
         context.registerModule<ExampleModule>();
