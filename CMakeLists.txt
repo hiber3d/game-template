@@ -6,19 +6,25 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
 set(TARGET_NAME "GameTemplate")
 
+# include(FetchContent)
+# FetchContent_Declare(
+#     Hiber3D_zip
+#     DOWNLOAD_EXTRACT_TIMESTAMP false
+#     URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v1.104.0-dev.zip
+# )
+# FetchContent_MakeAvailable(Hiber3D_zip)
+
+set(HBR_USE_WEBGPU false CACHE BOOL "" FORCE)
+set(HBR_ENABLE_SOKOL_ASSERTS false CACHE BOOL "" FORCE) # Runs way faster without sokol asserts
 include(FetchContent)
-FetchContent_Declare(
-    Hiber3D_zip
-    DOWNLOAD_EXTRACT_TIMESTAMP false
-    URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v1.104.0-dev.zip
-)
-FetchContent_MakeAvailable(Hiber3D_zip)
+FetchContent_Declare(Hiber2
+    GIT_REPOSITORY  https://github.com/HiberWorld/Hiber2.git
+    GIT_TAG         hib-33866-unify-cmake)
+FetchContent_MakeAvailable(Hiber2)
 
 # Executable (Desktop for IDE auto-complete + Emscripten for web build)
 set(GAME_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Main.cpp
-    
-
     
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleEvents.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.hpp
@@ -27,7 +33,7 @@ set(GAME_FILES
 )
 
 hiber3d_add_game(GameTemplate "${GAME_FILES}")
-hiber3d_game_include_directories(GameTemplate ${CMAKE_CURRENT_SOURCE_DIR}/game)
+target_include_directories(GameTemplate PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/game)
 
 if(DEFINED EMSCRIPTEN)
     hiber3d_game_add_interop(GameTemplate)
