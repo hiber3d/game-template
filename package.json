@@ -16,7 +16,7 @@
     "preview": "vite preview --configLoader runner"
   },
   "dependencies": {
-    "@hiber3d/web": "file:build/webgpu/web",
+    "@hiber3d/web": "file:build/webgl/web",
     "@tailwindcss/vite": "^4.0.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
