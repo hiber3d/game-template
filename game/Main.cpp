@@ -6,6 +6,7 @@
 #include <Hiber3D/BaseAssets/Mesh.hpp>
 #include <Hiber3D/Core/InitContext.hpp>
 #include <Hiber3D/Core/KeyEvent.hpp>
+#include <Hiber3D/Core/Name.hpp>
 #include <Hiber3D/Debug/DebugModule.hpp>
 #include <Hiber3D/Editor/EditorModule.hpp>
 #include <Hiber3D/Gltf/GltfModule.hpp>
