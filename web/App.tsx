@@ -1,4 +1,6 @@
 import { Hiber3D, useHiber3D } from "@hiber3d/web";
+import { default as moduleFactoryWebGPU } from "GameTemplate_webgpu";
+import { default as moduleFactoryWebGL } from "GameTemplate_webgl";
 import { useEffect } from "react";
 
 const ExampleEvent = () => {
@@ -22,7 +24,7 @@ const ExampleEvent = () => {
 };
 
 export const App = () => (
-  <Hiber3D>
+  <Hiber3D build={{webGPU: moduleFactoryWebGPU as any, webGL: moduleFactoryWebGL as any}}>
     <ExampleEvent />
   </Hiber3D>
 );
