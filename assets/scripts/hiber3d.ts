@@ -97,7 +97,7 @@ type Event = {
 };
 
 type CallableMethod = {
-  keyIsPressed: (keyCode: number, jasd: boolean) => boolean;
+  keyIsPressed: (keyCode: number) => boolean;
   keyJustPressed: (keyCode: number) => boolean;
   keyJustReleased: (keyCode: number) => boolean;
 };
@@ -127,7 +127,10 @@ declare global {
     getValue: GetValueOverloads;
     setValue: SetValueOverloads;
 
-    call(method: keyof CallableMethod, ...args: unknown[]): unknown;
+    call<T extends keyof CallableMethod>(
+      method: T,
+      ...args: Parameters<CallableMethod[T]>
+    ): ReturnType<CallableMethod[T]>;
 
     addEventListener(entity: Entity, eventName: keyof Event): void;
     writeEvent<T extends keyof Event>(eventName: T, eventData: Event[T]): void;
