@@ -5,3 +5,4 @@ dist/
 .DS_Store
 tsconfig.tsbuildinfo
 .vs/
+build_scripts/app.js
