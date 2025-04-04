@@ -6,20 +6,20 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
 set(TARGET_NAME "GameTemplate")
 
-# include(FetchContent)
-# FetchContent_Declare(
-#     Hiber3D_zip
-#     DOWNLOAD_EXTRACT_TIMESTAMP false
-#     URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v1.104.0-dev.zip
-# )
-# FetchContent_MakeAvailable(Hiber3D_zip)
-
-set(HBR_ENABLE_SOKOL_ASSERTS false CACHE BOOL "" FORCE) # Runs way faster without sokol asserts
 include(FetchContent)
-FetchContent_Declare(Hiber2
-    GIT_REPOSITORY  https://github.com/HiberWorld/Hiber2.git
-    GIT_TAG         hib-33866-unify-cmake)
-FetchContent_MakeAvailable(Hiber2)
+FetchContent_Declare(
+    Hiber3D_zip
+    DOWNLOAD_EXTRACT_TIMESTAMP false
+    URL https://storage.googleapis.com/bkt-hiberworld-cdn-prod/hiber2/web/hib-33866-unify-cmake/v1.105.0-hib-33866-unify-cmake/Hiber3D_v1.105.0-hib-33866-unify-cmake.0%2B4ee5e6a8b.zip
+)
+FetchContent_MakeAvailable(Hiber3D_zip)
+
+# set(HBR_ENABLE_SOKOL_ASSERTS false CACHE BOOL "" FORCE) # Runs way faster without sokol asserts
+# include(FetchContent)
+# FetchContent_Declare(Hiber2
+#     GIT_REPOSITORY  https://github.com/HiberWorld/Hiber2.git
+#     GIT_TAG         hib-33866-unify-cmake)
+# FetchContent_MakeAvailable(Hiber2)
 
 # Executable (Desktop for IDE auto-complete + Emscripten for web build)
 set(GAME_FILES
