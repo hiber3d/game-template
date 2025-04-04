@@ -1,6 +1,6 @@
 [
     {
-        "name": "Emscripten",
+        "name": "Emscripten (Win)",
         "toolchainFile": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
         "preferredGenerator": {
             "name": "Ninja"

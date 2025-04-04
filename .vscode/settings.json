@@ -1,7 +1,7 @@
 {
     "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
     "cmake.sourceDirectory": "${workspaceFolder}/CMakeLists.txt",
-    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.buildDirectory": "${workspaceFolder}/build/${variant:gfxBackend}",
     "cmake.preferredGenerators": [
         "Xcode",
         "Ninja"
