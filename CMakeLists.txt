@@ -10,7 +10,7 @@ include(FetchContent)
 FetchContent_Declare(
     Hiber3D_zip
     DOWNLOAD_EXTRACT_TIMESTAMP false
-    URL https://storage.googleapis.com/bkt-hiberworld-cdn-prod/hiber2/web/hib-33866-unify-cmake/v1.105.0-hib-33866-unify-cmake/Hiber3D_v1.105.0-hib-33866-unify-cmake.0%2B4ee5e6a8b.zip
+    URL https://storage.googleapis.com/bkt-hiberworld-cdn-prod/hiber2/web/hib-33866-unify-cmake/v1.105.0-hib-33866-unify-cmake/Hiber3D_v1.105.0-hib-33866-unify-cmake.0%2B64e3836e2.zip
 )
 FetchContent_MakeAvailable(Hiber3D_zip)
 

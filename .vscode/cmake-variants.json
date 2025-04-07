@@ -31,14 +31,14 @@
         "short": "WebGPU",
         "long": "Modern WebGPU implementation",
         "settings": {
-          "HBR_USE_WEBGPU": true,
+          "HBR_USE_WEBGPU": true
         }
       },
       "webgl": {
         "short": "WebGL",
         "long": "Fallback WebGL implementation",
         "settings": {
-          "HBR_USE_WEBGPU": false,
+          "HBR_USE_WEBGPU": false
         }
       }
     }
