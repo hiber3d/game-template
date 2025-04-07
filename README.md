@@ -29,7 +29,13 @@ clang-format is not available in `scoop`
 
 ## Getting started
 
-From the root of the project, run
+Unless you have used `git lfs` before, it needs to be initialized now:
+
+1. `git-lfs install`
+1. `git-lfs fetch`
+1. `git-lfs checkout`
+
+Next, from the root of the project, run
 
 1. `npm run compile` (See below for options)
 1. `npm install`
