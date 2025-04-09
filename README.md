@@ -21,11 +21,11 @@ Install via [HomeBrew](https://brew.sh/)
 
 Install via [Scoop](https://scoop.sh/)
 
-`scoop install cmake ccache ninja git-lfs nvm`
+`scoop install cmake ccache ninja git git-lfs nvm`
 
 > Note: We recommend installing node via nvm
 
-clang-format is not available in `scoop`
+(clang-format is not available in `scoop`)
 
 ## Getting started
 
@@ -61,3 +61,4 @@ If you only want to compile the C++ code you can run:
 - WebGL only:
   - `npm run compile:webgl`
   - `npm run compile:webgl:release`
+  
