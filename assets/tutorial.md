@@ -24,5 +24,7 @@
 
 ## 4. Adjust bullet
 
-1. Change the look of the bullet by opening the bullet.scene and modifying the contents.
-2. Open the `bullet.js` and adjust the bullet speed.
+1. Create a new scene: Right click the scenes folder, choose "New file..." and name it `bullet.scene`.
+2. Open the `bullet.scene` and create you custom bullet by adding glbs to it. Save the file when you are done.
+3. Open the `gun.js` script and change the `BULLET_SCENE` variable to reference your new scene: `BULLET_SCENE = "assets/bullet.scene"`.
+4. Press play and shoot your newly created bullets!
