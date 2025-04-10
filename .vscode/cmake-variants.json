@@ -1,0 +1,46 @@
+{
+  "buildType": {
+    "default": "debug",
+    "choices": {
+      "debug": {
+        "short": "Debug",
+        "long": "No optimizations, debug info",
+        "buildType": "Debug"
+      },
+      "relwithdebinfo": {
+        "short": "RelWithDebInfo",
+        "long": "Optimizations, debug info",
+        "buildType": "RelWithDebInfo"
+      },
+      "release": {
+        "short": "Release",
+        "long": "Optimizations, no debug info",
+        "buildType": "Release"
+      },
+      "production": {
+        "short": "Production",
+        "long": "Optimizations, no debug info, Only production ready features exposed",
+        "buildType": "Production"
+      }
+    }
+  },
+  "gfxBackend": {
+    "default": "webgpu",
+    "choices": {
+      "webgpu": {
+        "short": "WebGPU",
+        "long": "Modern WebGPU implementation",
+        "settings": {
+          "HBR_USE_WEBGPU": true
+        }
+      },
+      "webgl": {
+        "short": "WebGL",
+        "long": "Fallback WebGL implementation",
+        "settings": {
+          "HBR_USE_WEBGPU": false
+        }
+      }
+    }
+  }
+}

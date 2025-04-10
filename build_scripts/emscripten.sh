@@ -74,8 +74,6 @@ detect_os() {
 build() {
     echo "Building the project for '$1' using '$2' in $3 mode..."
 
-    mkdir -p build
-
     CMAKE_OPTIONAL_ARGS=""
     LINKER_FLAGS=""
 
@@ -91,9 +89,11 @@ build() {
 
     # Set webgl/webgpu and target
     if [ "$2" == "webgpu" ]; then
-        TARGET="GameTemplate"
+        BUILD_PATH="build/webgpu"
+        USE_WEBGPU="true"
     elif [ "$2" == "webgl" ]; then
-        TARGET="GameTemplate_webgl"
+        BUILD_PATH="build/webgl"
+        USE_WEBGPU="false"
     else
         echo "Unknown argument '$2'"
         return 1
@@ -105,7 +105,8 @@ build() {
     fi
 
     # Run cmake configure and build
-    pushd build
+    mkdir -p $BUILD_PATH
+    pushd $BUILD_PATH
 
     # Save ccache run into stats file
     rm -f ccache_stats.txt
@@ -115,10 +116,11 @@ build() {
     emsdk activate $EMSCRIPTEN_VERSION && \
     cmake -DCMAKE_TOOLCHAIN_FILE="$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake" \
           -G "Ninja" \
+          -DHBR_USE_WEBGPU="$USE_WEBGPU" \
           -DCMAKE_BUILD_TYPE="$3" \
           $CMAKE_OPTIONAL_ARGS \
-          .. && \
-    LDFLAGS="$LINKER_FLAGS" cmake --build . --target $TARGET
+          ../.. && \
+    LDFLAGS="$LINKER_FLAGS" cmake --build .
 
     build_result=$?
 
