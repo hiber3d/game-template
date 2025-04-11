@@ -37,7 +37,6 @@ const BULLET_SCALE = 0.1;
     if (hiber3d.call("keyJustPressed", GUN_KEYS.FIRE)) {
       this.fire();
     }
-    hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString())
   },
 
   onEvent(event, payload) {
