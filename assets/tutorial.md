@@ -39,5 +39,3 @@ hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
 ```
 5. Press play again and shoot your gun. The UI should now update. 
 6. Open `ammo.rml` and style your UI. The game will automatically update with your changes when you save the file.
-
-## 6. 
