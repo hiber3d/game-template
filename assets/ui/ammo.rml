@@ -1,0 +1,14 @@
+<rml>
+    <head>
+        <style>
+            body {
+                font-family: Roboto;
+                font-size: 100px;
+                margin: 30px;
+            }
+        </style>
+    </head>
+    <body data-model="gun">
+        <div>Ammo: {{ammo}}</div>
+    </body>
+</rml>

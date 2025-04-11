@@ -6,7 +6,13 @@ const BULLET_SCENE = "glbs/sphere.glb#scene0";
 const BULLET_SCALE = 0.1;
 
 ({
+  ammo: 100,
   fire(){
+    if (this.ammo <= 0) {
+      return;
+    }
+    this.ammo--;
+
     const bulletEntity = hiber3d.createEntity();
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
@@ -26,11 +32,12 @@ const BULLET_SCALE = 0.1;
   onCreate() {
     hiber3d.addEventListener(this.entity, "Hiber3D::TouchEvent");
   },
-
+  
   update(dt) {
     if (hiber3d.call("keyJustPressed", GUN_KEYS.FIRE)) {
       this.fire();
     }
+    hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString())
   },
 
   onEvent(event, payload) {
