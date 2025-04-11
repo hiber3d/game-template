@@ -28,3 +28,14 @@
 2. Open the `bullet.scene` and create you custom bullet by adding glbs to it. Save the file when you are done.
 3. Open the `gun.js` script and change the `BULLET_SCENE` variable to reference your new scene: `BULLET_SCENE = "assets/bullet.scene"`.
 4. Press play and shoot your newly created bullets!
+
+## 5. Add some UI
+1. Lets show the player how much ammo is left in the gun. Create a new entity and call it UI
+2. Add a `Hiber3D::RmlDocumentInstance` to it and select the `ammo.rml` document.
+3. Add the `ui.js` script to the UI entity. Press play and you should see "Ammo {{ammo}}".
+4. Open the `gun.js` script and add the following to the end of the `update()` function:
+```
+hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
+```
+5. Press play again and shoot your gun. The UI should now update. 
+6. Open `ammo.rml` and style your UI. The game will automatically update with your changes when you save the file.
