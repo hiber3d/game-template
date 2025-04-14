@@ -3,11 +3,12 @@ const GUN_KEYS = {
 };
 
 const BULLET_SCENE = "glbs/sphere.glb#scene0";
-const BULLET_SCALE = 0.1;
 
 ({
   ammo: 100,
-  fire(){
+  hits: 0,
+
+  fire() {
     if (this.ammo <= 0) {
       return;
     }
@@ -22,7 +23,6 @@ const BULLET_SCALE = 0.1;
     hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", gunWorldTransform.position);
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", gunWorldTransform.rotation);
-    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", {x:BULLET_SCALE, y:BULLET_SCALE, z:BULLET_SCALE});
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
     hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");

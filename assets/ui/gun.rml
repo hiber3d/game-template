@@ -1,0 +1,22 @@
+<rml>
+    <head>
+        <style>
+            body {
+                font-family: Roboto;
+                font-size: 100px;
+                width: 100%;
+            }
+            .stats {
+                display: flex;
+                padding: 30px;
+                justify-content: space-between;
+            }
+        </style>
+    </head>
+    <body data-model="gun">
+        <div class="stats">
+            <div>Ammo: {{ammo}}</div>
+            <div>Hits: {{hits}}</div>
+        </div>
+    </body>
+</rml>
