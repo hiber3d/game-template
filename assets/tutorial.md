@@ -18,7 +18,7 @@
 
 ## 3. Make a nicer gun
 
-1. Add a child entity to the Gun entity.
+1. Add a child entity to the Gun entity and name it `Model`.
 2. Add a sceneRoot component and choose the cylinder.
 3. Scale and rotate the cylinder to make it look nice.
 
@@ -26,15 +26,22 @@
 
 1. Create a new scene: Right click the scenes folder, choose "New file..." and name it `bullet.scene`.
 2. Open the `bullet.scene` and create you custom bullet by adding glbs to it. Save the file when you are done.
-3. Open the `gun.js` script and change the `BULLET_SCENE` variable to reference your new scene: `BULLET_SCENE = "assets/bullet.scene"`.
+3. Open the `gun.js` script and change the `BULLET_SCENE` variable to reference your new scene: `BULLET_SCENE = "scenes/bullet.scene"`.
 4. Press play and shoot your newly created bullets!
 
 ## 5. Add some UI
 
-1. Lets show the player how much ammo is left in the gun. Create a new entity and call it `UI`.
+1. Lets show the player how much ammo is left in the gun. Create a new entity and name it `UI`.
 2. Add a `RmlDocumentInstance` component to it and select the `gun.rml` document.
-3. Add the `ui.js` script to the `UI` entity. Press play and you should see "Ammo {{ammo}}".
-4. Open the `gun.js` script and add the following to the end of the  `onCreate()` and `fire()` functions:
+3. Open the `gun.js` script and add the following to the end of the  `onCreate()` function:
+
+```js
+hiber3d.call("rmlLoadFont", "fonts/Roboto-Regular.ttf");
+hiber3d.call("rmlCreateDataModel", "gun");
+hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
+```
+
+4. Add the following line to the end of the  `fire()` function:
 
 ```js
 hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
@@ -54,15 +61,15 @@ hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
     - `MotionQuality = Continuous`
     - `CollisionGroup = Dynamic`
     - `CollisionMask = Static, Dynamic`
-6. Create a new entity as a child to the root entity.
-7. Add the component `Shape` to it and choose a shape that matches your bullet (You add multiple shapes as children to a rigid body to match the form of your bullet).
-8. Make sure the shape matches the position of the rigid body. If your bullet is a cylinder or cube, move the shape up 1m in the Y axis.
-9. ON the `Shape` component, set `Density = 1000`.
+6. Create a new entity as a child to the root entity and name it `Shape`.
+7. Add the component `Shape` to it and choose a shape that matches your bullet (You can add multiple shapes as children to a rigid body to match the form of your bullet).
+8. Adjust the transform position of the Shape entity to align it with the model.
+9. On the `Shape` component, set `Density = 10000`. (Adjust depending on how strong the bullet should push the target it hits).
 10. Go back to the `main.scene`.
 11. Select the plane, add a `RigidBody` component to it and set:
     - `CollisionGroup = Static`
     - `CollisionMask = Dynamic`
-12. Add a child entity to the Plane, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 120`.
+12. Add a child entity to the Plane, name it `Shape`, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 120`.
 13. Add the `scenes/cubes.scene` to the `main.scene` (You can drag it from the assets panel to the Scene panel).
 14. Press play and shoot the cubes!
 

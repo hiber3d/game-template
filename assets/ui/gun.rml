@@ -16,7 +16,6 @@
     <body data-model="gun">
         <div class="stats">
             <div>Ammo: {{ammo}}</div>
-            <div>Hits: {{hits}}</div>
         </div>
     </body>
 </rml>
