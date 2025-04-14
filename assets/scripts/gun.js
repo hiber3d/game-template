@@ -29,6 +29,7 @@ const BULLET_SCENE = "glbs/sphere.glb#scene0";
 
     hiber3d.addScript(bulletEntity, "scripts/bullet.js");
   },
+  
   onCreate() {
     hiber3d.addEventListener(this.entity, "Hiber3D::TouchEvent");
   },

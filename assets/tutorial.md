@@ -31,13 +31,13 @@
 
 ## 5. Add some UI
 
-1. Lets show the player how much ammo is left in the gun. Create a new entity and call it UI
-2. Add a `RmlDocumentInstance` to it and select the `gun.rml` document.
-3. Add the `ui.js` script to the UI entity. Press play and you should see "Ammo {{ammo}}".
+1. Lets show the player how much ammo is left in the gun. Create a new entity and call it `UI`.
+2. Add a `RmlDocumentInstance` component to it and select the `gun.rml` document.
+3. Add the `ui.js` script to the `UI` entity. Press play and you should see "Ammo {{ammo}}".
 4. Open the `gun.js` script and add the following to the end of the  `onCreate()` and `fire()` functions:
 
 ```js
-`hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
+hiber3d.call('rmlSetDataModelString', "gun", "ammo", this.ammo.toString());
 ```
 
 5. Press play again and shoot your gun. The UI should now update.
@@ -62,8 +62,8 @@
 11. Select the plane, add a `RigidBody` component to it and set:
     - `CollisionGroup = Static`
     - `CollisionMask = Dynamic`
-12. Add a child entity to the Plane, add a `Shape` component, set its shape to `Plane` and `HalfExtent = 120`.
-13. Add the `cubes.scene` to the `main.scene` (You can drag it from the assets panel to the Scene panel).
+12. Add a child entity to the Plane, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 120`.
+13. Add the `scenes/cubes.scene` to the `main.scene` (You can drag it from the assets panel to the Scene panel).
 14. Press play and shoot the cubes!
 
 ## 7. Add scores (using collision events)
