@@ -26,7 +26,7 @@
 ## 4. Adjust bullet
 
 1. Create a new scene: Right click the scenes folder, choose "New file..." and name it `bullet.scene`.
-2. Open the `bullet.scene` and create you custom bullet by adding meshes and materials to it. Save the file when you are done.
+2. Open the `bullet.scene` and create your custom bullet by adding meshes and materials to it. Save the file when you are done.
 3. Open the `gun.js` script and add the variable `BULLET_SCENE` to reference your new scene: `const BULLET_SCENE = "scenes/bullet.scene";`.
 4. Replace the lines
 
