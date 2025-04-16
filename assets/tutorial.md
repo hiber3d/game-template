@@ -82,7 +82,7 @@ hiber3d.call("rmlSetDataModelString", "gun", "ammo", this.ammo.toString());
 8. Adjust the transform position of the Shape entity to align it with the model.
 9. On the `Shape` component, set `Density = 10000`. (Adjust depending on how strong the bullet should push the target it hits).
 10. Go back to the `main.scene`.
-11. Open the `plane-piece.scene`, add a `RigidBody` component to it and set:
+11. Select the Plane and add a `RigidBody` component to it and set:
     - `CollisionGroup = Static`
     - `CollisionMask = Dynamic`
 12. Add a child entity to the Plane, name it `Shape`, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 50`.
