@@ -9,11 +9,11 @@
   "roughnessFactor": 1,
   "metallicFactor": 1,
   "emissiveColor": {
-    "x": 0,
-    "y": 0,
-    "z": 0
+    "x": 1,
+    "y": 1,
+    "z": 1
   },
-  "emissiveStrength": 0,
+  "emissiveStrength": 1,
   "receiveShadows": true,
   "alphaClipping": {
     "enabled": false,
@@ -22,8 +22,8 @@
   "alphaBlending": {
     "enabled": false
   },
-  "albedoTexture": "textures/Hiber3D_Grid_albedo.png",
-  "normalTexture": "textures/Hiber3D_Grid_normal.png",
-  "metallicRoughnessTexture": "textures/Hiber3D_Grid_metallicroughness.png",
-  "emissiveTexture": ""
+  "albedoTexture": "textures/Hexagon_Tile_albedo.png",
+  "normalTexture": "textures/Hexagon_Tile_normal.png",
+  "metallicRoughnessTexture": "textures/Hexagon_Tile_metallicroughness.png",
+  "emissiveTexture": "textures/Hexagon_Tile_emissive.png"
 }

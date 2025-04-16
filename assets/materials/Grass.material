@@ -7,13 +7,14 @@
   },
   "normalStrength": 1,
   "roughnessFactor": 1,
-  "metallicFactor": 0,
+  "metallicFactor": 1,
   "emissiveColor": {
     "x": 0,
     "y": 0,
     "z": 0
   },
-  "receieveShadows": true,
+  "emissiveStrength": 0,
+  "receiveShadows": true,
   "alphaClipping": {
     "enabled": false,
     "threshold": 0.5
@@ -23,6 +24,6 @@
   },
   "albedoTexture": "textures/Grass_albedo.png",
   "normalTexture": "textures/Grass_normal.png",
-  "metallicRoughnessTexture": "",
+  "metallicRoughnessTexture": "textures/Grass_metallicroughness.png",
   "emissiveTexture": ""
 }
