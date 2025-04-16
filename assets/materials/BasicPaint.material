@@ -1,0 +1,1 @@
+{"albedoColor":{"x":0.85,"y":0.7,"z":0.5,"w":1},"normalStrength":1.5,"roughnessFactor":0.5,"metallicFactor":0,"emissiveColor":{"x":0,"y":0,"z":0},"receieveShadows":true,"alphaClipping":{"enabled":false,"threshold":0.5},"alphaBlending":{"enabled":false},"albedoTexture":"","normalTexture":"textures/Grunge_C_normal.png","metallicRoughnessTexture":"","emissiveTexture":""}
