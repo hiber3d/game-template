@@ -27,7 +27,7 @@
 
 1. Create a new scene: Right click the scenes folder, choose "New file..." and name it `bullet.scene`.
 2. Open the `bullet.scene` and create you custom bullet by adding meshes and materials to it. Save the file when you are done.
-3. Open the `gun.js` script and add the variable `BULLET_SCENE` to reference your new scene: `const BULLET_SCENE = "scenes/bullet.scene"`.
+3. Open the `gun.js` script and add the variable `BULLET_SCENE` to reference your new scene: `const BULLET_SCENE = "scenes/bullet.scene";`.
 4. Replace the lines
 
    ```js
@@ -82,10 +82,10 @@ hiber3d.call("rmlSetDataModelString", "gun", "ammo", this.ammo.toString());
 8. Adjust the transform position of the Shape entity to align it with the model.
 9. On the `Shape` component, set `Density = 10000`. (Adjust depending on how strong the bullet should push the target it hits).
 10. Go back to the `main.scene`.
-11. Select the plane, add a `RigidBody` component to it and set:
+11. Open the `plane-piece.scene`, add a `RigidBody` component to it and set:
     - `CollisionGroup = Static`
     - `CollisionMask = Dynamic`
-12. Add a child entity to the Plane, name it `Shape`, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 120`.
+12. Add a child entity to the Plane, name it `Shape`, add a `Shape` component, set its shape to `PlaneShape` and `HalfExtent = 50`.
 13. Add the `scenes/cubes.scene` to the `main.scene` (You can drag it from the assets panel to the Scene panel).
 14. Press play and shoot the cubes!
 
