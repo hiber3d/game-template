@@ -1,6 +1,6 @@
 import { Hiber3D, useHiber3D } from "@hiber3d/web";
-import { moduleFactory as moduleFactoryWebGPU } from "GameTemplate_webgpu";
-import { moduleFactory as moduleFactoryWebGL } from "GameTemplate_webgl";
+import { moduleFactory as webGPU } from "GameTemplate_webgpu";
+import { moduleFactory as webGL } from "GameTemplate_webgl";
 import { useEffect } from "react";
 
 const ExampleEvent = () => {
@@ -11,7 +11,7 @@ const ExampleEvent = () => {
       return;
     }
 
-    const listener = api.onHiber3DEditorNewEntityCreated((payload) => {
+    const listener = api.onExampleEvent((payload) => {
       console.debug(payload);
     });
 
@@ -24,7 +24,7 @@ const ExampleEvent = () => {
 };
 
 export const App = () => (
-  <Hiber3D build={{webGPU: moduleFactoryWebGPU as any, webGL: moduleFactoryWebGL as any}}>
+  <Hiber3D build={{ webGPU, webGL }}>
     <ExampleEvent />
   </Hiber3D>
 );
