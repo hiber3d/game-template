@@ -94,7 +94,7 @@ A module is a class and includes a registering function that can:
 
 ### Events
 
-The primary route of communication between game modules and systems are Events. They can also be ussed for commmunticcation between the web layer and the game wasm, but also for inter/intra module communication, is using a double buffered event bus.
+Events are the main way game modules and systems communicate with each other. They’re also used for communication between the web layer and the game's WebAssembly (WASM), as well as for both internal and external module interactions. This is all handled through a double-buffered event bus.
 
 #### Connecting events to the web layer
 
@@ -130,26 +130,48 @@ HIBER3D_INTEROP_RECEIVE_FROM_JS(ReadbleFromJS)
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadbleAndWriteableFromJS);
 ```
 
+This is how you read and write the events in React.js
+
+```tsx
+const { api } = useHiber3D();
+
+// Write GameButtonPressedEvent and pass in payload
+api.writeWriteableFromJS({});
+api.writeReadbleAndWriteableFromJS({});
+
+// Setup a listener for a GameStartedEvent
+const listener = api.onReadbleFromJS((payload) => {
+  console.log("Game event was sent with payload: ", payload.value);
+});
+
+const secondListener = api.ReadbleAndWriteableFromJS((payload) => {
+  console.log("Another game event was sent with payload: ", payload.value);
+});
+
+api.removeEventCallback(listener);
+api.removeEventCallback(secondListener);
+```
+
 ## Editor
 
 ### Keyboard shortcuts
 
-| **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
-| --- | --- | --- | --- | --- |
-| Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
-| Change to translate tool | `gizmo.translate` | Gizmo | `w` | `isEditMode` |
-| Change to rotate tool | `gizmo.rotate` | Gizmo | `e` | `isEditMode` |
-| Change to scale tool | `gizmo.scale` | Gizmo | `r` | `isEditMode` |
-| Save the current scene to disk | `scene.save` | Scene | `mod+s` | `isEditMode` |
-| Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
-| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
-| Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
-| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
-| Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
-| Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Rotate 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
-| Scale 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Scale 0,1x via Inspector | `entity.group`  | Transform | `mod+mouse down` |  |
+| **Action**                              | **id**                | **Category** | **Keyboard shortcut** | **When**                         |
+| --------------------------------------- | --------------------- | ------------ | --------------------- | -------------------------------- | --- | --------------------------------- |
+| Change to select tool                   | `gizmo.select`        | Gizmo        | `q`                   | `isEditMode`                     |
+| Change to translate tool                | `gizmo.translate`     | Gizmo        | `w`                   | `isEditMode`                     |
+| Change to rotate tool                   | `gizmo.rotate`        | Gizmo        | `e`                   | `isEditMode`                     |
+| Change to scale tool                    | `gizmo.scale`         | Gizmo        | `r`                   | `isEditMode`                     |
+| Save the current scene to disk          | `scene.save`          | Scene        | `mod+s`               | `isEditMode`                     |
+| Toggle the editor UI                    | `editor.toggle`       | Editor       | `mod+e`               | `always`                         |
+| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity       | `f`                   |                                  |
+| Duplicate the selected entity           | `entity.duplicate`    | Entity       | `shift+d`             | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
+| Group the selected entities             | `entity.group`        | Entity       | `mod+g`               | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
+| Move 10x via Inspector                  | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
+| Move 0,1x via Inspector                 | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
+| Rotate 10x via Inspector                | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
+| Rotate 0,1x via Inspector               | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
+| Scale 10x via Inspector                 | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
+| Scale 0,1x via Inspector                | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
 
 ## Interop Layer
