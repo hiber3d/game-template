@@ -1,5 +1,17 @@
-# Hiber3D Game Project
 ![HIBER3D](https://github.com/user-attachments/assets/d6fc8bf8-6c92-4521-913e-8a980902ebb2)
+
+# Game Project
+
+This is a Game Template of a Hiber3D project, you can use this as a start for
+
+## Table of Content
+
+- [Prerequisites](#prerequisites)
+  - [Mac OS](#macos)
+  - [Windows](#windows)
+- [Getting Started](#getting-started)
+- [Building for Distribution](#getting-started)
+- [Compiling the Engine](#compiling-engine)
 
 ## Prerequisites
 
@@ -10,7 +22,7 @@
 - ninja
 - clang-format
 
-### macOS
+### MacOS
 
 Install via [HomeBrew](https://brew.sh/)
 
@@ -38,7 +50,7 @@ Unless you have used `git lfs` before, it needs to be initialized now:
 
 Next, from the root of the project, run
 
-1. `npm run compile` (See below for options)
+1. `npm run compile` (See [below](#compiling-engine) for options)
 1. `npm install`
 1. `npm run dev`
 1. Press `cmd + e` (`ctrl + e` on Windows) to toggle the editor
@@ -62,4 +74,13 @@ If you only want to compile the C++ code you can run:
 - WebGL only:
   - `npm run compile:webgl`
   - `npm run compile:webgl:release`
-  
+
+## C++
+
+### Modules
+
+### Events
+
+## Editor
+
+## Interop Layer
