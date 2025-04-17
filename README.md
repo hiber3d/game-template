@@ -134,22 +134,22 @@ HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadbleAndWriteableFromJS);
 
 ### Keyboard shortcuts
 
-| **Action**                              | **id**                | **Category** | **Keyboard shortcut** | **When**                         |
-| --------------------------------------- | --------------------- | ------------ | --------------------- | -------------------------------- | --- | --------------------------------- |
-| Change to select tool                   | `gizmo.select`        | Gizmo        | `q`                   | `isEditMode`                     |
-| Change to translate tool                | `gizmo.translate`     | Gizmo        | `w`                   | `isEditMode`                     |
-| Change to rotate tool                   | `gizmo.rotate`        | Gizmo        | `e`                   | `isEditMode`                     |
-| Change to scale tool                    | `gizmo.scale`         | Gizmo        | `r`                   | `isEditMode`                     |
-| Save the current scene to disk          | `scene.save`          | Scene        | `mod+s`               | `isEditMode`                     |
-| Toggle the editor UI                    | `editor.toggle`       | Editor       | `mod+e`               | `always`                         |
-| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity       | `f`                   |                                  |
-| Duplicate the selected entity           | `entity.duplicate`    | Entity       | `shift+d`             | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
-| Group the selected entities             | `entity.group`        | Entity       | `mod+g`               | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
-| Move 10x via Inspector                  | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Move 0,1x via Inspector                 | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
-| Rotate 10x via Inspector                | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Rotate 0,1x via Inspector               | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
-| Scale 10x via Inspector                 | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Scale 0,1x via Inspector                | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
+| **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
+| --- | --- | --- | --- | --- |
+| Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
+| Change to translate tool | `gizmo.translate` | Gizmo | `w` | `isEditMode` |
+| Change to rotate tool | `gizmo.rotate` | Gizmo | `e` | `isEditMode` |
+| Change to scale tool | `gizmo.scale` | Gizmo | `r` | `isEditMode` |
+| Save the current scene to disk | `scene.save` | Scene | `mod+s` | `isEditMode` |
+| Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
+| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
+| Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Rotate 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Scale 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Scale 0,1x via Inspector | `entity.group`  | Transform | `mod+mouse down` |  |
 
 ## Interop Layer
