@@ -43,6 +43,7 @@ public:
 
         context.registerModule<ExampleModule>();
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalImpulse>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalForce>(context);
         context.addSystem(Hiber3D::Schedule::ON_START_EDIT, showDebugLines);
         context.addSystem(Hiber3D::Schedule::ON_START, hideDebugLines);
     }

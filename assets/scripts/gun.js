@@ -2,30 +2,25 @@ const GUN_KEYS = {
   FIRE: 1, // SPACE
 };
 
+const BULLET_SCENE = "scenes/Bullet.scene";
+
 ({
-  ammo: 100,
   hits: 0,
 
   fire() {
-    if (this.ammo <= 0) {
-      return;
-    }
-    this.ammo--;
-
     const bulletEntity = hiber3d.createEntity();
 
-    hiber3d.addComponent(bulletEntity, "Hiber3D::Renderable");
-    hiber3d.setValue(bulletEntity, "Hiber3D::Renderable", "mesh", "glbs/Sphere.glb#mesh0/primitive0");
-    hiber3d.setValue(bulletEntity, "Hiber3D::Renderable", "material", "materials/BasicPaint.material");
+    hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
+    hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", BULLET_SCENE);
 
     const gunWorldTransform = hiber3d.getValue(this.entity, "Hiber3D::ComputedWorldTransform");
     hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", gunWorldTransform.position);
+    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", gunWorldTransform.rotation);
+    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", {x: 0.5, y: 0.5, z: 0.5});
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
     hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
-
-    hiber3d.addScript(bulletEntity, "scripts/bullet.js");
   },
 
   onCreate() {
@@ -33,7 +28,7 @@ const GUN_KEYS = {
   },
 
   update(dt) {
-    if (hiber3d.call("keyJustPressed", GUN_KEYS.FIRE)) {
+    if (hiber3d.call("keyIsPressed", GUN_KEYS.FIRE)) {
       this.fire();
     }
   },
