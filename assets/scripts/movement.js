@@ -148,7 +148,7 @@ function generateArena(cols, rows, tileSize, wallThickness, openness) {
 ({
 
   onCreate() {
-    generateArena(10, 10, 10, 0.2, 0.4);
+    // generateArena(10, 10, 10, 0.2, 0.4);
   },
 
   update(dt) {
@@ -172,11 +172,21 @@ function generateArena(cols, rows, tileSize, wallThickness, openness) {
     }
 
     const forceRotated = hiber3d.call("quaternionRotateDirection", transform.rotation, force);
+    // hiber3d.print(hiber3d.call('quaternionGetY', transform.rotation));
 
     // Get updated transform component
     transform.position.y = 0.4;
     hiber3d.setValue(this.entity, "Hiber3D::Transform", transform);
     hiber3d.setValue(this.entity, "Hiber3D::ExternalForce", "force", forceRotated);
+
+    hiber3d.writeEvent("PlayerPosition", {
+      x: transform.position.x,
+      z: transform.position.z,
+      rotX: transform.rotation.x,
+      rotY: transform.rotation.y,
+      rotZ: transform.rotation.z,
+      rotW: transform.rotation.w,
+    });
   },
 
   onEvent(event, payload) { },

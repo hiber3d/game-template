@@ -17,9 +17,10 @@
   },
   "dependencies": {
     "@hiber3d/web": "file:build/webgpu/web",
-    "GameTemplate_webgpu": "file:build/webgpu",
-    "GameTemplate_webgl": "file:build/webgl",
     "@tailwindcss/vite": "^4.0.11",
+    "colyseus.js": "^0.16.15",
+    "GameTemplate_webgl": "file:build/webgl",
+    "GameTemplate_webgpu": "file:build/webgpu",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.11"

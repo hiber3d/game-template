@@ -1,4 +1,5 @@
 #include <Example/ExampleModule.hpp>
+#include <Example/ExampleEvents.hpp>
 
 #include <Hiber3D/Core/InitContext.hpp>
 #include <Hiber3D/Editor/Editor.hpp>
@@ -44,6 +45,13 @@ public:
         context.registerModule<ExampleModule>();
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalImpulse>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalForce>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerPosition>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<BulletShot>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerJoined>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerLeft>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerUpdate>(context);
+        
+        
         context.addSystem(Hiber3D::Schedule::ON_START_EDIT, showDebugLines);
         context.addSystem(Hiber3D::Schedule::ON_START, hideDebugLines);
     }
