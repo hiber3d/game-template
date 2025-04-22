@@ -6,6 +6,9 @@
       hiber3d.addEventListener(this.entity, "PlayerLeft");
       hiber3d.addEventListener(this.entity, "PlayerUpdate");
       hiber3d.addEventListener(this.entity, "RemoteBulletShot");
+      hiber3d.writeEvent('GameStarted', {
+        dummy: true
+      });
     },
 
     update(deltaTime) {
@@ -40,6 +43,14 @@
           hiber3d.print("Player not found: ", payload);
           return;
         }
+
+        if (payload.isDead) {
+          hiber3d.print("Player is dead: ", payload);
+          hiber3d.destroyEntity(player);
+          delete this.players[payload.id];
+          return;
+        }
+
         const children = hiber3d.getValue(player, "Hiber3D::Children", "entities");
 
         if (!children) {

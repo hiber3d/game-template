@@ -29,11 +29,17 @@ export class MyRoom extends Room<MyRoomState> {
       this.broadcast(
         "remoteBulletShot",
         {
-          // owner: client.sessionId,
           bulletShot: message,
         },
         { except: client }
       );
+    });
+
+    this.onMessage("playerDied", (client) => {
+      const player = this.state.players.get(client.sessionId);
+      if (player) {
+        player.isDead = true;
+      }
     });
 
     this.state = new MyRoomState();

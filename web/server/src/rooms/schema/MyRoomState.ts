@@ -16,6 +16,7 @@ export class Player extends Schema {
   @type("number") rotW: number;
   @type("number") velocityX: number;
   @type("number") velocityZ: number;
+  @type("boolean") isDead: boolean;
 }
 
 export class Bullet extends Schema {

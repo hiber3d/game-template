@@ -68,6 +68,7 @@ const MOVEMENT_SPEED = 10000; // meters per second
       payload.dentity2 === this.entity && hiber3d.hasScripts(payload.entity1, "scripts/bullet-with-physics.js")) {
         const me = payload.entity1 === this.entity ? payload.entity1 : payload.entity2;
         hiber3d.destroyEntity(me);
+        hiber3d.writeEvent("LocalPlayerDied", {});
       }
     }
   },

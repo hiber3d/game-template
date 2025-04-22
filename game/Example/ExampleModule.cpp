@@ -30,18 +30,18 @@ void loadEnvironment(
             };
         });
 
-    auto skybox = server->loadProcedural<Hiber3D::Cubemap>(
-        Hiber3D::AssetPath("skybox"),
-        [](Hiber3D::AssetLoadContext& ctx) -> Hiber3D::Cubemap {
-            return Hiber3D::Cubemap{
-                .posX = ctx.load<Hiber3D::Texture>("environments/sky_px.png"),
-                .negX = ctx.load<Hiber3D::Texture>("environments/sky_nx.png"),
-                .posY = ctx.load<Hiber3D::Texture>("environments/sky_py.png"),
-                .negY = ctx.load<Hiber3D::Texture>("environments/sky_ny.png"),
-                .posZ = ctx.load<Hiber3D::Texture>("environments/sky_pz.png"),
-                .negZ = ctx.load<Hiber3D::Texture>("environments/sky_nz.png"),
-            };
-        });
+    // auto skybox = server->loadProcedural<Hiber3D::Cubemap>(
+    //     Hiber3D::AssetPath("skybox"),
+    //     [](Hiber3D::AssetLoadContext& ctx) -> Hiber3D::Cubemap {
+    //         return Hiber3D::Cubemap{
+    //             .posX = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //             .negX = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //             .posY = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //             .negY = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //             .posZ = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //             .negZ = ctx.load<Hiber3D::Texture>("environments/space_bottom.png"),
+    //         };
+    //     });
 
     auto reflectionbox = server->loadProcedural<Hiber3D::Cubemap>(
         Hiber3D::AssetPath("reflectionbox"),
@@ -58,7 +58,7 @@ void loadEnvironment(
 
     env->exposureCompensation = 0.5f;
 
-    env->skybox.cubemap = skybox;
+    // env->skybox.cubemap = skybox;
 
     env->lightbox.brightness = 1.0f;
     env->lightbox.cubemap    = lightbox;
@@ -66,7 +66,7 @@ void loadEnvironment(
     env->reflectionbox.brightness = 1.0f;
     env->reflectionbox.cubemap    = reflectionbox;
 
-    env->fog.enabled        = true;
+    env->fog.enabled        = false;
     env->fog.density        = 0.00003f;
     env->fog.height         = 30.0f;
     env->fog.color          = Hiber3D::float3{0.2f, 0.4f, 0.6f};
@@ -98,7 +98,7 @@ void ExampleModule::onRegister(Hiber3D::InitContext& context) {
     // Make available in scripts
     if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<ExampleComponent>(context);
-        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ExampleEvent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<GameStarted>(context);
     }
 
     // Saved to scene file

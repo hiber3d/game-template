@@ -4,9 +4,34 @@ import { moduleFactory as webGPU } from "GameTemplate_webgpu";
 import { useEffect, useRef, useState } from "react";
 
 import { Client, getStateCallbacks, Room } from "colyseus.js";
-import { MyRoomState, Quaternion } from "server/src/rooms/schema/MyRoomState";
+import { MyRoomState } from "server/src/rooms/schema/MyRoomState";
 
 const client = new Client("http://192.168.28.208:2567");
+
+const GameHandler = ({ children }: { children: React.ReactNode }) => {
+  const { api } = useHiber3D();
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const listener = api.onGameStarted(() => {
+      setStarted(true);
+    });
+
+    return () => {
+      api.removeEventCallback(listener);
+    };
+  }, [api]);
+
+  if (!started) {
+    return null;
+  }
+
+  return <>{children}</>;
+};
 
 function RoomComponent() {
   const { api } = useHiber3D();
@@ -71,6 +96,7 @@ function RoomComponent() {
             rotW: player.rotW,
             velocityX: player.velocityX,
             velocityZ: player.velocityZ,
+            isDead: player.isDead,
           });
           // console.log("Player changed:", player);
         });
@@ -112,9 +138,14 @@ function RoomComponent() {
       roomRef.current?.send("bulletShot", payload);
     });
 
+    const diedListener = api.onLocalPlayerDied(() => {
+      roomRef.current?.send("playerDied");
+    });
+
     return () => {
       api.removeEventCallback(positionListener);
       api.removeEventCallback(bulletListener);
+      api.removeEventCallback(diedListener);
     };
   });
 
@@ -129,6 +160,8 @@ function RoomComponent() {
 
 export const App = () => (
   <Hiber3D build={{ webGPU, webGL }}>
-    <RoomComponent />
+    <GameHandler>
+      <RoomComponent />
+    </GameHandler>
   </Hiber3D>
 );

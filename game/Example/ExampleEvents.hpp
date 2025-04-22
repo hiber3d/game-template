@@ -5,12 +5,12 @@
 
 #include <string>
 
-struct ExampleEvent {
-    int value;
+struct GameStarted {
+    bool dummy;
 };
 
-HIBER3D_REFLECT(HIBER3D_TYPE(ExampleEvent), HIBER3D_MEMBER(value));
-HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ExampleEvent);
+HIBER3D_REFLECT(HIBER3D_TYPE(GameStarted), HIBER3D_MEMBER(dummy));
+HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(GameStarted);
 
 struct PlayerPosition {
     float x;
@@ -54,6 +54,12 @@ struct PlayerLeft {
 HIBER3D_REFLECT(HIBER3D_TYPE(PlayerLeft), HIBER3D_MEMBER(id));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerLeft);
 
+struct LocalPlayerDied {
+    bool dummy;
+};
+HIBER3D_REFLECT(HIBER3D_TYPE(LocalPlayerDied), HIBER3D_MEMBER(dummy));
+HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(LocalPlayerDied);
+
 struct PlayerUpdate {
     std::string id = "";
     float       x;
@@ -64,7 +70,8 @@ struct PlayerUpdate {
     float       rotW;
     float       velocityX;
     float       velocityZ;
+    bool        isDead = false;
 };
 HIBER3D_REFLECT(HIBER3D_TYPE(PlayerUpdate), HIBER3D_MEMBER(id), HIBER3D_MEMBER(x), HIBER3D_MEMBER(z),
-                HIBER3D_MEMBER(rotX), HIBER3D_MEMBER(rotY), HIBER3D_MEMBER(rotZ), HIBER3D_MEMBER(rotW), HIBER3D_MEMBER(velocityX), HIBER3D_MEMBER(velocityZ));
+                HIBER3D_MEMBER(rotX), HIBER3D_MEMBER(rotY), HIBER3D_MEMBER(rotZ), HIBER3D_MEMBER(rotW), HIBER3D_MEMBER(velocityX), HIBER3D_MEMBER(velocityZ), HIBER3D_MEMBER(isDead));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerUpdate);
