@@ -13,6 +13,8 @@
     hiber3d.setValue(this.entity, "Hiber3D::ExternalImpulse", "linear", force);
 
     hiber3d.setValue(this.entity, "Hiber3D::Transform", "position", "y", 0);
+
+    hiber3d.addEventListener(this.entity, "Hiber3D::CollisionStarted");
   },
 
   destroy() {
@@ -27,5 +29,13 @@
     }
   },
 
-  onEvent(event, payload) {}
+  onEvent(event, payload) {
+    if (event === "Hiber3D::CollisionStarted") {
+      if (payload.entity1 === this.entity && hiber3d.hasScripts(payload.entity2, "scripts/bullet-with-physics.js") ||
+        payload.entity2 === this.entity && hiber3d.hasScripts(payload.entity1, "scripts/bullet-with-physics.js")) {
+          hiber3d.destroyEntity(payload.entity1);
+          hiber3d.destroyEntity(payload.entity2);
+      }
+    }
+  }
 });
