@@ -1,5 +1,12 @@
 import { MapSchema, Schema, type } from "@colyseus/schema";
 
+export class Float4 extends Schema {
+  @type("number") x: number;
+  @type("number") y: number;
+  @type("number") z: number;
+  @type("number") w: number;
+}
+
 export class Player extends Schema {
   @type("number") x: number;
   @type("number") z: number;
@@ -7,6 +14,8 @@ export class Player extends Schema {
   @type("number") rotY: number;
   @type("number") rotZ: number;
   @type("number") rotW: number;
+  @type("number") velocityX: number;
+  @type("number") velocityZ: number;
 }
 
 export class Bullet extends Schema {
@@ -14,7 +23,7 @@ export class Bullet extends Schema {
   @type("number") time: number;
   @type("number") originX: number;
   @type("number") originZ: number;
-  @type("number") direction: number;
+  @type(Float4) rotation: Float4;
 }
 
 export class MyRoomState extends Schema {

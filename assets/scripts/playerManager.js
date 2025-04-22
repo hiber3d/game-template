@@ -1,9 +1,12 @@
+const BULLET_SCENE = "scenes/Bullet.scene";
+
 ({
     players: {},
     onCreate() {
       hiber3d.addEventListener(this.entity, "PlayerJoined");
       hiber3d.addEventListener(this.entity, "PlayerLeft");
       hiber3d.addEventListener(this.entity, "PlayerUpdate");
+      hiber3d.addEventListener(this.entity, "RemoteBulletShot");
     },
 
     update(deltaTime) {
@@ -23,7 +26,6 @@
         hiber3d.addComponent(player, "Hiber3D::SceneRoot");
         hiber3d.setValue(player, "Hiber3D::SceneRoot", "scene", "scenes/Enemy.scene");
         hiber3d.addComponent(player, "Hiber3D::Transform");
-
       } else if (event == "PlayerLeft") {
         hiber3d.print("Player left: ", payload);
         const player = this.players[payload.id];
@@ -39,12 +41,40 @@
           hiber3d.print("Player not found: ", payload);
           return;
         }
-        hiber3d.setValue(player, "Hiber3D::Transform", "position", "x", payload.x);
-        hiber3d.setValue(player, "Hiber3D::Transform", "position", "z", payload.z);
-        hiber3d.setValue(player, "Hiber3D::Transform", "rotation", "x", payload.rotX);
-        hiber3d.setValue(player, "Hiber3D::Transform", "rotation", "y", payload.rotY);
-        hiber3d.setValue(player, "Hiber3D::Transform", "rotation", "z", payload.rotZ);
-        hiber3d.setValue(player, "Hiber3D::Transform", "rotation", "w", payload.rotW);
+        const children = hiber3d.getValue(player, "Hiber3D::Children", "entities");
+
+        if (!children) {
+          return;
+        }
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "x", payload.x);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "y", 0.4);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "z", payload.z);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "x", payload.rotX);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "y", payload.rotY);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "z", payload.rotZ);
+        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "w", payload.rotW);
+        hiber3d.setValue(children[0], "Hiber3D::Velocity", "linear", {
+          x: payload.velocityX,
+          y: 0,
+          z: payload.velocityZ
+        });
+      } else if (event === "RemoteBulletShot") {
+        // hiber3d.print("Remote bullet shot: ", JSON.stringify(payload));
+        const bulletEntity = hiber3d.createEntity();
+        const bulletShot = payload.bulletShot;
+
+        hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
+        hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", BULLET_SCENE);
+
+        hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
+        hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "x", bulletShot.originX);
+        hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "z", bulletShot.originZ);
+        hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "y", 0.4);
+        hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", bulletShot.rotation);
+        hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", {x: 0.5, y: 0.5, z: 0.5});
+
+        hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
+        hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
       }
     }
 });

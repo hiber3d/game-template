@@ -1,11 +1,12 @@
-#include <Example/ExampleModule.hpp>
 #include <Example/ExampleEvents.hpp>
+#include <Example/ExampleModule.hpp>
 
 #include <Hiber3D/Core/InitContext.hpp>
 #include <Hiber3D/Editor/Editor.hpp>
 #include <Hiber3D/Editor/EditorSettings.hpp>
 #include <Hiber3D/Hiber3D.hpp>
 #include <Hiber3D/Hiber3DModule.hpp>
+#include <Hiber3D/Math/Quaternion.hpp>
 #include <Hiber3D/Physics/PhysicsComponents.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
 
@@ -45,13 +46,15 @@ public:
         context.registerModule<ExampleModule>();
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalImpulse>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalForce>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Velocity>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerPosition>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<BulletShot>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerJoined>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerLeft>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerUpdate>(context);
-        
-        
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<RemoteBulletShot>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](Hiber3D::Quaternion& quaternion) { return quaternion.toEulerRollPitchYaw(); }>(context, "toEulerRollPitchYaw");
+
         context.addSystem(Hiber3D::Schedule::ON_START_EDIT, showDebugLines);
         context.addSystem(Hiber3D::Schedule::ON_START, hideDebugLines);
     }

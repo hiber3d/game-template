@@ -21,6 +21,12 @@ const BULLET_SCENE = "scenes/Bullet.scene";
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
     hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
+
+    hiber3d.writeEvent("BulletShot", {
+      originX: gunWorldTransform.position.x,
+      originZ: gunWorldTransform.position.z,
+      rotation: gunWorldTransform.rotation,
+    })
   },
 
   onCreate() {
@@ -28,7 +34,7 @@ const BULLET_SCENE = "scenes/Bullet.scene";
   },
 
   update(dt) {
-    if (hiber3d.call("keyIsPressed", GUN_KEYS.FIRE)) {
+    if (hiber3d.call("keyJustPressed", GUN_KEYS.FIRE)) {
       this.fire();
     }
   },

@@ -20,7 +20,20 @@ export class MyRoom extends Room<MyRoomState> {
         player.rotY = message.rotY;
         player.rotZ = message.rotZ;
         player.rotW = message.rotW;
+        player.velocityX = message.velocityX;
+        player.velocityZ = message.velocityZ;
       }
+    });
+
+    this.onMessage("bulletShot", (client, message) => {
+      this.broadcast(
+        "remoteBulletShot",
+        {
+          // owner: client.sessionId,
+          bulletShot: message,
+        },
+        { except: client }
+      );
     });
 
     this.state = new MyRoomState();

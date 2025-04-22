@@ -1,6 +1,6 @@
 ({
   speed: 100,
-  maxLifeTime: 2,
+  maxLifeTime: 1.5,
 
   currentLifeTime: 0,
 

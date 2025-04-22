@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Client, getStateCallbacks, Room } from "colyseus.js";
 import { MyRoomState, Quaternion } from "server/src/rooms/schema/MyRoomState";
 
-const client = new Client("http://localhost:2567");
+const client = new Client("http://192.168.28.208:2567");
 
 function RoomComponent() {
   const { api } = useHiber3D();
@@ -69,6 +69,8 @@ function RoomComponent() {
             rotY: player.rotY,
             rotZ: player.rotZ,
             rotW: player.rotW,
+            velocityX: player.velocityX,
+            velocityZ: player.velocityZ,
           });
           // console.log("Player changed:", player);
         });
@@ -80,6 +82,10 @@ function RoomComponent() {
           id: sessionId,
         });
         // console.log("Player left:", player, sessionId);
+      });
+
+      room.onMessage("remoteBulletShot", (message) => {
+        api?.writeRemoteBulletShot(message);
       });
     });
 
@@ -97,11 +103,19 @@ function RoomComponent() {
       return;
     }
 
-    api.onPlayerPosition((payload) => {
+    const positionListener = api.onPlayerPosition((payload) => {
       // console.log(payload);
-
       roomRef.current?.send("playerPosition", payload);
     });
+
+    const bulletListener = api.onBulletShot((payload) => {
+      roomRef.current?.send("bulletShot", payload);
+    });
+
+    return () => {
+      api.removeEventCallback(positionListener);
+      api.removeEventCallback(bulletListener);
+    };
   });
 
   return (
