@@ -8,6 +8,7 @@
 #include <Hiber3D/Hiber3DModule.hpp>
 #include <Hiber3D/Math/Quaternion.hpp>
 #include <Hiber3D/Physics/PhysicsComponents.hpp>
+#include <Hiber3D/Renderer/Light.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
 
 #include <stdio.h>
@@ -47,6 +48,7 @@ public:
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalImpulse>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalForce>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Velocity>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::Light>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerPosition>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<BulletShot>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerJoined>(context);

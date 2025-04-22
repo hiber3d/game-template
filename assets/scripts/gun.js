@@ -17,16 +17,19 @@ const BULLET_SCENE = "scenes/Bullet.scene";
     hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", gunWorldTransform.position);
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", gunWorldTransform.rotation);
-    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", {x: 0.5, y: 0.5, z: 0.5});
+    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", { x: 0.5, y: 0.5, z: 0.5 });
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
     hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
+
+    const script = hiber3d.addScript(bulletEntity, "scripts/setLight.js");
+    script.isEnemy = false;
 
     hiber3d.writeEvent("BulletShot", {
       originX: gunWorldTransform.position.x,
       originZ: gunWorldTransform.position.z,
       rotation: gunWorldTransform.rotation,
-    })
+    });
   },
 
   onCreate() {
