@@ -162,21 +162,53 @@ api.removeEventCallback(secondListener);
 
 ### Assets
 
-The engine can use different assets and you can either register these in the C++ or you can use the editor to add assets to entities. 
+The engine use assets and you can either register these in the C++ or you can use the editor to add assets to entities.
 
 #### Serving Assets
-In the assets folder that is served by the vite development server the editor can read images (ktx2, png), glbs, scripts (js) and our internal files `.scene` and `.material`.
+
+Both the engine and the web defaults to read assets from the folder `assets/` in the root of the project. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
 
 ### Editor
 
-The editor is written in React.js
+The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
+
+- `showEditor`=`0|1`
+- `mode`=`play|edit`
 
 #### Scripts
 
-You can write scripts in js
+You can write scripts in JavaScript that follow this pattern. Add it to an entity to have it run in Play Mode. Scripts are hot reloaded and you can see changes reflected while playing.
 
+```js
+({
+  variable: 0,
+
+  onCreate() {
+    hiber3d.addEventListener(this.entity, "WriteableFromJS");
+  },
+
+  update(deltaTime) {
+    this.variable += deltaTime;
+  },
+
+  onEvent(event, payload) {
+    if (event === "WriteableFromJS") {
+      this.variable = payload.value;
+    }
+  },
+});
+```
+
+#### Play on Mobile
+
+By running the development server with the host option you'll get a QR code to scan in the editor to play test on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
+
+```
+npm run dev -- --host
+```
 
 #### Keyboard shortcuts
+
 | **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
 | --- | --- | --- | --- | --- |
 | Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
