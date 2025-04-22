@@ -16,8 +16,10 @@ This is a Game Template of a Hiber3D project
   - [Modules](#modules)
   - [Events](#events)
   - [Assets](#assets)
+    - [Serving Assets](#serving-assets)
   - [Editor](#editor)
     - [Scripts](#scripts)
+    - [Test on Mobile](#test-on-mobile)
     - [Keyboard Shortcuts](#keyboard-shortcuts)
 
 ## Prerequisites
@@ -199,7 +201,7 @@ You can write scripts in JavaScript that follow this pattern. Add it to an entit
 });
 ```
 
-#### Play on Mobile
+#### Test on Mobile
 
 By running the development server with the host option you'll get a QR code to scan in the editor to play test on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
 
