@@ -1,8 +1,8 @@
 ![HIBER3D](https://github.com/user-attachments/assets/d6fc8bf8-6c92-4521-913e-8a980902ebb2)
 
-# Game Project
+# Hiber 3D
 
-This is a Game Template of a Hiber3D project, you can use this as a start for
+This is a Game Template of a Hiber3D project
 
 ## Table of Content
 
@@ -12,6 +12,13 @@ This is a Game Template of a Hiber3D project, you can use this as a start for
 - [Getting Started](#getting-started)
 - [Building for Distribution](#getting-started)
 - [Compiling the Engine](#compiling-engine)
+- [Working with the Engine](#)
+  - [Modules](#modules)
+  - [Events](#events)
+  - [Assets](#assets)
+  - [Editor](#editor)
+    - [Scripts](#scripts)
+    - [Keyboard Shortcuts](#keyboard-shortcuts)
 
 ## Prerequisites
 
@@ -75,11 +82,11 @@ If you only want to compile the C++ code you can run:
   - `npm run compile:webgl`
   - `npm run compile:webgl:release`
 
-## C++
+## Working with the engine
 
 ### Modules
 
-A module is an optional “building block” of code, with a very specific concern. This is the main way you implement your gameplay code.
+Written in C++ a module is an optional “building block” of code, with a very specific concern. This is the main way you implement your gameplay code.
 
 To register a module to your game project, you can:
 
@@ -104,7 +111,7 @@ You can mark events to be extended to the web layer by using macros. The type ne
 - `HIBER3D_INTEROP_RECEIVE_FROM_JS`
 - `HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS`
 
-Example
+Example in C++
 
 ```C++
 #pragma once
@@ -117,17 +124,17 @@ struct ReadbleFromJS {
 struct WriteableFromJS {
   std::string value;
 };
-struct ReadbleAndWriteableFromJS {
+struct ReadableAndWriteableFromJS {
   bool value;
 };
 
 HIBER3D_REFLECT(HIBER3D_TYPE(ReadbleFromJS), HIBER3D_MEMBER(value));
 HIBER3D_REFLECT(HIBER3D_TYPE(WriteableFromJS), HIBER3D_MEMBER(value));
-HIBER3D_REFLECT(HIBER3D_TYPE(ReadbleAndWriteableFromJS), HIBER3D_MEMBER(value));
+HIBER3D_REFLECT(HIBER3D_TYPE(ReadableAndWriteableFromJS), HIBER3D_MEMBER(value));
 
 HIBER3D_INTEROP_SEND_TO_JS(ReadbleFromJS)
 HIBER3D_INTEROP_RECEIVE_FROM_JS(ReadbleFromJS)
-HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadbleAndWriteableFromJS);
+HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadableAndWriteableFromJS);
 ```
 
 This is how you read and write the events in React.js
@@ -137,41 +144,53 @@ const { api } = useHiber3D();
 
 // Write GameButtonPressedEvent and pass in payload
 api.writeWriteableFromJS({});
-api.writeReadbleAndWriteableFromJS({});
+api.writeReadableAndWriteableFromJS({});
 
 // Setup a listener for a GameStartedEvent
 const listener = api.onReadbleFromJS((payload) => {
-  console.log("Game event was sent with payload: ", payload.value);
+  console.log("Game event was sent with value: ", payload.value);
 });
 
-const secondListener = api.ReadbleAndWriteableFromJS((payload) => {
-  console.log("Another game event was sent with payload: ", payload.value);
+const secondListener = api.ReadableAndWriteableFromJS((payload) => {
+  console.log("Another game event was sent with value: ", payload.value);
 });
 
+// Clean up
 api.removeEventCallback(listener);
 api.removeEventCallback(secondListener);
 ```
 
-## Editor
+### Assets
 
-### Keyboard shortcuts
+The engine can use different assets and you can either register these in the C++ or you can use the editor to add assets to entities. 
 
-| **Action**                              | **id**                | **Category** | **Keyboard shortcut** | **When**                         |
-| --------------------------------------- | --------------------- | ------------ | --------------------- | -------------------------------- | --- | --------------------------------- |
-| Change to select tool                   | `gizmo.select`        | Gizmo        | `q`                   | `isEditMode`                     |
-| Change to translate tool                | `gizmo.translate`     | Gizmo        | `w`                   | `isEditMode`                     |
-| Change to rotate tool                   | `gizmo.rotate`        | Gizmo        | `e`                   | `isEditMode`                     |
-| Change to scale tool                    | `gizmo.scale`         | Gizmo        | `r`                   | `isEditMode`                     |
-| Save the current scene to disk          | `scene.save`          | Scene        | `mod+s`               | `isEditMode`                     |
-| Toggle the editor UI                    | `editor.toggle`       | Editor       | `mod+e`               | `always`                         |
-| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity       | `f`                   |                                  |
-| Duplicate the selected entity           | `entity.duplicate`    | Entity       | `shift+d`             | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
-| Group the selected entities             | `entity.group`        | Entity       | `mod+g`               | `isEditMode && (scenePaleFocused |     | canvasFocused) && entitySelected` |
-| Move 10x via Inspector                  | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Move 0,1x via Inspector                 | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
-| Rotate 10x via Inspector                | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Rotate 0,1x via Inspector               | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
-| Scale 10x via Inspector                 | `entity.group`        | Transform    | `shift+mouse down`    |                                  |
-| Scale 0,1x via Inspector                | `entity.group`        | Transform    | `mod+mouse down`      |                                  |
+#### Serving Assets
+In the assets folder that is served by the vite development server the editor can read images (ktx2, png), glbs, scripts (js) and our internal files `.scene` and `.material`.
 
-## Interop Layer
+### Editor
+
+The editor is written in React.js
+
+#### Scripts
+
+You can write scripts in js
+
+
+#### Keyboard shortcuts
+| **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
+| --- | --- | --- | --- | --- |
+| Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
+| Change to translate tool | `gizmo.translate` | Gizmo | `w` | `isEditMode` |
+| Change to rotate tool | `gizmo.rotate` | Gizmo | `e` | `isEditMode` |
+| Change to scale tool | `gizmo.scale` | Gizmo | `r` | `isEditMode` |
+| Save the current scene to disk | `scene.save` | Scene | `mod+s` | `isEditMode` |
+| Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
+| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
+| Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Rotate 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Scale 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Scale 0,1x via Inspector | `entity.group`  | Transform | `mod+mouse down` |  |
