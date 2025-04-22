@@ -22,7 +22,6 @@ const MOVEMENT_SPEED = 10000; // meters per second
     const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
 
 
-
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.FORWARD)) {
       force.z = -MOVEMENT_SPEED;
     }
@@ -66,7 +65,7 @@ const MOVEMENT_SPEED = 10000; // meters per second
   onEvent(event, payload) {
     if (event === 'Hiber3D::CollisionStarted') {
       if (payload.entity1 === this.entity && hiber3d.hasScripts(payload.entity2, "scripts/bullet-with-physics.js") || 
-      payload.entity2 === this.entity && hiber3d.hasScripts(payload.entity1, "scripts/bullet-with-physics.js")) {
+      payload.dentity2 === this.entity && hiber3d.hasScripts(payload.entity1, "scripts/bullet-with-physics.js")) {
         const me = payload.entity1 === this.entity ? payload.entity1 : payload.entity2;
         hiber3d.destroyEntity(me);
       }

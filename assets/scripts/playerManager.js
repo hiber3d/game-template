@@ -1,4 +1,3 @@
-const BULLET_SCENE = "scenes/Bullet.scene";
 
 ({
     players: {},
@@ -64,7 +63,7 @@ const BULLET_SCENE = "scenes/Bullet.scene";
         const bulletShot = payload.bulletShot;
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
-        hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", BULLET_SCENE);
+        hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", "scenes/EnemyBullet.scene");
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
         hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "x", bulletShot.originX);
@@ -76,8 +75,6 @@ const BULLET_SCENE = "scenes/Bullet.scene";
         hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
         hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
 
-        const script = hiber3d.addScript(bulletEntity, "scripts/setLight.js");
-        script.isEnemy = true;
       }
     }
 });
