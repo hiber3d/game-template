@@ -171,6 +171,7 @@ The engine uses assets and you can either register these in the C++ or you can u
 Both the engine and the web reads assets from the folder `assets/` in the root of the project by default. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
 
 ### Editor
+![editor](https://github.com/user-attachments/assets/15a8a9da-4375-4621-a8bb-404167c0ac79)
 
 The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
 
