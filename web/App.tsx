@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Client, getStateCallbacks, Room } from "colyseus.js";
 import { MyRoomState } from "server/src/rooms/schema/MyRoomState";
 
-const client = new Client("http://192.168.28.208:2567");
+const client = new Client("http://localhost:2567");
 
 const GameHandler = ({ children }: { children: React.ReactNode }) => {
   const { api } = useHiber3D();
@@ -76,14 +76,14 @@ function RoomComponent() {
       $(room.state).players.onAdd((player, sessionId) => {
         console.log("Player joined:", player, sessionId);
 
+        api?.writePlayerJoined({
+          id: sessionId,
+        });
+
         if (room.sessionId === sessionId) {
           // this is the local player
           return;
         }
-
-        api?.writePlayerJoined({
-          id: sessionId,
-        });
 
         $(player).onChange(() => {
           api?.writePlayerUpdate({

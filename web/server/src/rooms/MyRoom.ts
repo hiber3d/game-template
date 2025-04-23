@@ -22,6 +22,7 @@ export class MyRoom extends Room<MyRoomState> {
         player.rotW = message.rotW;
         player.velocityX = message.velocityX;
         player.velocityZ = message.velocityZ;
+        player.isDead = false;
       }
     });
 

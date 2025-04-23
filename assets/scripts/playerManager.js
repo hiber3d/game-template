@@ -1,6 +1,7 @@
 
 ({
     players: {},
+    localPlayer: undefined,
     onCreate() {
       hiber3d.addEventListener(this.entity, "PlayerJoined");
       hiber3d.addEventListener(this.entity, "PlayerLeft");
@@ -9,10 +10,28 @@
       hiber3d.writeEvent('GameStarted', {
         dummy: true
       });
+      this.spawnLocalPlayer();
     },
 
     update(deltaTime) {
+      this.spawnLocalPlayer();
+    },
 
+    spawnLocalPlayer() {
+      if (this.localPlayer) {
+        return;
+      }
+      const spawnpoints = hiber3d.findEntitiesWithScript("scripts/spawnpoint.js");
+      if (spawnpoints.length === 0) {
+        return;
+      }
+      this.localPlayer = hiber3d.createEntity();
+      hiber3d.addComponent(this.localPlayer, "Hiber3D::SceneRoot");
+      hiber3d.setValue(this.localPlayer, "Hiber3D::SceneRoot", "scene", "scenes/Player.scene");
+      hiber3d.addComponent(this.localPlayer, "Hiber3D::Transform");
+      const spawnpoint = spawnpoints[Math.floor(Math.random() * spawnpoints.length)];
+      const script = hiber3d.addScript(this.localPlayer, "scripts/setTransform.js");
+      script.transform = hiber3d.getValue(spawnpoint, "Hiber3D::Transform");
     },
 
     onEvent(event, payload) {
@@ -82,7 +101,7 @@
         hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "y", 0.4);
         hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", bulletShot.rotation);
         hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "scale", {x: 0.5, y: 0.5, z: 0.5});
-        
+
         hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
         hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
 
