@@ -76,14 +76,14 @@ function RoomComponent() {
       $(room.state).players.onAdd((player, sessionId) => {
         console.log("Player joined:", player, sessionId);
 
-        api?.writePlayerJoined({
-          id: sessionId,
-        });
-
         if (room.sessionId === sessionId) {
           // this is the local player
           return;
         }
+
+        api?.writePlayerJoined({
+          id: sessionId,
+        });
 
         $(player).onChange(() => {
           api?.writePlayerUpdate({
