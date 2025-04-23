@@ -171,7 +171,7 @@ Events are the main way game modules and systems communicate with each other. Th
 
 #### Connecting events to the web layer
 
-You can mark events to be extended to the web layer by using macros. The type need to be reflected first and then marked with one of three macros
+You can mark events to be extended to the web layer by using macros. The events needs to defined in a `.hpp` file, type reflected and marked with one of three macros.
 
 - `HIBER3D_INTEROP_SEND_TO_JS`
 - `HIBER3D_INTEROP_RECEIVE_FROM_JS`
