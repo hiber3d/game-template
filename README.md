@@ -13,14 +13,14 @@ This is a Game Template of a Hiber3D project
 - [Building for Distribution](#getting-started)
 - [Compiling the Engine](#compiling-engine)
 - [Working with the Engine](#)
-  - [Modules](#modules)
-  - [Events](#events)
-  - [Assets](#assets)
-    - [Serving Assets](#serving-assets)
   - [Editor](#editor)
     - [Scripts](#scripts)
     - [Test on Mobile](#test-on-mobile)
     - [Keyboard Shortcuts](#keyboard-shortcuts)
+  - [Modules](#modules)
+  - [Events](#events)
+  - [Assets](#assets)
+    - [Serving Assets](#serving-assets)
 
 ## Prerequisites
 
@@ -85,6 +85,70 @@ If you only want to compile the C++ code you can run:
   - `npm run compile:webgl:release`
 
 ## Working with the engine
+
+### Editor
+
+Live demo here -> [Hiber3D](https://template.hiber3d.com/)
+
+![editor](https://github.com/user-attachments/assets/15a8a9da-4375-4621-a8bb-404167c0ac79)
+
+The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
+
+- `showEditor`=`0|1`
+- `mode`=`play|edit`
+
+#### Scripts
+
+You can write scripts using JavaScript using the pattern below. Add it to an entity to have it run in Play Mode. Scripts are hot reloaded and you can see changes reflected while playing.
+
+```js
+({
+  variable: 0,
+
+  onCreate() {
+    hiber3d.addEventListener(this.entity, "WriteableFromJS");
+  },
+
+  update(deltaTime) {
+    this.variable += deltaTime;
+  },
+
+  onEvent(event, payload) {
+    if (event === "WriteableFromJS") {
+      this.variable = payload.value;
+    }
+  },
+});
+```
+
+#### Test on Mobile
+
+By running the development server with the `host` option you'll get a QR code to scan in the editor to playtest on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
+
+```
+npm run dev -- --host
+```
+
+#### Keyboard shortcuts
+
+| **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
+| --- | --- | --- | --- | --- |
+| Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
+| Change to translate tool | `gizmo.translate` | Gizmo | `w` | `isEditMode` |
+| Change to rotate tool | `gizmo.rotate` | Gizmo | `e` | `isEditMode` |
+| Change to scale tool | `gizmo.scale` | Gizmo | `r` | `isEditMode` |
+| Save the current scene to disk | `scene.save` | Scene | `mod+s` | `isEditMode` |
+| Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
+| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
+| Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
+| Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Rotate 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
+| Scale 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
+| Scale 0,1x via Inspector | `entity.group`  | Transform | `mod+mouse down` |  |
+
 
 ### Modules
 
@@ -170,62 +234,3 @@ The engine uses assets and you can either register these in the C++ or you can u
 
 Both the engine and the web reads assets from the folder `assets/` in the root of the project by default. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
 
-### Editor
-![editor](https://github.com/user-attachments/assets/15a8a9da-4375-4621-a8bb-404167c0ac79)
-
-The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
-
-- `showEditor`=`0|1`
-- `mode`=`play|edit`
-
-#### Scripts
-
-You can write scripts using JavaScript using the pattern below. Add it to an entity to have it run in Play Mode. Scripts are hot reloaded and you can see changes reflected while playing.
-
-```js
-({
-  variable: 0,
-
-  onCreate() {
-    hiber3d.addEventListener(this.entity, "WriteableFromJS");
-  },
-
-  update(deltaTime) {
-    this.variable += deltaTime;
-  },
-
-  onEvent(event, payload) {
-    if (event === "WriteableFromJS") {
-      this.variable = payload.value;
-    }
-  },
-});
-```
-
-#### Test on Mobile
-
-By running the development server with the `host` option you'll get a QR code to scan in the editor to playtest on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
-
-```
-npm run dev -- --host
-```
-
-#### Keyboard shortcuts
-
-| **Action** | **id** | **Category** | **Keyboard shortcut** | **When** |
-| --- | --- | --- | --- | --- |
-| Change to select tool | `gizmo.select` | Gizmo | `q` | `isEditMode` |
-| Change to translate tool | `gizmo.translate` | Gizmo | `w` | `isEditMode` |
-| Change to rotate tool | `gizmo.rotate` | Gizmo | `e` | `isEditMode` |
-| Change to scale tool | `gizmo.scale` | Gizmo | `r` | `isEditMode` |
-| Save the current scene to disk | `scene.save` | Scene | `mod+s` | `isEditMode` |
-| Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
-| Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
-| Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
-| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && (scenePaleFocused || canvasFocused) && entitySelected`   |
-| Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
-| Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Rotate 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
-| Scale 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
-| Scale 0,1x via Inspector | `entity.group`  | Transform | `mod+mouse down` |  |
