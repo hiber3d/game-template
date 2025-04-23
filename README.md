@@ -4,7 +4,7 @@
 
 This is a Game Template of a Hiber3D project
 
-## Table of Content
+## Table of Contents
 
 - [Prerequisites](#prerequisites)
   - [Mac OS](#macos)
@@ -88,7 +88,7 @@ If you only want to compile the C++ code you can run:
 
 ### Modules
 
-Written in C++ a module is an optional “building block” of code, with a very specific concern. This is the main way you implement your gameplay code.
+Written in C++, a module is an optional “building block” of code, with a very specific concern. This is the main way you implement your gameplay code.
 
 To register a module to your game project, you can:
 
@@ -164,11 +164,11 @@ api.removeEventCallback(secondListener);
 
 ### Assets
 
-The engine use assets and you can either register these in the C++ or you can use the editor to add assets to entities.
+The engine uses assets and you can either register these in the C++ or you can use the editor to add assets to entities.
 
 #### Serving Assets
 
-Both the engine and the web defaults to read assets from the folder `assets/` in the root of the project. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
+Both the engine and the web reads assets from the folder `assets/` in the root of the project by default. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
 
 ### Editor
 
@@ -179,7 +179,7 @@ The editor is written in React.js and is run locally by starting your vite devel
 
 #### Scripts
 
-You can write scripts in JavaScript that follow this pattern. Add it to an entity to have it run in Play Mode. Scripts are hot reloaded and you can see changes reflected while playing.
+You can write scripts using JavaScript using the pattern below. Add it to an entity to have it run in Play Mode. Scripts are hot reloaded and you can see changes reflected while playing.
 
 ```js
 ({
@@ -203,7 +203,7 @@ You can write scripts in JavaScript that follow this pattern. Add it to an entit
 
 #### Test on Mobile
 
-By running the development server with the host option you'll get a QR code to scan in the editor to play test on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
+By running the development server with the `host` option you'll get a QR code to scan in the editor to playtest on you mobile. Everything on mobile is hot reloaded and can be altered while playing. Mobile will always start in play mode.
 
 ```
 npm run dev -- --host
