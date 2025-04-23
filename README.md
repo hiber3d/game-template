@@ -90,7 +90,8 @@ If you only want to compile the C++ code you can run:
 
 Live demo here -> [Hiber3D](https://template.hiber3d.com/)
 
-![editor](https://github.com/user-attachments/assets/15a8a9da-4375-4621-a8bb-404167c0ac79)
+![HIBER3DEDITOR](https://github.com/user-attachments/assets/923c3aeb-c324-4660-bbfc-50726520f060)
+
 
 The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
 
