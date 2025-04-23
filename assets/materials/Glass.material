@@ -1,0 +1,29 @@
+{
+  "albedoColor": {
+    "x": 0.7,
+    "y": 0.7,
+    "z": 1,
+    "w": 0.5
+  },
+  "normalStrength": 0.4,
+  "roughnessFactor": 0,
+  "metallicFactor": 0.7,
+  "emissiveColor": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "emissiveStrength": 0,
+  "receiveShadows": true,
+  "alphaClipping": {
+    "enabled": false,
+    "threshold": 0.5
+  },
+  "alphaBlending": {
+    "enabled": true
+  },
+  "albedoTexture": "",
+  "normalTexture": "textures/Grunge_B_normal.png",
+  "metallicRoughnessTexture": "textures/Grunge_A_roughness.png",
+  "emissiveTexture": ""
+}

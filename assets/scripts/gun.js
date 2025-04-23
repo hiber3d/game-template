@@ -2,8 +2,6 @@ const GUN_KEYS = {
   FIRE: 1, // SPACE
 };
 
-const BULLET_SCENE = "glbs/sphere.glb#scene0";
-
 ({
   ammo: 100,
   hits: 0,
@@ -16,24 +14,24 @@ const BULLET_SCENE = "glbs/sphere.glb#scene0";
 
     const bulletEntity = hiber3d.createEntity();
 
-    hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
-    hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", BULLET_SCENE);
+    hiber3d.addComponent(bulletEntity, "Hiber3D::Renderable");
+    hiber3d.setValue(bulletEntity, "Hiber3D::Renderable", "mesh", "glbs/Sphere.glb#mesh0/primitive0");
+    hiber3d.setValue(bulletEntity, "Hiber3D::Renderable", "material", "materials/BasicPaint.material");
 
     const gunWorldTransform = hiber3d.getValue(this.entity, "Hiber3D::ComputedWorldTransform");
     hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
     hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", gunWorldTransform.position);
-    hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "rotation", gunWorldTransform.rotation);
 
     hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
     hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
 
     hiber3d.addScript(bulletEntity, "scripts/bullet.js");
   },
-  
+
   onCreate() {
     hiber3d.addEventListener(this.entity, "Hiber3D::TouchEvent");
   },
-  
+
   update(dt) {
     if (hiber3d.call("keyJustPressed", GUN_KEYS.FIRE)) {
       this.fire();
@@ -41,8 +39,8 @@ const BULLET_SCENE = "glbs/sphere.glb#scene0";
   },
 
   onEvent(event, payload) {
-    if(event == "Hiber3D::TouchEvent") {
+    if (event == "Hiber3D::TouchEvent") {
       this.fire();
     }
-  }
+  },
 });

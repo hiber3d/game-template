@@ -1,0 +1,29 @@
+{
+  "albedoColor": {
+    "x": 1,
+    "y": 1,
+    "z": 1,
+    "w": 1
+  },
+  "normalStrength": 1,
+  "roughnessFactor": 1,
+  "metallicFactor": 1,
+  "emissiveColor": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "emissiveStrength": 0,
+  "receiveShadows": true,
+  "alphaClipping": {
+    "enabled": false,
+    "threshold": 0.5
+  },
+  "alphaBlending": {
+    "enabled": false
+  },
+  "albedoTexture": "textures/Stone_Tiles_albedo.png",
+  "normalTexture": "textures/Stone_Tiles_normal.png",
+  "metallicRoughnessTexture": "textures/Stone_Tiles_metallicroughness.png",
+  "emissiveTexture": ""
+}
