@@ -1,0 +1,72 @@
+#include <Midi/MidiModule.hpp>
+
+#include <Midi/MidiEvents.hpp>
+#include <Midi/MidiTypes.hpp>
+
+#include <Hiber3D/Asset/AssetModule.hpp>
+#include <Hiber3D/Asset/AssetPath.hpp>
+#include <Hiber3D/Asset/AssetServer.hpp>
+#include <Hiber3D/Core/FixedStringFormat.hpp>
+#include <Hiber3D/BaseAssets/Cubemap.hpp>
+#include <Hiber3D/BaseAssets/Texture.hpp>
+#include <Hiber3D/Editor/EditorModule.hpp>
+#include <Hiber3D/Hiber3D.hpp>
+#include <Hiber3D/Core/EventReader.hpp>
+#include <Hiber3D/Core/EventWriter.hpp>
+#include <Hiber3D/Renderer/RenderEnvironment.hpp>
+#include <Hiber3D/Scene/SceneModule.hpp>
+#include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
+
+static void receiveMidi(
+    Hiber3D::EventView<MidiInputEvent> events,
+    Hiber3D::Singleton<MidiState> midiState) {
+    for (const auto& event : events) {
+        LOG_INFO("Received MIDI event: {} {} {}", event.byte0, event.byte1, event.byte2);
+    }
+}
+
+static void sendMidiOn(
+    Hiber3D::Singleton<MidiState> midiState,
+    Hiber3D::EventWriter<MidiOutputEvent>& writer) {
+    LOG_INFO("Sending MIDI on event");
+    writer.writeEvent({{
+        .byte0 = 0b10010000, // Note on, channel 0
+        .byte1 = 60, // Middle C
+        .byte2 = 127,
+    }});
+}
+
+static void sendMidiOff(
+    Hiber3D::Singleton<MidiState> midiState,
+    Hiber3D::EventWriter<MidiOutputEvent>& writer) {
+    LOG_INFO("Sending MIDI off event");
+    writer.writeEvent({{
+        .byte0 = 0b10000000, // Note on, channel 0
+        .byte1 = 60,
+        .byte2 = 127,
+    }});
+}
+
+void MidiModule::onRegister(Hiber3D::InitContext& context) {
+    context.addSystem(Hiber3D::Schedule::ON_FRAME, receiveMidi);
+    context.addSystem(Hiber3D::Schedule::ON_START, sendMidiOn);
+    context.addSystem(Hiber3D::Schedule::ON_START_EDIT, sendMidiOff);
+
+    context.registerSingleton<MidiState>();
+
+    // Show in editor inspector
+    if (context.isModuleRegistered<Hiber3D::EditorModule>()) {
+        //context.getModule<Hiber3D::EditorModule>().registerComponent<ExampleComponent>(context);
+    }
+
+    // Make available in scripts
+    if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<MidiOutputEvent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<MidiInputEvent>(context);
+    }
+
+    // Saved to scene file
+    if (context.isModuleRegistered<Hiber3D::SceneModule>()) {
+        //context.getModule<Hiber3D::SceneModule>().registerComponent<ExampleComponent>(context);
+    }
+}
