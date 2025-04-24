@@ -23,11 +23,29 @@ const ExampleEvent = () => {
   return null;
 };
 
-const MidiEvent = () => {
+const MidiEvent = ({ MIDIAccess }: { MIDIAccess: MIDIAccess | null }) => {
   const { api } = useHiber3D();
 
-  const [MIDIAccess, setMIDIAccess] = useState<MIDIAccess | null>(null);
-  const MIDIInitializationInProgress = useRef<boolean>(false);
+  useEffect(() => {
+    if (!api || !MIDIAccess) {
+      return;
+    }
+
+    const listener = api.onMidiOutputEvent((payload) => {
+      console.log("MIDI event from WASM with value" + JSON.stringify(payload), MIDIAccess);
+      // const noteOnMessage = [payload.byte0, payload.byte1, payload.byte2];
+      // const output = MIDIAccess?.outputs.get("output-2");
+      // console.log("Output: " + JSON.stringify(output));
+      // if (output) {
+      //   console.log("Sending MIDI message to output");
+      //   output?.send(noteOnMessage);
+      // }
+    });
+
+    return () => {
+      api.removeEventCallback(listener);
+    };
+  }, [api, MIDIAccess]);
 
   useEffect(() => {
     if (!api) {
@@ -35,47 +53,47 @@ const MidiEvent = () => {
     }
 
     function onMIDIMessage(message: MIDIMessageEvent) {
-      api?.writeMidiInputEvent({ byte0: message.data[0], byte1: message.data[1], byte2: message.data[2] });
+      api?.writeMidiInputEvent({ byte0: message.data?.[0], byte1: message.data?.[1], byte2: message.data?.[2] });
     }
 
+    if (!MIDIAccess) {
+      return;
+    }
+
+    for (const entry of MIDIAccess.inputs) {
+      const input = entry[1];
+      console.log(
+        `Input port [type:'${input.type}']` +
+          ` id:'${input.id}'` +
+          ` manufacturer:'${input.manufacturer}'` +
+          ` name:'${input.name}'` +
+          ` version:'${input.version}'`
+      );
+      if (!entry[1].name?.startsWith("OutFromHiber3D")) {
+        const input = MIDIAccess.inputs.get(entry[1].id);
+        if (input) {
+          input.onmidimessage = onMIDIMessage;
+        }
+      }
+    }
+  }, [api, MIDIAccess]);
+
+  return null;
+};
+
+export const App = () => {
+  const [MIDIAccess, setMIDIAccess] = useState<MIDIAccess | null>(null);
+  const MIDIInitializationInProgress = useRef<boolean>(false);
+
+  useEffect(() => {
     function onMIDISuccess(midiAccess: MIDIAccess) {
       console.log("MIDI ready!");
 
       setMIDIAccess(midiAccess);
-
-      for (const entry of midiAccess.inputs) {
-        const input = entry[1];
-        console.log(
-          `Input port [type:'${input.type}']` +
-            ` id:'${input.id}'` +
-            ` manufacturer:'${input.manufacturer}'` +
-            ` name:'${input.name}'` +
-            ` version:'${input.version}'`
-        );
-        if (!entry[1].name.startsWith("OutFromHiber3D")) {
-          const input = midiAccess.inputs.get(entry[1].id);
-          input.onmidimessage = onMIDIMessage;
-        }
-      }
-
-      for (const entry of midiAccess.outputs) {
-        const output = entry[1];
-        console.log(
-          `Output port [type:'${output.type}']` +
-            ` id:'${output.id}'` +
-            ` manufacturer:'${output.manufacturer}'` +
-            ` name:'${output.name}'` +
-            ` version:'${output.version}'`
-        );
-      }
     }
 
     function onMIDIFailure(msg: string) {
       console.error(`Failed to get MIDI access - ${msg}`);
-    }
-
-    if (MIDIAccess) {
-      return;
     }
 
     if (MIDIInitializationInProgress.current) {
@@ -84,40 +102,11 @@ const MidiEvent = () => {
     MIDIInitializationInProgress.current = true;
 
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-  }, [api, MIDIAccess]);
+  }, [MIDIAccess]);
 
-  useEffect(() => {
-    console.log("Before if");
-
-    if (!api || !MIDIAccess) {
-      return;
-    }
-
-    console.log("After if", api, MIDIAccess);
-
-    const listener = api.onMidiOutputEvent((payload) => {
-      console.log("MIDI event from WASM with value" + JSON.stringify(payload));
-      const noteOnMessage = [payload.byte0, payload.byte1, payload.byte2];
-      const output = MIDIAccess?.outputs.get("output-2");
-      console.log("Output: " + JSON.stringify(output));
-      if (output) {
-        console.log("Sending MIDI message to output");
-        output?.send(noteOnMessage);
-      }
-    });
-
-    return () => {
-      console.log("Removing MIDI event listener");
-      api.removeEventCallback(listener);
-    };
-  }, [api, MIDIAccess]);
-
-  return null;
+  return (
+    <Hiber3D build={{ webGPU, webGL }}>
+      <MidiEvent MIDIAccess={MIDIAccess} />
+    </Hiber3D>
+  );
 };
-
-export const App = () => (
-  <Hiber3D build={{ webGPU, webGL }}>
-    <ExampleEvent />
-    <MidiEvent />
-  </Hiber3D>
-);
