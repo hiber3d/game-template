@@ -1,11 +1,16 @@
 #include <Example/ExampleModule.hpp>
+#include <Midi/MidiModule.hpp>
 
+#include <Hiber3D/Audio/AudioComponents.hpp>
 #include <Hiber3D/Core/InitContext.hpp>
 #include <Hiber3D/Editor/Editor.hpp>
+#include <Hiber3D/Editor/EditorModule.hpp>
 #include <Hiber3D/Editor/EditorSettings.hpp>
 #include <Hiber3D/Hiber3D.hpp>
 #include <Hiber3D/Hiber3DModule.hpp>
 #include <Hiber3D/Physics/PhysicsComponents.hpp>
+#include <Hiber3D/Renderer/Camera.hpp>
+#include <Hiber3D/Scene/SceneModule.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
 
 #include <stdio.h>
@@ -36,15 +41,40 @@ static void hideDebugLines(Hiber3D::Singleton<Hiber3D::Editor> editor) {
     });
 }
 
+static void ensureListenerOnCamera(
+    Hiber3D::Registry&               registry,
+    Hiber3D::View<const Hiber3D::Transform, const Hiber3D::Camera> camerasWithTransforms,
+    Hiber3D::View<const Hiber3D::Camera> cameras) {
+    const auto activeCameraEntity = Hiber3D::Camera::getActive(cameras);
+
+    for (auto [entity, cameraTransform, camera] : camerasWithTransforms.each()) {
+        if (entity != activeCameraEntity) {
+            if (registry.hasComponents<Hiber3D::AudioListener>(entity)) {
+                registry.remove<Hiber3D::AudioListener>(entity);
+            }
+            continue;
+        }
+        if (registry.hasComponents<Hiber3D::AudioListener>(entity)) {
+            continue;
+        }
+        registry.emplace<Hiber3D::AudioListener>(entity);
+    }
+}
+
 class MainModule : public Hiber3D::Module {
 public:
     void onRegister(Hiber3D::InitContext& context) override {
         context.registerModule<Hiber3D::Hiber3DModule>();
 
         context.registerModule<ExampleModule>();
+        context.registerModule<MidiModule>();
+
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<Hiber3D::ExternalImpulse>(context);
+
         context.addSystem(Hiber3D::Schedule::ON_START_EDIT, showDebugLines);
         context.addSystem(Hiber3D::Schedule::ON_START, hideDebugLines);
+
+        context.addSystem(Hiber3D::Schedule::ON_FRAME, ensureListenerOnCamera);
     }
 };
 

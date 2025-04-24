@@ -29,6 +29,11 @@ set(GAME_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleModule.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game/Example/ExampleTypes.hpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Midi/MidiEvents.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Midi/MidiModule.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Midi/MidiModule.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/game/Midi/MidiTypes.hpp
 )
 
 hiber3d_add_game(GameTemplate "${GAME_FILES}")
