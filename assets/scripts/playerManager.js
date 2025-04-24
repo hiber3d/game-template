@@ -90,6 +90,8 @@
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::SceneRoot");
         hiber3d.setValue(bulletEntity, "Hiber3D::SceneRoot", "scene", "scenes/EnemyBullet.scene");
+        const bulletOwnerScript = hiber3d.addScript(bulletEntity, "scripts/setBulletOwner.js");
+        bulletOwnerScript.ownerId = payload.ownerId;
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::Transform");
         hiber3d.setValue(bulletEntity, "Hiber3D::Transform", "position", "x", bulletShot.originX);

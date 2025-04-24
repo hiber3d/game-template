@@ -38,9 +38,10 @@ HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(BulletShot);
 
 struct RemoteBulletShot {
     BulletShot bulletShot;
+    std::string ownerId = "";
 };
 
-HIBER3D_REFLECT(HIBER3D_TYPE(RemoteBulletShot), HIBER3D_MEMBER(bulletShot));
+HIBER3D_REFLECT(HIBER3D_TYPE(RemoteBulletShot), HIBER3D_MEMBER(bulletShot), HIBER3D_MEMBER(ownerId));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(RemoteBulletShot);
 
 struct PlayerJoined {
@@ -55,9 +56,9 @@ HIBER3D_REFLECT(HIBER3D_TYPE(PlayerLeft), HIBER3D_MEMBER(id));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerLeft);
 
 struct LocalPlayerDied {
-    bool dummy;
+    std::string killedById = "";
 };
-HIBER3D_REFLECT(HIBER3D_TYPE(LocalPlayerDied), HIBER3D_MEMBER(dummy));
+HIBER3D_REFLECT(HIBER3D_TYPE(LocalPlayerDied), HIBER3D_MEMBER(killedById));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(LocalPlayerDied);
 
 struct PlayerUpdate {

@@ -5,12 +5,7 @@ export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
   state = new MyRoomState();
 
-  onCreate(options: any) {
-    this.onMessage("type", (client, message) => {
-      //
-      // handle "type" message
-      //
-    });
+  onCreate() {
     this.onMessage("playerPosition", (client, message) => {
       const player = this.state.players.get(client.sessionId);
       if (player) {
@@ -30,15 +25,21 @@ export class MyRoom extends Room<MyRoomState> {
         "remoteBulletShot",
         {
           bulletShot: message,
+          ownerId: client.sessionId,
         },
         { except: client }
       );
     });
 
-    this.onMessage("playerDied", (client) => {
+    this.onMessage("playerDied", (client, message) => {
       const player = this.state.players.get(client.sessionId);
       if (player) {
         player.isDead = true;
+
+        const killer = this.state.players.get(message.killedById);
+        if (killer) {
+          killer.kills += 1;
+        }
 
         setTimeout(() => {
           player.isDead = false;
@@ -49,12 +50,12 @@ export class MyRoom extends Room<MyRoomState> {
     this.state = new MyRoomState();
   }
 
-  onJoin(client: Client, options: any) {
+  onJoin(client: Client) {
     console.log(client.sessionId, "joined!");
     this.state.players.set(client.sessionId, new Player());
   }
 
-  onLeave(client: Client, consented: boolean) {
+  onLeave(client: Client) {
     console.log(client.sessionId, "left!");
     this.state.players.delete(client.sessionId);
   }

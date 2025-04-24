@@ -3,7 +3,8 @@
   maxLifeTime: 2,
 
   currentLifeTime: 0,
-  
+  ownerId: undefined,
+
   onCreate() {
     hiber3d.addComponent(this.entity, "Hiber3D::ExternalImpulse");
     const parent = hiber3d.getValue(this.entity, "Hiber3D::Parent", "parent");

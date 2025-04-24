@@ -4,7 +4,7 @@ import { moduleFactory as webGPU } from "GameTemplate_webgpu";
 import { useEffect, useRef, useState } from "react";
 
 import { Client, getStateCallbacks, Room } from "colyseus.js";
-import { MyRoomState } from "server/src/rooms/schema/MyRoomState";
+import { MyRoomState, Player } from "server/src/rooms/schema/MyRoomState";
 
 const client = new Client("http://localhost:2567");
 
@@ -33,12 +33,14 @@ const GameHandler = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+type PlayerInfo = { id: string } & Pick<Player, "kills">;
+
 function RoomComponent() {
   const { api } = useHiber3D();
   const roomRef = useRef<Room>(null);
 
-  const [isConnecting, setIsConnecting] = useState(true);
-  const [players, setPlayers] = useState([]);
+  const [, setIsConnecting] = useState(true);
+  const [players, setPlayers] = useState<PlayerInfo[]>([]);
 
   useEffect(() => {
     const req = client.joinOrCreate<MyRoomState>("my_room", {});
@@ -75,6 +77,7 @@ function RoomComponent() {
 
       $(room.state).players.onAdd((player, sessionId) => {
         console.log("Player joined:", player, sessionId);
+        setPlayers((players) => [...players, { id: sessionId, kills: player.kills }]);
 
         $(player).listen("isDead", (isDead) => {
           api?.writePlayerIsDeadChanged({
@@ -82,6 +85,17 @@ function RoomComponent() {
             isLocalPlayer: room.sessionId === sessionId,
             isDead,
           });
+        });
+
+        $(player).listen("kills", (kills) => {
+          setPlayers((players) =>
+            players.map((p) => {
+              if (p.id === sessionId) {
+                return { ...p, kills };
+              }
+              return p;
+            })
+          );
         });
 
         if (room.sessionId === sessionId) {
@@ -115,7 +129,7 @@ function RoomComponent() {
         api?.writePlayerLeft({
           id: sessionId,
         });
-        // console.log("Player left:", player, sessionId);
+        setPlayers((players) => players.filter((p) => p.id !== sessionId));
       });
 
       room.onMessage("remoteBulletShot", (message) => {
@@ -146,8 +160,8 @@ function RoomComponent() {
       roomRef.current?.send("bulletShot", payload);
     });
 
-    const diedListener = api.onLocalPlayerDied(() => {
-      roomRef.current?.send("playerDied");
+    const diedListener = api.onLocalPlayerDied((payload) => {
+      roomRef.current?.send("playerDied", payload);
     });
 
     return () => {
@@ -158,10 +172,15 @@ function RoomComponent() {
   });
 
   return (
-    <div>
-      {players.map((player) => (
-        <div key={player.id}>{player.name}</div>
-      ))}
+    <div style={{ position: "absolute", top: 20, left: 20, width: 200 }}>
+      {players
+        .toSorted((a, b) => b.kills - a.kills)
+        .map((player) => (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr min-content", gap: 10 }} key={player.id}>
+            <div>{player.id}</div>
+            <div>{player.kills}</div>
+          </div>
+        ))}
     </div>
   );
 }

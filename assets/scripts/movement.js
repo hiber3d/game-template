@@ -64,12 +64,16 @@ const MOVEMENT_SPEED = 10000; // meters per second
 
   onEvent(event, payload) {
     if (event === 'Hiber3D::CollisionStarted') {
-      if (payload.entity1 === this.entity && hiber3d.hasScripts(payload.entity2, "scripts/bullet-with-physics.js") || 
+      if (payload.entity1 === this.entity && hiber3d.hasScripts(payload.entity2, "scripts/bullet-with-physics.js") ||
       payload.dentity2 === this.entity && hiber3d.hasScripts(payload.entity1, "scripts/bullet-with-physics.js")) {
         const me = payload.entity1 === this.entity ? payload.entity1 : payload.entity2;
+        const bullet = payload.entity1 === this.entity ? payload.entity2 : payload.entity1;
+        const bulletScript = hiber3d.getScript(bullet, "scripts/bullet-with-physics.js");
         const parent = hiber3d.getValue(me, "Hiber3D::Parent", "parent");
         hiber3d.destroyEntity(parent);
-        hiber3d.writeEvent("LocalPlayerDied", {});
+        hiber3d.writeEvent("LocalPlayerDied", {
+          killedById: bulletScript.ownerId
+        });
       }
     }
   },
