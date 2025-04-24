@@ -8,9 +8,21 @@ import { MyRoomState, Player } from "server/src/rooms/schema/MyRoomState";
 
 const client = new Client("http://localhost:2567");
 
-const GameHandler = ({ children }: { children: React.ReactNode }) => {
+const GameHandler = () => {
   const { api } = useHiber3D();
-  const [started, setStarted] = useState(false);
+  const [nameInput, setNameInput] = useState<string | null>(localStorage.getItem("name"));
+  const [name, setName] = useState<string | null>(null);
+  const [readyToStart, setReadyToStart] = useState(false);
+  const [room, setRoom] = useState<Room<MyRoomState> | null>(null);
+
+  const join = async (name: string) => {
+    setName(name);
+    localStorage.setItem("name", name);
+    const response = await client.joinOrCreate<MyRoomState>("my_room", {
+      name,
+    });
+    setRoom(response);
+  };
 
   useEffect(() => {
     if (!api) {
@@ -18,7 +30,7 @@ const GameHandler = ({ children }: { children: React.ReactNode }) => {
     }
 
     const listener = api.onGameStarted(() => {
-      setStarted(true);
+      setReadyToStart(true);
     });
 
     return () => {
@@ -26,16 +38,80 @@ const GameHandler = ({ children }: { children: React.ReactNode }) => {
     };
   }, [api]);
 
-  if (!started) {
+  if (!name) {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          backdropFilter: "blur(5px)",
+        }}
+      >
+        <div style={{ maxWidth: 300, width: "100%", display: "flex", flexDirection: "column", gap: 10 }}>
+          <label style={{ backgroundColor: "black", padding: 12, borderRadius: 10 }}>
+            <div style={{ fontSize: 12 }}>Your name</div>
+            <input
+              autoFocus
+              style={{ outline: "none", width: "100%" }}
+              type="text"
+              placeholder="Enter your name"
+              value={nameInput ?? ""}
+              data-1p-ignore
+              onChange={(e) => {
+                const value = e.currentTarget.value;
+                setNameInput(value);
+              }}
+            />
+          </label>
+          <button
+            style={{
+              display: "block",
+              padding: 10,
+              backgroundColor: "rebeccapurple",
+              color: "white",
+              borderRadius: 5,
+              border: "none",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              if (!nameInput) {
+                return;
+              }
+              join(nameInput);
+            }}
+          >
+            Join
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!readyToStart) {
     return null;
   }
 
-  return <>{children}</>;
+  if (!room) {
+    return null;
+  }
+
+  return (
+    <>
+      <RoomComponent room={room} />
+    </>
+  );
 };
 
-type PlayerInfo = { id: string } & Pick<Player, "kills">;
+type PlayerInfo = { id: string } & Pick<Player, "kills" | "name">;
 
-function RoomComponent() {
+function RoomComponent({ room }: { room: Room<MyRoomState> }) {
   const { api } = useHiber3D();
   const roomRef = useRef<Room>(null);
 
@@ -43,108 +119,81 @@ function RoomComponent() {
   const [players, setPlayers] = useState<PlayerInfo[]>([]);
 
   useEffect(() => {
-    const req = client.joinOrCreate<MyRoomState>("my_room", {});
+    roomRef.current = room;
+    const $ = getStateCallbacks(room);
 
-    req.then((room) => {
-      roomRef.current = room;
-      const $ = getStateCallbacks(room);
+    setIsConnecting(false);
 
-      setIsConnecting(false);
-
-      // const a = $(room.state).onChange(() => {
-      //   a();
-      //   // console.log("Initial state:", room.state);
-      //   room.state.players.forEach((player, sessionId) => {
-      //     if (room.sessionId === sessionId) {
-      //       return;
-      //     }
-      //     // console.log("Player joined:", player, sessionId);
-      //     api?.writePlayerJoined({
-      //       id: sessionId,
-      //     });
-      //     // you can now safely read state.count, state.players, etc.
-      //   });
-      // });
-
-      $(room.state).players.onChange((changes, index) => {
-        if (room.sessionId === index) {
-          return;
-        }
-        api?.writePlayerJoined({
-          id: index,
-        });
-      });
-
-      $(room.state).players.onAdd((player, sessionId) => {
-        console.log("Player joined:", player, sessionId);
-        setPlayers((players) => [...players, { id: sessionId, kills: player.kills }]);
-
-        $(player).listen("isDead", (isDead) => {
-          api?.writePlayerIsDeadChanged({
-            id: sessionId,
-            isLocalPlayer: room.sessionId === sessionId,
-            isDead,
-          });
-        });
-
-        $(player).listen("kills", (kills) => {
-          setPlayers((players) =>
-            players.map((p) => {
-              if (p.id === sessionId) {
-                return { ...p, kills };
-              }
-              return p;
-            })
-          );
-        });
-
-        if (room.sessionId === sessionId) {
-          // this is the local player
-          return;
-        }
-
-        api?.writePlayerJoined({
-          id: sessionId,
-        });
-
-        $(player).onChange(() => {
-          api?.writePlayerUpdate({
-            id: sessionId,
-            x: player.x,
-            z: player.z,
-            rotX: player.rotX,
-            rotY: player.rotY,
-            rotZ: player.rotZ,
-            rotW: player.rotW,
-            velocityX: player.velocityX,
-            velocityZ: player.velocityZ,
-            isDead: player.isDead,
-          });
-          // console.log("Player changed:", player);
-        });
-      });
-
-      // handle room events here
-      $(room.state).players.onRemove((player, sessionId) => {
-        api?.writePlayerLeft({
-          id: sessionId,
-        });
-        setPlayers((players) => players.filter((p) => p.id !== sessionId));
-      });
-
-      room.onMessage("remoteBulletShot", (message) => {
-        api?.writeRemoteBulletShot(message);
+    $(room.state).players.onChange((changes, index) => {
+      if (room.sessionId === index) {
+        return;
+      }
+      api?.writePlayerJoined({
+        id: index,
       });
     });
 
-    return () => {
-      // make sure to leave the room when the component is unmounted
-      req.then((room) => {
-        room.leave();
-        roomRef.current = null;
+    $(room.state).players.onAdd((player, sessionId) => {
+      console.log("Player joined:", player, sessionId);
+      setPlayers((players) => [...players, { id: sessionId, kills: player.kills, name: player.name }]);
+
+      $(player).listen("isDead", (isDead) => {
+        api?.writePlayerIsDeadChanged({
+          id: sessionId,
+          isLocalPlayer: room.sessionId === sessionId,
+          isDead,
+        });
       });
-    };
-  }, [api]);
+
+      $(player).listen("kills", (kills) => {
+        setPlayers((players) =>
+          players.map((p) => {
+            if (p.id === sessionId) {
+              return { ...p, kills };
+            }
+            return p;
+          })
+        );
+      });
+
+      if (room.sessionId === sessionId) {
+        // this is the local player
+        return;
+      }
+
+      api?.writePlayerJoined({
+        id: sessionId,
+      });
+
+      $(player).onChange(() => {
+        api?.writePlayerUpdate({
+          id: sessionId,
+          x: player.x,
+          z: player.z,
+          rotX: player.rotX,
+          rotY: player.rotY,
+          rotZ: player.rotZ,
+          rotW: player.rotW,
+          velocityX: player.velocityX,
+          velocityZ: player.velocityZ,
+          isDead: player.isDead,
+        });
+        // console.log("Player changed:", player);
+      });
+    });
+
+    // handle room events here
+    $(room.state).players.onRemove((player, sessionId) => {
+      api?.writePlayerLeft({
+        id: sessionId,
+      });
+      setPlayers((players) => players.filter((p) => p.id !== sessionId));
+    });
+
+    room.onMessage("remoteBulletShot", (message) => {
+      api?.writeRemoteBulletShot(message);
+    });
+  }, [api, room]);
 
   useEffect(() => {
     if (!api) {
@@ -177,7 +226,7 @@ function RoomComponent() {
         .toSorted((a, b) => b.kills - a.kills)
         .map((player) => (
           <div style={{ display: "grid", gridTemplateColumns: "1fr min-content", gap: 10 }} key={player.id}>
-            <div>{player.id}</div>
+            <div>{player.name}</div>
             <div>{player.kills}</div>
           </div>
         ))}
@@ -187,8 +236,6 @@ function RoomComponent() {
 
 export const App = () => (
   <Hiber3D build={{ webGPU, webGL }}>
-    <GameHandler>
-      <RoomComponent />
-    </GameHandler>
+    <GameHandler />
   </Hiber3D>
 );

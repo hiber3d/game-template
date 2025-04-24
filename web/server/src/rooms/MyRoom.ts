@@ -50,9 +50,11 @@ export class MyRoom extends Room<MyRoomState> {
     this.state = new MyRoomState();
   }
 
-  onJoin(client: Client) {
+  onJoin(client: Client, options: { name: string }) {
     console.log(client.sessionId, "joined!");
-    this.state.players.set(client.sessionId, new Player());
+    const player = new Player();
+    player.name = options.name;
+    this.state.players.set(client.sessionId, player);
   }
 
   onLeave(client: Client) {
