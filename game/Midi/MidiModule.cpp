@@ -22,6 +22,13 @@ static void receiveMidi(
     Hiber3D::Singleton<MidiState> midiState) {
     for (const auto& event : events) {
         LOG_INFO("Received MIDI event: {} {} {}", event.byte0, event.byte1, event.byte2);
+        Hiber3D::u8 command  = event.byte0 >> 4;
+        Hiber3D::u8 channel  = event.byte0 & 0xf;
+        Hiber3D::u8 noteOrCc     = event.byte1;
+        Hiber3D::u8 velocityOrValue = event.byte2;
+        if (command == 0b1011) { // CC
+            midiState->cc[noteOrCc] = velocityOrValue;
+        }
     }
 }
 
@@ -63,6 +70,7 @@ void MidiModule::onRegister(Hiber3D::InitContext& context) {
     if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<MidiOutputEvent>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<MidiInputEvent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerSingleton<MidiState>(context);
     }
 
     // Saved to scene file
