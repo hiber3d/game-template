@@ -84,3 +84,8 @@ struct PlayerIsDeadChanged {
 };
 HIBER3D_REFLECT(HIBER3D_TYPE(PlayerIsDeadChanged), HIBER3D_MEMBER(id), HIBER3D_MEMBER(isDead), HIBER3D_MEMBER(isLocalPlayer));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerIsDeadChanged);
+
+struct PlayerName {
+    std::string name = "";
+};
+HIBER3D_REFLECT(HIBER3D_TYPE(PlayerName), HIBER3D_MEMBER(name));

@@ -12,6 +12,8 @@
 #include <Hiber3D/Renderer/RenderEnvironment.hpp>
 #include <Hiber3D/Scene/SceneModule.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
+#include <Hiber3D/BaseAssets/Material.hpp>
+#include <Hiber3D/Core/Registry.hpp>
 
 void loadEnvironment(
     Hiber3D::Singleton<Hiber3D::RenderEnvironment>        env,
@@ -86,23 +88,56 @@ void loadEnvironment(
     env->sun.color       = Hiber3D::float3{1.0f, 1.0f, 1.0f};
 }
 
+struct PlayerMaterial {
+    std::string name;
+    std::string texture;
+}; 
+
+struct PlayerMaterialState {
+    std::vector<PlayerMaterial> materials;
+};
+
+void applyPlayerMaterials(
+    Hiber3D::Registry& registry,
+    Hiber3D::View<PlayerName, Hiber3D::Renderable> playerNames,
+    Hiber3D::Singleton<Hiber3D::AssetServer>       server) {
+    for (auto [entity, playerName, renderable] : playerNames.each()) {
+        if (renderable.material.handle == Hiber3D::AssetBaseHandleType(0) && playerName.name != "") {
+            Hiber3D::FixedString<320> url     = Hiber3D::formatFixedString<320>("https://placehold.co/400x30/transparent/white/png?text={}&.png", playerName.name);
+            auto& materials      = registry.singleton<Hiber3D::Assets<Hiber3D::StandardMaterial>>();
+            auto  materialHandle = materials.add(Hiber3D::StandardMaterial{
+                 .albedoColor   = Hiber3D::float4(1.0f, 1.0f, 1.0f, 1.0f),
+                 .albedoTexture = server->load<Hiber3D::Texture>(Hiber3D::AssetPath(url.str())),
+                 .alphaClipping = {.enabled = true, .threshold = 0.5f},
+            });
+
+            renderable.material = materialHandle;
+        }
+    }
+}
+
 void ExampleModule::onRegister(Hiber3D::InitContext& context) {
     context.addSystem(Hiber3D::Schedule::ON_START, loadEnvironment);
     context.addSystem(Hiber3D::Schedule::ON_START_EDIT, loadEnvironment);
+    context.addSystem(Hiber3D::Schedule::ON_TICK, applyPlayerMaterials);
 
     // Show in editor inspector
     if (context.isModuleRegistered<Hiber3D::EditorModule>()) {
         context.getModule<Hiber3D::EditorModule>().registerComponent<ExampleComponent>(context);
+        context.getModule<Hiber3D::EditorModule>().registerComponent<PlayerName>(context);
     }
 
     // Make available in scripts
     if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<ExampleComponent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<PlayerName>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<GameStarted>(context);
     }
 
     // Saved to scene file
     if (context.isModuleRegistered<Hiber3D::SceneModule>()) {
         context.getModule<Hiber3D::SceneModule>().registerComponent<ExampleComponent>(context);
+        context.getModule<Hiber3D::SceneModule>().registerComponent<PlayerName>(context);
     }
+    
 }
