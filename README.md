@@ -12,12 +12,13 @@ This is a Game Template of a Hiber3D project
 - [Getting Started](#getting-started)
 - [Building for Distribution](#getting-started)
 - [Compiling the Engine](#compiling-engine)
-- [Working with the Engine](#)
+- [Working with the Engine](#systems)
   - [Editor](#editor)
     - [Scripts](#scripts)
     - [Test on Mobile](#test-on-mobile)
     - [Keyboard Shortcuts](#keyboard-shortcuts)
   - [Modules](#modules)
+    - [Systems](#systems)
   - [Events](#events)
   - [Assets](#assets)
     - [Serving Assets](#serving-assets)
@@ -92,7 +93,6 @@ Live demo here -> [Hiber3D](https://template.hiber3d.com/)
 
 ![HIBER3DEDITOR](https://github.com/user-attachments/assets/923c3aeb-c324-4660-bbfc-50726520f060)
 
-
 The editor is written in React.js and is run locally by starting your vite development server. Open or close the Editor UI by pressing `(ctrl/cmd) + e`. You can also use query params to start the editor in play mode or hide/show the editor by default
 
 - `showEditor`=`0|1`
@@ -166,6 +166,40 @@ A module is a class and includes a registering function that can:
 - register singletons (data)
 - add systems (functionality) with schedules (on start, on tick, on frame, etc.)
 
+Example module
+
+`Module.hpp`
+
+```c++
+#pragma once
+
+#include <Hiber3D/Core/InitContext.hpp>
+
+
+class YourOwnModule : public Hiber3D::Module {
+  public:
+    void onRegister(Hiber3D::InitContext& context) override;
+};
+```
+
+`Module.cpp`
+
+```c++
+#include <Dir/ExampleModule.hpp>
+
+#include <Hiber3D/Asset/AssetServer.hpp>
+
+void startSystem(Hiber3D::Singleton<Hiber3D::AssetServer> server) {
+  server->load();
+}
+
+void YourOwnModule::onRegister(Hiber3D::InitContext& context) {
+    context.addSystem(Hiber3D::Schedule::ON_START, startSystem);
+}
+```
+
+#### Systems
+
 ### Events
 
 Events are the main way game modules and systems communicate with each other. They’re also used for communication between the web layer and the game's WebAssembly (WASM), as well as for both internal and external module interactions. This is all handled through a double-buffered event bus.
@@ -178,14 +212,14 @@ You can mark events to be extended to the web layer by using macros. The events 
 - `HIBER3D_INTEROP_RECEIVE_FROM_JS`
 - `HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS`
 
-Example in C++
+Event definition example in C++
 
 ```C++
 #pragma once
 
 #include <Hiber3D/Interop/Defines.hpp>
 
-struct ReadbleFromJS {
+struct ReadableFromJS {
   float value;
 };
 struct WriteableFromJS {
@@ -195,16 +229,34 @@ struct ReadableAndWriteableFromJS {
   bool value;
 };
 
-HIBER3D_REFLECT(HIBER3D_TYPE(ReadbleFromJS), HIBER3D_MEMBER(value));
+HIBER3D_REFLECT(HIBER3D_TYPE(ReadableFromJS), HIBER3D_MEMBER(value));
 HIBER3D_REFLECT(HIBER3D_TYPE(WriteableFromJS), HIBER3D_MEMBER(value));
 HIBER3D_REFLECT(HIBER3D_TYPE(ReadableAndWriteableFromJS), HIBER3D_MEMBER(value));
 
-HIBER3D_INTEROP_SEND_TO_JS(ReadbleFromJS)
-HIBER3D_INTEROP_RECEIVE_FROM_JS(ReadbleFromJS)
+HIBER3D_INTEROP_SEND_TO_JS(ReadableFromJS)
+HIBER3D_INTEROP_RECEIVE_FROM_JS(ReadableFromJS)
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadableAndWriteableFromJS);
 ```
 
-This is how you read and write the events in React.js
+Reading and writing events in a system in C++
+
+```C++
+static void handleWriteableFromJS(
+    EventView<handleWriteableFromJS> events) {
+    for (const auto& event : events) {
+        float jsValue = event.value;
+    }
+}
+
+static void handleWriteReadableFromJS(
+    EventWriter<ReadableFromJS>& writer) {
+    writer.writeEvent(ReadableFromJS{.value = 1.0f})
+}
+
+
+```
+
+Reading and writing events in a React.js component
 
 ```tsx
 const { api } = useHiber3D();
@@ -214,7 +266,7 @@ api.writeWriteableFromJS({});
 api.writeReadableAndWriteableFromJS({});
 
 // Setup a listener for a GameStartedEvent
-const listener = api.onReadbleFromJS((payload) => {
+const listener = api.onReadableFromJS((payload) => {
   console.log("Game event was sent with value: ", payload.value);
 });
 
@@ -234,4 +286,3 @@ The engine uses assets and you can either register these in the C++ or you can u
 #### Serving Assets
 
 Both the engine and the web reads assets from the folder `assets/` in the root of the project by default. The folder is served by the vite development server and the editor can read images (ktx2, png), glbs, scripts (js, lua) and our internal files `.scene` and `.material`.
-
