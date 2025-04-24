@@ -9,7 +9,7 @@ import { MyRoomState, Player } from "server/src/rooms/schema/MyRoomState";
 const client = new Client("http://localhost:2567");
 
 const GameHandler = () => {
-  const { api } = useHiber3D();
+  const { api, canvasRef } = useHiber3D();
   const [nameInput, setNameInput] = useState<string | null>(localStorage.getItem("name"));
   const [name, setName] = useState<string | null>(null);
   const [readyToStart, setReadyToStart] = useState(false);
@@ -18,10 +18,15 @@ const GameHandler = () => {
   const join = async (name: string) => {
     setName(name);
     localStorage.setItem("name", name);
-    const response = await client.joinOrCreate<MyRoomState>("my_room", {
-      name,
-    });
-    setRoom(response);
+    canvasRef?.focus();
+    try {
+      const response = await client.joinOrCreate<MyRoomState>("my_room", {
+        name,
+      });
+      setRoom(response);
+    } catch (e) {
+      console.error("Error joining room:", e);
+    }
   };
 
   useEffect(() => {
