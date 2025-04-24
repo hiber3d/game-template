@@ -56,6 +56,7 @@ public:
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerUpdate>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<LocalPlayerDied>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<RemoteBulletShot>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<PlayerIsDeadChanged>(context);
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerFunction<[](Hiber3D::Quaternion& quaternion) { return quaternion.toEulerRollPitchYaw(); }>(context, "toEulerRollPitchYaw");
 
         context.addSystem(Hiber3D::Schedule::ON_START_EDIT, showDebugLines);

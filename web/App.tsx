@@ -76,6 +76,14 @@ function RoomComponent() {
       $(room.state).players.onAdd((player, sessionId) => {
         console.log("Player joined:", player, sessionId);
 
+        $(player).listen("isDead", (isDead) => {
+          api?.writePlayerIsDeadChanged({
+            id: sessionId,
+            isLocalPlayer: room.sessionId === sessionId,
+            isDead,
+          });
+        });
+
         if (room.sessionId === sessionId) {
           // this is the local player
           return;

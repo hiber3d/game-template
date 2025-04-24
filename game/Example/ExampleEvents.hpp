@@ -75,3 +75,11 @@ struct PlayerUpdate {
 HIBER3D_REFLECT(HIBER3D_TYPE(PlayerUpdate), HIBER3D_MEMBER(id), HIBER3D_MEMBER(x), HIBER3D_MEMBER(z),
                 HIBER3D_MEMBER(rotX), HIBER3D_MEMBER(rotY), HIBER3D_MEMBER(rotZ), HIBER3D_MEMBER(rotW), HIBER3D_MEMBER(velocityX), HIBER3D_MEMBER(velocityZ), HIBER3D_MEMBER(isDead));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerUpdate);
+
+struct PlayerIsDeadChanged {
+    std::string id            = "";
+    bool        isDead        = false;
+    bool        isLocalPlayer = false;
+};
+HIBER3D_REFLECT(HIBER3D_TYPE(PlayerIsDeadChanged), HIBER3D_MEMBER(id), HIBER3D_MEMBER(isDead), HIBER3D_MEMBER(isLocalPlayer));
+HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerIsDeadChanged);

@@ -6,11 +6,11 @@
       hiber3d.addEventListener(this.entity, "PlayerJoined");
       hiber3d.addEventListener(this.entity, "PlayerLeft");
       hiber3d.addEventListener(this.entity, "PlayerUpdate");
+      hiber3d.addEventListener(this.entity, "PlayerIsDeadChanged");
       hiber3d.addEventListener(this.entity, "RemoteBulletShot");
       hiber3d.writeEvent('GameStarted', {
         dummy: true
       });
-      this.spawnLocalPlayer();
     },
 
     update(deltaTime) {
@@ -34,19 +34,22 @@
       script.transform = hiber3d.getValue(spawnpoint, "Hiber3D::Transform");
     },
 
+    spawnRemotePlayer(id) {
+      if (this.players[id]) {
+        hiber3d.print("Player already exists: ", id);
+        return;
+      }
+      const player = hiber3d.createEntity();
+      this.players[id] = player;
+      hiber3d.addComponent(player, "Hiber3D::SceneRoot");
+      hiber3d.setValue(player, "Hiber3D::SceneRoot", "scene", "scenes/Enemy.scene");
+      hiber3d.addComponent(player, "Hiber3D::Transform");
+    },
+
     onEvent(event, payload) {
       if (event == "PlayerJoined") {
         hiber3d.print("Player joined: ", payload.id);
-
-        if (this.players[payload.id]) {
-          hiber3d.print("Player already exists: ", payload);
-          return;
-        }
-        const player = hiber3d.createEntity();
-        this.players[payload.id] = player;
-        hiber3d.addComponent(player, "Hiber3D::SceneRoot");
-        hiber3d.setValue(player, "Hiber3D::SceneRoot", "scene", "scenes/Enemy.scene");
-        hiber3d.addComponent(player, "Hiber3D::Transform");
+        this.spawnRemotePlayer(payload.id);
       } else if (event == "PlayerLeft") {
         hiber3d.print("Player left: ", payload);
         const player = this.players[payload.id];
@@ -60,13 +63,6 @@
         const player = this.players[payload.id];
         if (!player) {
           hiber3d.print("Player not found: ", payload);
-          return;
-        }
-
-        if (payload.isDead) {
-          hiber3d.print("Player is dead: ", payload);
-          hiber3d.destroyEntity(player);
-          delete this.players[payload.id];
           return;
         }
 
@@ -104,7 +100,27 @@
 
         hiber3d.addComponent(bulletEntity, "Hiber3D::Name");
         hiber3d.setValue(bulletEntity, "Hiber3D::Name", "Bullet");
+      } else if (event === "PlayerIsDeadChanged") {
+        if (payload.isLocalPlayer && !payload.isDead) {
+          this.localPlayer = undefined; // This will respawn local player
+          return;
+        }
 
+        if (!payload.isLocalPlayer && payload.isDead) {
+            const player = this.players[payload.id];
+            if (!player) {
+              hiber3d.print("Player not found: ", payload);
+              return;
+            }
+            hiber3d.destroyEntity(player);
+            delete this.players[payload.id];
+            return;
+        }
+
+        if (!payload.isLocalPlayer && !payload.isDead) {
+          this.spawnRemotePlayer(payload.id);
+          hiber3d.print("Player respawned: ", payload.id);
+        }
       }
     }
 });

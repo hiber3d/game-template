@@ -22,7 +22,6 @@ export class MyRoom extends Room<MyRoomState> {
         player.rotW = message.rotW;
         player.velocityX = message.velocityX;
         player.velocityZ = message.velocityZ;
-        player.isDead = false;
       }
     });
 
@@ -40,6 +39,10 @@ export class MyRoom extends Room<MyRoomState> {
       const player = this.state.players.get(client.sessionId);
       if (player) {
         player.isDead = true;
+
+        setTimeout(() => {
+          player.isDead = false;
+        }, 3000);
       }
     });
 
