@@ -119,7 +119,6 @@
 
         if (!payload.isLocalPlayer && !payload.isDead) {
           this.spawnRemotePlayer(payload.id);
-          hiber3d.print("Player respawned: ", payload.id);
         }
       }
     }
