@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Client, getStateCallbacks, Room } from "colyseus.js";
 import { MyRoomState, Player } from "server/src/rooms/schema/MyRoomState";
 
-const client = new Client("http://localhost:2567");
+const client = new Client("http://192.168.28.208:2567");
 
 const GameHandler = () => {
   const { api, canvasRef } = useHiber3D();
