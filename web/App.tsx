@@ -149,6 +149,7 @@ function RoomComponent({ room }: { room: Room<MyRoomState> }) {
           id: sessionId,
           isLocalPlayer: room.sessionId === sessionId,
           isDead,
+          name: player.name,
         });
       });
 

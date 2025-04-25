@@ -129,7 +129,7 @@
         }
 
         if (!payload.isLocalPlayer && !payload.isDead) {
-          this.spawnRemotePlayer(payload.id);
+          this.spawnRemotePlayer(payload.id, payload.name);
         }
       }
     }
