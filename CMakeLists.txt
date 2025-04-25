@@ -10,7 +10,7 @@ include(FetchContent)
 FetchContent_Declare(
     Hiber3D_zip
     DOWNLOAD_EXTRACT_TIMESTAMP false
-    URL https://storage.googleapis.com/bkt-hiberworld-cdn-prod/hiber2/web/add-interop-to-example/v0.110.0-add-interop-to-example/Hiber3D_v0.110.0-add-interop-to-example.0%2Bd3dd2a6c7.zip
+    URL https://cdn.hiber3d.com/engine/web/dev/Hiber3D_v0.110.0-dev.zip
 )
 FetchContent_MakeAvailable(Hiber3D_zip)
 
