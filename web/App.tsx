@@ -130,15 +130,15 @@ function RoomComponent({ room }: { room: Room<MyRoomState> }) {
     setIsConnecting(false);
 
     // TODO: Try removing this
-    $(room.state).players.onChange((player, index) => {
-      if (room.sessionId === index) {
-        return;
-      }
-      api?.writePlayerJoined({
-        id: index,
-        name: player.name,
-      });
-    });
+    // $(room.state).players.onChange((player, index) => {
+    //   if (room.sessionId === index) {
+    //     return;
+    //   }
+    //   api?.writePlayerJoined({
+    //     id: index,
+    //     name: player.name,
+    //   });
+    // });
 
     $(room.state).players.onAdd((player, sessionId) => {
       console.log("Player joined:", player, sessionId);

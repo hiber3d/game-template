@@ -2,7 +2,7 @@ import { Room, Client } from "@colyseus/core";
 import { MyRoomState, Player } from "./schema/MyRoomState";
 
 export class MyRoom extends Room<MyRoomState> {
-  maxClients = 4;
+  maxClients = 20;
   state = new MyRoomState();
 
   onCreate() {
