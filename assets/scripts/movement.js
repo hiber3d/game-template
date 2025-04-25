@@ -21,33 +21,18 @@ const MOVEMENT_SPEED = 10000; // meters per second
     var force = { x: 0, y: 0, z: 0 };
     const transform = hiber3d.getValue(this.entity, "Hiber3D::Transform");
 
-
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.FORWARD)) {
       force.z = -MOVEMENT_SPEED;
     }
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.BACKWARD)) {
       force.z = MOVEMENT_SPEED;
     }
-    if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.STRAFE_LEFT)) {
-      transform.rotation  = hiber3d.call("quaternionRotateAroundAxis", transform.rotation, {x: 0, y: 1, z: 0}, 0.07);
-    }
-    if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.STRAFE_RIGHT)) {
-      transform.rotation  = hiber3d.call("quaternionRotateAroundAxis", transform.rotation, {x: 0, y: 1, z: 0}, -0.07);
-    }
-
-    const euler = hiber3d.call('toEulerRollPitchYaw', transform.rotation);
-    euler.x = 0;
-    euler.z = 0;
-
-    transform.rotation = hiber3d.call('quaternionFromEuler', euler);
 
     const forceRotated = hiber3d.call("quaternionRotateDirection", transform.rotation, force);
-    // hiber3d.print(hiber3d.call('quaternionGetY', transform.rotation));
-
+    hiber3d.setValue(this.entity, "Hiber3D::ExternalForce", "force", forceRotated);
+    
     // Get updated transform component
     transform.position.y = 0.4;
-    hiber3d.setValue(this.entity, "Hiber3D::Transform", transform);
-    hiber3d.setValue(this.entity, "Hiber3D::ExternalForce", "force", forceRotated);
     const velocity = hiber3d.getValue(this.entity, "Hiber3D::Velocity", "linear");
 
     hiber3d.writeEvent("PlayerPosition", {

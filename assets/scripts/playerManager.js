@@ -30,11 +30,11 @@
       hiber3d.setValue(this.localPlayer, "Hiber3D::SceneRoot", "scene", "scenes/Player.scene");
       hiber3d.addComponent(this.localPlayer, "Hiber3D::Transform");
       const spawnpoint = spawnpoints[Math.floor(Math.random() * spawnpoints.length)];
-      const script = hiber3d.addScript(this.localPlayer, "scripts/setTransform.js");
-      script.transform = hiber3d.getValue(spawnpoint, "Hiber3D::Transform");
+      const transformScript = hiber3d.addScript(this.localPlayer, "scripts/setTransform.js");
+      transformScript.transform = hiber3d.getValue(spawnpoint, "Hiber3D::Transform");
     },
 
-    spawnRemotePlayer(id) {
+    spawnRemotePlayer(id, name) {
       if (this.players[id]) {
         hiber3d.print("Player already exists: ", id);
         return;
@@ -44,12 +44,15 @@
       hiber3d.addComponent(player, "Hiber3D::SceneRoot");
       hiber3d.setValue(player, "Hiber3D::SceneRoot", "scene", "scenes/Enemy.scene");
       hiber3d.addComponent(player, "Hiber3D::Transform");
+      const nameScript = hiber3d.addScript(player, "scripts/setName.js");
+      hiber3d.print("Set name script: ", name);
+      nameScript.name = name;
     },
 
     onEvent(event, payload) {
       if (event == "PlayerJoined") {
         hiber3d.print("Player joined: ", payload.id);
-        this.spawnRemotePlayer(payload.id);
+        this.spawnRemotePlayer(payload.id, payload.name);
       } else if (event == "PlayerLeft") {
         hiber3d.print("Player left: ", payload);
         const player = this.players[payload.id];
@@ -67,17 +70,23 @@
         }
 
         const children = hiber3d.getValue(player, "Hiber3D::Children", "entities");
-
+        
         if (!children) {
+          return;
+        }
+        const grandChildren = hiber3d.getValue(children[0], "Hiber3D::Children", "entities");
+        if (!grandChildren) {
+          hiber3d.print("No grand children found: ", payload);
           return;
         }
         hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "x", payload.x);
         hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "y", 0.4);
         hiber3d.setValue(children[0], "Hiber3D::Transform", "position", "z", payload.z);
-        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "x", payload.rotX);
-        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "y", payload.rotY);
-        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "z", payload.rotZ);
-        hiber3d.setValue(children[0], "Hiber3D::Transform", "rotation", "w", payload.rotW);
+
+        hiber3d.setValue(grandChildren[0], "Hiber3D::Transform", "rotation", "x", payload.rotX);
+        hiber3d.setValue(grandChildren[0], "Hiber3D::Transform", "rotation", "y", payload.rotY);
+        hiber3d.setValue(grandChildren[0], "Hiber3D::Transform", "rotation", "z", payload.rotZ);
+        hiber3d.setValue(grandChildren[0], "Hiber3D::Transform", "rotation", "w", payload.rotW);
         hiber3d.setValue(children[0], "Hiber3D::Velocity", "linear", {
           x: payload.velocityX,
           y: 0,

@@ -37,7 +37,7 @@ HIBER3D_REFLECT(HIBER3D_TYPE(BulletShot), HIBER3D_MEMBER(originX), HIBER3D_MEMBE
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(BulletShot);
 
 struct RemoteBulletShot {
-    BulletShot bulletShot;
+    BulletShot  bulletShot;
     std::string ownerId = "";
 };
 
@@ -45,9 +45,10 @@ HIBER3D_REFLECT(HIBER3D_TYPE(RemoteBulletShot), HIBER3D_MEMBER(bulletShot), HIBE
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(RemoteBulletShot);
 
 struct PlayerJoined {
-    std::string id = "";
+    std::string id   = "";
+    std::string name = "";
 };
-HIBER3D_REFLECT(HIBER3D_TYPE(PlayerJoined), HIBER3D_MEMBER(id));
+HIBER3D_REFLECT(HIBER3D_TYPE(PlayerJoined), HIBER3D_MEMBER(id), HIBER3D_MEMBER(name));
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(PlayerJoined);
 struct PlayerLeft {
     std::string id = "";

@@ -129,12 +129,14 @@ function RoomComponent({ room }: { room: Room<MyRoomState> }) {
 
     setIsConnecting(false);
 
-    $(room.state).players.onChange((changes, index) => {
+    // TODO: Try removing this
+    $(room.state).players.onChange((player, index) => {
       if (room.sessionId === index) {
         return;
       }
       api?.writePlayerJoined({
         id: index,
+        name: player.name,
       });
     });
 
@@ -168,6 +170,7 @@ function RoomComponent({ room }: { room: Room<MyRoomState> }) {
 
       api?.writePlayerJoined({
         id: sessionId,
+        name: player.name,
       });
 
       $(player).onChange(() => {
