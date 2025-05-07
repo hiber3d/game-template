@@ -1,1 +1,1 @@
-# [Tutorial: Make a mini game](https://docs.hiber3d.com/getting-started/create) 
+# [Tutorial: Make a mini game](https://developer.hiber3d.com/getting-started/create) 
