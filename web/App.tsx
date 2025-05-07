@@ -50,7 +50,7 @@ const ExampleUI = () => {
 };
 
 export const App = () => (
-  <Hiber3D build={{ webGPU, webGL }} config={{ Editor: { Enabled: false, Mode: "play" } }}>
+  <Hiber3D build={{ webGPU, webGL }}>
     <ExampleUI />
   </Hiber3D>
 );
