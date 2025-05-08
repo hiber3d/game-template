@@ -31,7 +31,7 @@ const MOVEMENT_SPEED = 10; // meters per second
     if (hiber3d.call("keyIsPressed", MOVEMENT_KEYS.STRAFE_RIGHT)) {
       toMove.x += dt * MOVEMENT_SPEED;
     }
-    const toMoveRotated = hiber3d.call("rotateDirection", transform.rotation, toMove);
+    const toMoveRotated = hiber3d.call("quaternionRotateDirection", transform.rotation, toMove);
     transform.position = {x: transform.position.x + toMoveRotated.x, y: transform.position.y + toMoveRotated.y, z: transform.position.z + toMoveRotated.z};
     
     // Get updated transform component
