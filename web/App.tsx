@@ -1,7 +1,5 @@
-import { GunStateChangedEvent, Hiber3D, useHiber3D } from "@hiber3d/web";
-import { moduleFactory as webGPU } from "GameTemplate_webgpu";
-import { moduleFactory as webGL } from "GameTemplate_webgl";
 import { useEffect, useState } from "react";
+import { Hiber3D, useHiber3D, GunStateChangedEvent } from "./hiber3d";
 
 const ExampleUI = () => {
   const { api } = useHiber3D();
@@ -50,7 +48,7 @@ const ExampleUI = () => {
 };
 
 export const App = () => (
-  <Hiber3D build={{ webGPU, webGL }}>
+  <Hiber3D>
     <ExampleUI />
   </Hiber3D>
 );
