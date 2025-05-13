@@ -98,7 +98,7 @@ void ExampleModule::onRegister(Hiber3D::InitContext& context) {
     // Make available in scripts
     if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
         context.getModule<Hiber3D::JavaScriptScriptingModule>().registerComponent<ExampleComponent>(context);
-        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ExampleEvent>(context);
+        context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<GunStateChangedEvent>(context);
     }
 
     // Saved to scene file

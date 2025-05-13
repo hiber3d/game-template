@@ -1,18 +1,17 @@
-import { Hiber3D, useHiber3D } from "@hiber3d/web";
-import { moduleFactory as webGPU } from "GameTemplate_webgpu";
-import { moduleFactory as webGL } from "GameTemplate_webgl";
 import { useEffect, useRef, useState } from "react";
+import { Hiber3D, useHiber3D, GunStateChangedEvent } from "./hiber3d";
 
-const ExampleEvent = () => {
+const ExampleUI = () => {
   const { api } = useHiber3D();
+  const [gunState, setGunState] = useState<GunStateChangedEvent | undefined>();
 
   useEffect(() => {
     if (!api) {
       return;
     }
 
-    const listener = api.onExampleEvent((payload) => {
-      console.debug(payload);
+    const listener = api.onGunStateChangedEvent((payload) => {
+      setGunState(payload);
     });
 
     return () => {
@@ -20,11 +19,39 @@ const ExampleEvent = () => {
     };
   }, [api]);
 
-  return null;
+  if (!gunState) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        pointerEvents: "none",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        color: "white",
+        padding: "12px 25px",
+        fontSize: "20px",
+        fontWeight: "bold",
+      }}
+    >
+      <div>AMMO: {gunState.ammo}</div>
+      {/* <div>HITS: {gunState.hits}</div> */}
+    </div>
+  );
 };
 
 const MidiEvent = ({ MIDIAccess }: { MIDIAccess: MIDIAccess | null }) => {
   const { api } = useHiber3D();
+  
+  const outputId = "output-2";
+  const outputName = "OutFromHiber3D";
 
   useEffect(() => {
     if (!api || !MIDIAccess) {
@@ -32,14 +59,14 @@ const MidiEvent = ({ MIDIAccess }: { MIDIAccess: MIDIAccess | null }) => {
     }
 
     const listener = api.onMidiOutputEvent((payload) => {
-      console.log("MIDI event from WASM with value" + JSON.stringify(payload), MIDIAccess);
-      // const noteOnMessage = [payload.byte0, payload.byte1, payload.byte2];
-      // const output = MIDIAccess?.outputs.get("output-2");
-      // console.log("Output: " + JSON.stringify(output));
-      // if (output) {
-      //   console.log("Sending MIDI message to output");
-      //   output?.send(noteOnMessage);
-      // }
+      //console.log("MIDI event from WASM with value" + JSON.stringify(payload), MIDIAccess);
+      const noteOnMessage = [payload.byte0, payload.byte1, payload.byte2];
+      const output = MIDIAccess?.outputs.get(outputId);
+      //console.log("Output: " + JSON.stringify(output));
+      if (output) {
+        //console.log("Sending MIDI message to output");
+        output?.send(noteOnMessage);
+      }
     });
 
     return () => {
@@ -69,7 +96,7 @@ const MidiEvent = ({ MIDIAccess }: { MIDIAccess: MIDIAccess | null }) => {
           ` name:'${input.name}'` +
           ` version:'${input.version}'`
       );
-      if (!entry[1].name?.startsWith("OutFromHiber3D")) {
+      if (!entry[1].name?.startsWith(outputName)) {
         const input = MIDIAccess.inputs.get(entry[1].id);
         if (input) {
           input.onmidimessage = onMIDIMessage;
@@ -105,7 +132,8 @@ export const App = () => {
   }, [MIDIAccess]);
 
   return (
-    <Hiber3D build={{ webGPU, webGL }}>
+    <Hiber3D>
+      <ExampleUI />
       <MidiEvent MIDIAccess={MIDIAccess} />
     </Hiber3D>
   );
