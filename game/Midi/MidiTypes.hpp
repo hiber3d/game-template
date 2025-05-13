@@ -9,9 +9,9 @@ struct MidiChannel {
     std::array<Hiber3D::u8, 128> cc    = {Hiber3D::u8{0}};
 
     float pitchBend = 0.0f;
-    
-    Hiber3D::u8 lastNote  = -1;
-    Hiber3D::u8 lastCc    = -1;
+
+    Hiber3D::u8 lastNote = -1;
+    Hiber3D::u8 lastCc   = -1;
 };
 
 struct MidiPort {
