@@ -7,8 +7,6 @@
 #include <Hiber3D/Physics/PhysicsComponents.hpp>
 #include <Hiber3D/Scripting/JavaScriptScriptingModule.hpp>
 
-#include <stdio.h>
-
 class MainModule : public Hiber3D::Module {
 public:
     void onRegister(Hiber3D::InitContext& context) override {

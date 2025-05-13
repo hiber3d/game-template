@@ -4,6 +4,7 @@
         "twxs.cmake",
         "ms-vscode.cmake-tools",
         "ms-vscode.cpptools",
-        "ms-vscode.wasm-dwarf-debugging"
+        "ms-vscode.wasm-dwarf-debugging",
+        "llvm-vs-code-extensions.vscode-clangd"
     ]
 }
