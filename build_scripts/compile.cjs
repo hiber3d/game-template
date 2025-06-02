@@ -7,6 +7,8 @@ const path = require('path');
 
 const projectRoot = path.resolve(__dirname, "..");
 
+const currentOS = detectOS();
+
 const EMSCRIPTEN_VERSION = "3.1.64";
 
 function printUsage() {
@@ -27,15 +29,21 @@ Note: This script needs to set environment variables for Emscripten in the curre
 function installEmscripten() {
   console.log("Installing Emscripten and dependencies...");
   try {
-    execSync(`git clone https://github.com/emscripten-core/emsdk.git`, { stdio: 'inherit' });
+    execSync(`git clone https://github.com/emscripten-core/emsdk.git`, { stdio: 'inherit', windowsHide: true });
     process.chdir(path.join(process.cwd(), "emsdk"));
-    execSync(`./emsdk install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
-    execSync(`./emsdk activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
 
-    // Move into upstream/emscripten to run npm install
-    process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
-    console.log("Running npm install...");
-    execSync(`npm install`, { stdio: 'inherit' });
+    if (currentOS === 'windows') {
+      execSync(`emsdk.bat install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
+      execSync(`emsdk.bat activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
+    } else { 
+      execSync(`./emsdk install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+      execSync(`./emsdk activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+    }
+      
+      // Move into upstream/emscripten to run npm install
+      process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
+      console.log("Running npm install...");
+      execSync(`npm install`, { stdio: 'inherit' });
 
     console.log("Installation complete.");
     // Return to repo root
@@ -142,7 +150,7 @@ function build(platformName, graphicsBackend, buildType) {
   // Activate emsdk and run cmake configure + build
   try {
     // Activate specific EMSCRIPTEN version
-    execSync(`"${process.env.EMSDK}/emsdk" activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+    execSync(`"${process.env.EMSDK}/emsdk.bat" activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
 
     // Run CMake configure
     const cmakeCmd = [
@@ -156,11 +164,14 @@ function build(platformName, graphicsBackend, buildType) {
       `-B "${BUILD_PATH}"`,
     ].filter(Boolean).join(" ");
 
-    execSync(cmakeCmd, { shell: '/bin/bash', stdio: 'inherit' });
+    execSync(cmakeCmd, { stdio: 'inherit', windowsHide: true });
 
     // Build with Ninja, passing linker flags
-    const buildCmd = `LDFLAGS="${LINKER_FLAGS}" cmake --build ${BUILD_PATH}`;
-    execSync(buildCmd, { shell: '/bin/bash', stdio: 'inherit' });
+    const buildCmd = `cmake --build ${BUILD_PATH}`;
+    execSync(buildCmd, { stdio: 'inherit', windowsHide: true, env: {
+      ...process.env,
+      LDFLAGS: LINKER_FLAGS
+    }});
 
   } catch (err) {
     console.error("Error during build:", err);
@@ -170,7 +181,7 @@ function build(platformName, graphicsBackend, buildType) {
   // Print ccache run stats
   console.log("ccache statistics for this build:");
   try {
-    execSync("ccache --show-log-stats -v", { stdio: 'inherit' });
+    execSync("ccache --show-log-stats -v", { stdio: 'inherit', windowsHide: true });
   } catch (err) {
     console.warn("Warning: ccache not found or failed to show stats:", err);
   }
