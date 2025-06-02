@@ -34,13 +34,13 @@ function installEmscripten() {
 
     const emsdk = currentOS === 'windows' ? "emsdk.bat" : "./emsdk";
 
-    execSync(`${emsdk} install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
-    execSync(`${emsdk} activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+    execSync(`${emsdk} install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
+    execSync(`${emsdk} activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
     
     // Move into upstream/emscripten to run npm install
     process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
     console.log("Running npm install...");
-    execSync(`npm install`, { stdio: 'inherit' });
+    execSync(`npm install`, { stdio: 'inherit', windowsHide: true });
 
     console.log("Installation complete.");
     // Return to repo root
@@ -197,7 +197,7 @@ function cleanBuild() {
   }
   console.log("Clearing ccache...");
   try {
-    execSync("ccache -C", { stdio: 'inherit' });
+    execSync("ccache -C", { stdio: 'inherit', windowsHide: true });
   } catch (err) {
     console.warn("Warning: ccache not found or failed to clear:", err);
   }
