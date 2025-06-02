@@ -10,10 +10,11 @@ const projectRoot = path.resolve(__dirname, "..");
 const EMSCRIPTEN_VERSION = "3.1.64";
 
 function printUsage() {
-  console.log(`Usage: node ${path.basename(__filename)} [--clean] [--webgl] [--webgpu] [--reinstall-emsdk] [--debug] [--release] [--help]
+  console.log(`Usage: node ${path.basename(__filename)} [--clean] [--webgl] [--webgpu] [--install-emsdk] [--reinstall-emsdk] [--debug] [--release] [--help]
   --clean           Clear CMake cache, build directory, and ccache (always runs first if specified)
   --webgpu          Build for WebGPU
   --webgl           Build for WebGL
+  --install-emsdk   Install Emscripten SDK if not present
   --reinstall-emsdk Clean and reinstall Emscripten
   --debug           Build in Debug mode with -Wl,--lto-O0
   --release         Build in Release mode
@@ -222,6 +223,10 @@ function main(args) {
     switch (arg) {
       case "--clean":
         // Already handled above; nothing more to do here
+        break;
+
+      case "--install-emsdk":
+        ensureEmscripten();
         break;
 
       case "--reinstall-emsdk":
