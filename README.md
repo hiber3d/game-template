@@ -142,7 +142,7 @@ npm run dev -- --host
 | Toggle the editor UI | `editor.toggle` | Editor | `mod+e` | `always` |
 | Show the selected entity in the 3d view | `entity.moveIntoView` | Entity | `f` |  |
 | Duplicate the selected entity | `entity.duplicate` | Entity | `shift+d` | `isEditMode && entitySelected && (scenePaleFocused \|\| canvasFocused)` |
-| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && entitySelected && (scenePaleFocused \|\| canvasFocused) ` |
+| Group the selected entities  | `entity.group` | Entity | `mod+g` | `isEditMode && entitySelected && (scenePaleFocused \|\| canvasFocused)` |
 | Move 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
 | Move 0,1x via Inspector | `entity.group` | Transform | `mod+mouse down` |  |
 | Rotate 10x via Inspector | `entity.group` | Transform | `shift+mouse down` |  |
