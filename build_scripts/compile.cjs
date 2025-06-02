@@ -32,18 +32,15 @@ function installEmscripten() {
     execSync(`git clone https://github.com/emscripten-core/emsdk.git`, { stdio: 'inherit', windowsHide: true });
     process.chdir(path.join(process.cwd(), "emsdk"));
 
-    if (currentOS === 'windows') {
-      execSync(`emsdk.bat install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
-      execSync(`emsdk.bat activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
-    } else { 
-      execSync(`./emsdk install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
-      execSync(`./emsdk activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
-    }
-      
-      // Move into upstream/emscripten to run npm install
-      process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
-      console.log("Running npm install...");
-      execSync(`npm install`, { stdio: 'inherit' });
+    const emsdk = currentOS === 'windows' ? "emsdk.bat" : "./emsdk";
+
+    execSync(`${emsdk} install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+    execSync(`${emsdk} activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit' });
+    
+    // Move into upstream/emscripten to run npm install
+    process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
+    console.log("Running npm install...");
+    execSync(`npm install`, { stdio: 'inherit' });
 
     console.log("Installation complete.");
     // Return to repo root
@@ -150,7 +147,7 @@ function build(platformName, graphicsBackend, buildType) {
   // Activate emsdk and run cmake configure + build
   try {
     // Activate specific EMSCRIPTEN version
-    execSync(`"${process.env.EMSDK}/emsdk.bat" activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
+    execSync(`"${process.env.EMSDK}/emsdk" activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
 
     // Run CMake configure
     const cmakeCmd = [
