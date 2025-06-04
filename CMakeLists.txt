@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(Hiber3D_zip)
 # set(HBR_ENABLE_SOKOL_ASSERTS false CACHE BOOL "" FORCE) # Runs way faster without sokol asserts
 # include(FetchContent)
 # FetchContent_Declare(Hiber2
-#     GIT_REPOSITORY  https://github.com/HiberWorld/Hiber2.git
+#     GIT_REPOSITORY  REPO_URL
 #     GIT_TAG         master)
 # FetchContent_MakeAvailable(Hiber2)
 
