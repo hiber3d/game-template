@@ -6,6 +6,10 @@
         "Xcode",
         "Ninja"
     ],
+    "cmake.copyCompileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "*.html": "html",
         "*.schema": "flatbuffers",
