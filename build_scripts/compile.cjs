@@ -37,12 +37,6 @@ function installEmscripten() {
     execSync(`${emsdk} install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
     execSync(`${emsdk} activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
     
-    // Move into upstream/emscripten to run npm install
-    process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
-    console.log("Running npm install...");
-    execSync(`npm install`, { stdio: 'inherit', windowsHide: true });
-
-    console.log("Installation complete.");
     // Return to repo root
     process.chdir(path.resolve(__dirname));
   } catch (err) {
