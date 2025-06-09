@@ -33,15 +33,6 @@
                         "data": "Cube"
                     },
                     {
-                        "type": "Hiber3D::ScriptInstance",
-                        "data": {
-                            "scripts": [
-                                "scripts/gun.js",
-                                "scripts/movement.js"
-                            ]
-                        }
-                    },
-                    {
                         "type": "Hiber3D::Renderable",
                         "data": {
                             "mesh": "glbs/Cube.glb#mesh0/primitive0",
