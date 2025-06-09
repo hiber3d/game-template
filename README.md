@@ -43,7 +43,7 @@ Install via [HomeBrew](https://brew.sh/)
 
 Install via [Scoop](https://scoop.sh/)
 
-`scoop install cmake ccache ninja git git-lfs nvm`
+`scoop install cmake ccache ninja git-lfs nvm`
 
 > Note: We recommend installing node via nvm
 
