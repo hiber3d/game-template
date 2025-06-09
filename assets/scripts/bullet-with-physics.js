@@ -1,25 +1,20 @@
-({
-  force: 100000000,
-  maxLifeTime: 2,
+export default class {
+  FORCE = 100000000;
+  MAX_LIFE_TIME = 2;
 
-  currentLifeTime: 0,
+  currentLifeTime = 0;
 
   onCreate() {
     hiber3d.addComponent(this.entity, "Hiber3D::ExternalImpulse");
-    hiber3d.setValue(this.entity, "Hiber3D::ExternalImpulse", "linear", { x: 0, y: 0, z: -this.force });
-  },
+    hiber3d.setComponent(this.entity, "Hiber3D::ExternalImpulse", "linear", { x: 0, y: 0, z: -this.FORCE });
+  }
 
-  destroy() {
-    const parent = hiber3d.getValue(this.entity, "Hiber3D::Parent", "parent");
-    hiber3d.call("destroyEntityWithChildrenRecursive", parent);
-  },
-
-  update(dt) {
+  onUpdate(dt) {
     this.currentLifeTime += dt;
-    if (this.currentLifeTime > this.maxLifeTime) {
-      this.destroy();
+    if (this.currentLifeTime > this.MAX_LIFE_TIME) {
+      hiber3d.destroyEntity(this.entity);
     }
-  },
+  }
 
   onEvent(event, payload) {}
-});
+}
