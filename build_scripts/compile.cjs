@@ -13,14 +13,15 @@ const EMSCRIPTEN_VERSION = "3.1.64";
 
 function printUsage() {
   console.log(`Usage: node ${path.basename(__filename)} [--clean] [--webgl] [--webgpu] [--install-emsdk] [--reinstall-emsdk] [--debug] [--release] [--help]
-  --clean           Clear CMake cache, build directory, and ccache (always runs first if specified)
-  --webgpu          Build for WebGPU
-  --webgl           Build for WebGL
-  --install-emsdk   Install Emscripten SDK if not present
-  --reinstall-emsdk Clean and reinstall Emscripten
-  --debug           Build in Debug mode with -Wl,--lto-O0
-  --release         Build in Release mode
-  -h, --help        Show this help message
+  --clean                   Clear CMake cache, build directory, and ccache (always runs first if specified)
+  --webgpu                  Build for WebGPU
+  --webgl                   Build for WebGL
+  --install-emsdk           Install Emscripten SDK if not present
+  --reinstall-emsdk         Clean and reinstall Emscripten
+  --debug                   Build in Debug mode with -Wl,--lto-O0
+  --release                 Build in Release mode
+  --skip-emsdk-npm-install  Skip npm install in Emscripten upstream directory (Not needed when running via app)
+  -h, --help                Show this help message
 
 You can use multiple flags together. Build installs Emscripten if not present.
 Note: This script needs to set environment variables for Emscripten in the current session.`);
@@ -37,12 +38,14 @@ function installEmscripten() {
     execSync(`${emsdk} install ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
     execSync(`${emsdk} activate ${EMSCRIPTEN_VERSION}`, { stdio: 'inherit', windowsHide: true });
     
-    // Move into upstream/emscripten to run npm install
-    process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
-    console.log("Running npm install...");
-    execSync(`npm install`, { stdio: 'inherit', windowsHide: true });
-
-    console.log("Installation complete.");
+    if (!process.argv.includes("--skip-emsdk-npm-install")) {
+      process.chdir(path.join(process.cwd(), "upstream", "emscripten"));
+      console.log("Running npm install...");
+      execSync(`echo $PATH`, { stdio: 'inherit', windowsHide: true });
+      execSync(`npm install`, { stdio: 'inherit', windowsHide: true });
+    }
+    
+    console.log("Emscripten installation complete.");
     // Return to repo root
     process.chdir(path.resolve(__dirname));
   } catch (err) {
@@ -230,6 +233,7 @@ function main(args) {
     const arg = args[idx];
     switch (arg) {
       case "--clean":
+      case '--skip-emsdk-npm-install':
         // Already handled above; nothing more to do here
         break;
 
