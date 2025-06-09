@@ -1,1 +1,136 @@
-{"version":"1.0.0","root":{"id":12582913,"components":[{"type":"Hiber3D::Transform","data":{"position":{"x":0,"y":0,"z":0},"rotation":{"x":0,"y":0,"z":0,"w":1},"scale":{"x":1,"y":1,"z":1}}},{"type":"Hiber3D::Name","data":"main.scene"}],"children":[{"id":12582914,"components":[{"type":"Hiber3D::Transform","data":{"position":{"x":0,"y":0,"z":0},"rotation":{"x":0,"y":0,"z":0,"w":1},"scale":{"x":1,"y":1,"z":1}}},{"type":"Hiber3D::Name","data":"Cube"},{"type":"Hiber3D::Renderable","data":{"mesh":"glbs/Cube.glb#mesh0/primitive0","material":"materials/BasicPaint.material","castShadows":true}}],"children":[]},{"id":12582915,"components":[{"type":"Hiber3D::Transform","data":{"position":{"x":0,"y":4,"z":10},"rotation":{"x":-0.0404902,"y":0,"z":0,"w":0.99918},"scale":{"x":1,"y":1,"z":1}}},{"type":"Hiber3D::Name","data":"Camera"},{"type":"Hiber3D::Camera","data":{"priority":1,"fovDegrees":60,"nearPlane":0.25,"farPlane":1000}}],"children":[]},{"id":12583023,"components":[{"type":"Hiber3D::Transform","data":{"position":{"x":0.5,"y":0,"z":0.5},"rotation":{"x":0,"y":0,"z":0,"w":1},"scale":{"x":1,"y":1,"z":1}}},{"type":"Hiber3D::Name","data":"Plane"},{"type":"Hiber3D::Renderable","data":{"mesh":"glbs/Plane.glb#mesh0/primitive0","material":"materials/Hiber3DGrid.material","castShadows":true}}],"children":[]}]}}
+{
+    "version": "1.0.0",
+    "root": {
+        "id": 12582913,
+        "components": [],
+        "children": [
+            {
+                "id": 12582914,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0
+                            },
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Cube"
+                    },
+                    {
+                        "type": "Hiber3D::ScriptInstance",
+                        "data": {
+                            "scripts": [
+                                "scripts/gun.js",
+                                "scripts/movement.js"
+                            ]
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Renderable",
+                        "data": {
+                            "mesh": "glbs/Cube.glb#mesh0/primitive0",
+                            "material": "materials/BasicPaint.material",
+                            "castShadows": true
+                        }
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 12582915,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": 0,
+                                "y": 4,
+                                "z": 10
+                            },
+                            "rotation": {
+                                "x": -0.0404902,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0.99918
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Camera"
+                    },
+                    {
+                        "type": "Hiber3D::Camera",
+                        "data": {
+                            "priority": 1,
+                            "fovDegrees": 60,
+                            "nearPlane": 0.25,
+                            "farPlane": 1000
+                        }
+                    }
+                ],
+                "children": []
+            },
+            {
+                "id": 12583023,
+                "components": [
+                    {
+                        "type": "Hiber3D::Transform",
+                        "data": {
+                            "position": {
+                                "x": 0.5,
+                                "y": 0,
+                                "z": 0.5
+                            },
+                            "rotation": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 1
+                            },
+                            "scale": {
+                                "x": 1,
+                                "y": 1,
+                                "z": 1
+                            }
+                        }
+                    },
+                    {
+                        "type": "Hiber3D::Name",
+                        "data": "Plane"
+                    },
+                    {
+                        "type": "Hiber3D::Renderable",
+                        "data": {
+                            "mesh": "glbs/Plane.glb#mesh0/primitive0",
+                            "material": "materials/Hiber3DGrid.material",
+                            "castShadows": true
+                        }
+                    }
+                ],
+                "children": []
+            }
+        ]
+    }
+}
