@@ -53,7 +53,7 @@ type TransformProps = {
 
 type Component = {
   "Hiber3D::Transform": TransformProps;
-  "Hiber3D::SceneRoot": {
+  "Hiber3D::SceneInstance": {
     scene: string;
   };
   "Hiber3D::Renderable": {
