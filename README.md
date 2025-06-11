@@ -204,15 +204,18 @@ HIBER3D_INTEROP_RECEIVE_FROM_JS(ReadbleFromJS)
 HIBER3D_INTEROP_SEND_AND_RECEIVE_FROM_JS(ReadableAndWriteableFromJS);
 ```
 
-You also need to register the events in the JavaScript scripting module. This is most easily done in a module's `onRegister` function:
+You also need to register the events with the JavaScript scripting module. This is most easily done in a module's `onRegister` function:
 
 ```cpp
 void ExampleModule::onRegister(Hiber3D::InitContext& context) {
+  ...
   if (context.isModuleRegistered<Hiber3D::JavaScriptScriptingModule>()) {
     context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ReadbleFromJS>(context);
     context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<WriteableFromJS>(context);
     context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ReadableAndWriteableFromJS>(context);
   }
+ ...
+}
 ```
 
 This is how you read and write the events in React.js:
