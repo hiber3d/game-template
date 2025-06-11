@@ -214,7 +214,7 @@ void ExampleModule::onRegister(Hiber3D::InitContext& context) {
     context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<WriteableFromJS>(context);
     context.getModule<Hiber3D::JavaScriptScriptingModule>().registerEvent<ReadableAndWriteableFromJS>(context);
   }
- ...
+  ...
 }
 ```
 
