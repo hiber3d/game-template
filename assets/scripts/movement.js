@@ -32,7 +32,7 @@ export default class {
     if (input.keyIsPressed(this.MOVEMENT_KEYS.STRAFE_RIGHT)) {
       toMove.x += dt * MOVEMENT_SPEED;
     }
-    const toMoveRotated = hiber3d.call("quaternionRotateDirection", transform.rotation, toMove);
+    const toMoveRotated = transform.rotation.rotateDirection(toMove);
     transform.position = {x: transform.position.x + toMoveRotated.x, y: transform.position.y + toMoveRotated.y, z: transform.position.z + toMoveRotated.z};
     
     // Get updated transform component
