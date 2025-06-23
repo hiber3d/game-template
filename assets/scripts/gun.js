@@ -1,3 +1,5 @@
+import * as input from 'hiber3d:input';
+
 export default class {
   GUN_KEYS = {
     FIRE: 1, // SPACE
@@ -33,7 +35,7 @@ export default class {
   }
 
   onUpdate(dt) {
-    if (hiber3d.call("keyJustPressed", this.GUN_KEYS.FIRE)) {
+    if (input.keyJustPressed(this.GUN_KEYS.FIRE)) {
       this.fire();
     }
   }

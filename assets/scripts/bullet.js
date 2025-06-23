@@ -13,7 +13,7 @@ export default class {
       return;
     }
     const toMove = { x: 0, y: 0, z: -dt * this.SPEED };
-    const toMoveRotated = hiber3d.call("quaternionRotateDirection", worldTransform.rotation, toMove);
+    const toMoveRotated = worldTransform.rotation.rotateDirection(toMove);
     const newPosition = {x: localTransform.position.x + toMoveRotated.x, y: localTransform.position.y + toMoveRotated.y, z: localTransform.position.z + toMoveRotated.z};
     hiber3d.setComponent(this.entity, "Hiber3D::Transform", "position", newPosition);
 
