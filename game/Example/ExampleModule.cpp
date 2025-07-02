@@ -74,7 +74,7 @@ void loadEnvironment(
     env->fog.skyboxGradient = 0.01f;
 
     env->bloom.enabled            = true;
-    env->bloom.brightnessTreshold = 0.95f;
+    env->bloom.brightnessThreshold = 0.95f;
     env->bloom.blendAlpha         = 0.3f;
 
     env->colorGrading.enabled    = true;
